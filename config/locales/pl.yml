@@ -1,0 +1,91 @@
+pl:
+  layouts:
+    elements: 
+      menu:
+        sign_out: "Wyloguj się"
+        clients_link: "Klienci"
+        products_link: "Produkty"
+        my_landing_page_link: "Moja strona"
+  trainer:
+    actions:
+      submit: "Submit"
+    clients:
+      index:
+        header_title: "Wszyscy klienci"
+        header_link: "Nowy klient" 
+      show:
+        header_link_edit_client: "Edycja"
+        header_link_add_training_plan: "Dodaj plan treningu"
+        panel_link_to_plan: "Link do planu dla klienta"
+        panel_link_add_training: "Dodaj trening"
+        blank_state_training_plan: "Dodaj trening"
+        blank_state_trackable: "Śledź ścieżkę"
+      new:
+        header_title: "Nowy klient"
+        header_cancel: "Anuluj" 
+        submit_client: "Zapisz klienta"
+        success: " %{name} dadano!"   
+      edit: 
+        header_title: "Zmień dane dla %{name}"
+        header_cancel: "Anuluj"
+        header_save: "Zapisz"
+    products:
+      index:
+        header_title: "Wszystkie produkty"
+        header_link: "Utwórz produkt"
+      new: 
+        header_title: "Nowy produkt"
+        header_cancel: "Anuluj"
+        header_save: "Zapisz"
+        files: "Pliki"
+      edit:
+        header_title: "Edycja"
+        header_cancel: "Anuluj"
+        header_save: "Zapisz produkt"
+        files: "Pliki"
+    webpages:
+      edit: 
+        header_title: "Ustawienia strony głównej"
+        header_cancel: "Anuluj"
+        header_save: "Zapisz ustawienia"
+        success: "Zapisano ustawienia strony"
+    trainings:
+      new:
+        header_title: "Nowy trening dla %{name}"
+        header_cancel: "Anuluj"
+        header_save: "Zapisz trening"
+      edit:
+        header_title: "Edytuj trening %{name}"
+        header_save: "Zapisz trening"
+        heder_cancel: "Anuluj"
+        success: "Zapisano zmiany"
+    training_plans:
+      new: 
+        header_title: "Nowy plan treningów dla %{name}"
+        header_cancel: "Anuluj"
+        header_save: "Zapisz"
+
+  activerecord:
+    attributes:
+      client:
+        name: "Imię"
+        phone: "Telefon"
+        one: "Klient"
+        other: "Klienci"
+      product:
+        name: "Nazwa"
+        description: "Opis"
+        price: "Cena"
+        files: "Pliki"
+      webpage:
+        domain: "Domena"
+      training:
+        name: "Nazwa"
+        description: "Opis"
+      training_plan:
+        name: "Nazwa"
+        description: "Opis"
+
+  time:
+    formats:
+      date_short: "%d-%m-%Y"

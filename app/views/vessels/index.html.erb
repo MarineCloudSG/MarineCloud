@@ -1,0 +1,10 @@
+<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+  <% collection.each do |vessel| %>
+    <%= render CardComponent.new(
+      title: vessel.name,
+      description: vessel.vessel_group.name,
+      icon: user_avatar(vessel.name, size: 42, colors: 45),
+      link: vessel_path(vessel)
+    ) %>
+  <% end %>
+</div>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html class="h-full bg-gray-100">
+  <head>
+    <title>Better Coach PRO :: <%= @page_title %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  </head>
+
+  <body class="h-full">
+    <div class="min-h-full">
+      <%= render "layouts/elements/menu" %>
+
+      <div class="pt-5 pb-10">
+        <main class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+          <%= render "layouts/elements/notifications" %>
+
+          <%= content_for?(:content) ? yield(:content) : yield %>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

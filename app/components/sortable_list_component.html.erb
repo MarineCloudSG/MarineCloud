@@ -1,0 +1,17 @@
+<li data-controller="sortable-list-component">
+  <div class="block px-4 py-4 sm:px-6 hover:bg-gray-50">
+    <div class="flex justify-between items-center flex-wrap sm:flex-nowrap">
+      <div class="ml-4">
+        <%= content %>
+      </div>
+
+      <div class="ml-4 flex-shrink-0">
+        <span class="relative z-0 inline-flex shadow-sm rounded-md">
+          <%= move_up_link unless @iteration.first? %>
+          <%= move_down_link unless @iteration.last? %>
+          <%= remove_link %>
+        </span>
+      </div>
+    </div>
+  </div>
+</li>

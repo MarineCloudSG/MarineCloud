@@ -1,0 +1,4 @@
+en:
+  hints:
+    rules:
+      avoid_same_muscle_group_in_single_superset: Try not including two exercises for the same muscle group in the same superset

@@ -1,0 +1,71 @@
+en:
+  layouts:
+    elements: 
+      menu:
+        sign_out: "Sign out"
+        clients_link: "Clients"
+        products_link: "Products"
+        my_landing_page_link: "My landing page"
+  trainer:
+    clients:
+      index:
+        header_title: "All Clients"
+        header_link: "New client"
+      show:
+        header_link_edit_client: "Edit Client"
+        header_link_add_training_plan: "Add training plan"
+        panel_link_to_plan: "Link to Clients plan"
+        panel_link_add_training: "Add training"
+        blank_state_training_plan: "Add training"
+        blank_state_trackable: "Track new metric"
+      new:
+        header_title: "New Client"
+        header_cancel: "Cancel"
+        submit_client: "Save Client"
+      edit:
+        header_title: "Edit Client %{name}"
+        header_cancel: "Cancel"
+        header_save: "Save"
+    products:
+      index:
+        header_title: "All products"
+        header_link: "Create product"
+      new: 
+        header_title: "New product"
+        header_cancel: "Cancel"
+        header_save: "Save"
+        files: "Files"
+      edit:
+        header_title: "Edit"
+        header_cancel: "Cancel"
+        header_save: "Save"
+        files: "Files"
+    webpages:
+      edit: 
+        header_title: "Landing page configuration"
+        header_cancel: "Cancel"
+        header_save: "Save settings"
+        success: "Webpage configuration updated successfully"
+    trainings:
+      new:
+        header_title: "New training for %{name}"
+        header_cancel: "Cancel"
+        header_save: "Save training"
+      edit:
+        header_title: "Edit training %{name}"
+        header_save: "Save training"
+        heder_cancel: "Cancel"
+        success: "Updated successfully"
+    training_plans:
+      new: 
+        header_title: "New training plan for %{name}"
+        header_cancel: "Cancel"
+        header_save: "Save"
+
+  activerecord:
+    attributes:
+      client:
+        success: "Success"
+  time:
+     formats:
+       date_short: "%d-%m-%Y"

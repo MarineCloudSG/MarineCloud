@@ -1,0 +1,22 @@
+# Offer
+
+- Trainer can sell items for a given price
+- There is no concept of basket, you just pick the thing, pay for it and it is delivered to you
+- The thing can be a file or a link, or a promise ??
+- File - this can be an ebook, training plan, diet plan or anything of this sort.
+  - It is delivered to customer as a link to download it from our platform
+  - Probably needs to be secured with some sort of token... do we want to use JWT here? Probably not...
+- Link - it is just a link, it might be a link to ebook, training plan, diet etc... but hosted outside of the platform.
+- The thing can be described with
+  - Name
+  - Description (details)
+  - Image (thumb)
+  - Price
+- Delivery
+  - Immediate (automatic)
+  - Conditional (manual)
+- Immediate delivery can be executed on a non-customised resources (i.e. e-books, generic dietary or training plans etc.)
+- Conditional delivery will/may require filling up a questionnaire (0..n)
+  - In such case the trainer will need to upload/deliver the product manually
+- Payments
+  - One-time payments (P24)
