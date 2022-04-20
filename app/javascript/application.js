@@ -17,9 +17,6 @@ import "@rails/actiontext"
 import { Application } from "@hotwired/stimulus"
 const application = Application.start();
 
-import { Dropdown } from "tailwindcss-stimulus-components"
-application.register('dropdown', Dropdown)
-
 import NotificationController from "./controllers/notification_controller"
 application.register("notification", NotificationController)
 

@@ -1,5 +1,5 @@
 # rubocop:disable all
-#
+# INFO: This code can be used as starting point for XLSX processing
 # This is experimental code, not to be used in production
 # workbook = RubyXL::Parser.parse("baza2.xlsx")['Baza ćwiczeń - Baza ćwiczeń']
 class WorksheetType

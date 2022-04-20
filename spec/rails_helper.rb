@@ -6,8 +6,6 @@ require File.expand_path('../config/environment', __dir__)
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
 require 'webmock/rspec'
-require 'graphiti_spec_helpers/rspec'
-require 'capybara/rails'
 require 'rspec_tapas/behavior_dsl'
 # Add additional requires below this line. Rails is not loaded until this point!
 
