@@ -1,18 +1,29 @@
 ActiveAdmin.register VesselGroup do
   config.filters = false
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
   permit_params :name
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:name]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
-  
+
+
+  show do
+    columns do
+      column do
+        attributes_table title: 'Group summary' do
+          row :name
+        end
+      end
+    end
+
+    columns do
+      column do
+        panel 'Vessels' do
+          header_action link_to('Add vessel', new_admin_vessel_path)
+
+          table_for vessel_group.vessels do
+            column 'Name' do |vessel|
+              link_to vessel.name, vessel
+            end
+          end
+        end
+      end
+    end
+  end
 end

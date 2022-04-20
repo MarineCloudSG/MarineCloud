@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_08_091742) do
+ActiveRecord::Schema.define(version: 202204020181742) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,7 +42,13 @@ ActiveRecord::Schema.define(version: 2022_04_08_091742) do
   create_table "parameters", force: :cascade do |t|
     t.string "label"
     t.string "code"
-    t.integer "system"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "systems", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "code", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -68,16 +74,31 @@ ActiveRecord::Schema.define(version: 2022_04_08_091742) do
   create_table "vessel_parameters", force: :cascade do |t|
     t.bigint "vessel_id", null: false
     t.bigint "parameter_id", null: false
+    t.bigint "system_id", null: false
     t.float "min_satisfactory"
     t.float "max_satisfactory"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["parameter_id"], name: "index_vessel_parameters_on_parameter_id"
+    t.index ["system_id"], name: "index_vessel_parameters_on_system_id"
     t.index ["vessel_id"], name: "index_vessel_parameters_on_vessel_id"
+  end
+
+  create_table "vessel_systems", force: :cascade do |t|
+    t.bigint "vessel_id", null: false
+    t.bigint "system_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["system_id"], name: "index_vessel_systems_on_system_id"
+    t.index ["vessel_id"], name: "index_vessel_systems_on_vessel_id"
   end
 
   create_table "vessels", force: :cascade do |t|
     t.string "name"
+    t.string "company_name"
+    t.datetime "last_data_upload", precision: 6
+    t.string "email"
+    t.string "chemical_program"
     t.bigint "vessel_group_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -85,6 +106,9 @@ ActiveRecord::Schema.define(version: 2022_04_08_091742) do
   end
 
   add_foreign_key "vessel_parameters", "parameters"
+  add_foreign_key "vessel_parameters", "systems"
   add_foreign_key "vessel_parameters", "vessels"
+  add_foreign_key "vessel_systems", "systems"
+  add_foreign_key "vessel_systems", "vessels"
   add_foreign_key "vessels", "vessel_groups"
 end

@@ -20,8 +20,11 @@
     - `yarn install` - install YARN packages
     - `gem install foreman` - required to execute Procfiles (for the command below)
     - `bin/dev` - runs application server, sidekiq, stripe daemon and CSS/JS builds
-    - goto [localhost:3000](http://localhost:3000) to open up application
+    - goto [localhost:3000/admin](http://localhost:3000/admin) to open up application (admin panel)
       - u: `admin@example.com`
+      - p: `password`
+    - goto [localhost:3000](http://localhost:3000) to open up application (user)
+      - u: `user@example.com`
       - p: `password`
 
 # Editing credentials
