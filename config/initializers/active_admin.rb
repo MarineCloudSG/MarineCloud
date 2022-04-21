@@ -117,7 +117,7 @@ ActiveAdmin.setup do |config|
   # roots for each namespace.
   #
   # Default:
-  # config.root_to = 'dashboard#index'
+  config.root_to = 'vessels#index'
 
   # == Admin Comments
   #
@@ -137,13 +137,13 @@ ActiveAdmin.setup do |config|
   # config.comments_menu = false
   #
   # You can customize the comment menu:
-  # config.comments_menu = { parent: 'Admin', priority: 1 }
+  config.comments_menu = { parent: 'Configuration', priority: 1 }
 
   # == Batch Actions
   #
   # Enable and disable Batch Actions
   #
-  config.batch_actions = true
+  config.batch_actions = false
 
   # == Controller Filters
   #
@@ -252,19 +252,19 @@ ActiveAdmin.setup do |config|
   #
   # To disable/customize for the :admin namespace:
   #
-  #   config.namespace :admin do |admin|
-  #
-  #     # Disable the links entirely
-  #     admin.download_links = false
-  #
-  #     # Only show XML & PDF options
-  #     admin.download_links = [:xml, :pdf]
-  #
-  #     # Enable/disable the links based on block
-  #     #   (for example, with cancan)
-  #     admin.download_links = proc { can?(:view_download_links) }
-  #
-  #   end
+  config.namespace :admin do |admin|
+    #
+    #     # Disable the links entirely
+    #     admin.download_links = false
+    #
+    #     # Only show XML & PDF options
+    admin.download_links = [:csv]
+    #
+    #     # Enable/disable the links based on block
+    #     #   (for example, with cancan)
+    #     admin.download_links = proc { can?(:view_download_links) }
+    #
+  end
 
   # == Pagination
   #

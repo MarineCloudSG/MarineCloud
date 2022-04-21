@@ -36,7 +36,7 @@ if Rails.env.development?
     'HT COOLING' => 301,
     'LT COOLING' => 302
   }.each do |name, code|
-    System.where(name: name, code: code).first_or_create
+    System.where(name: name, code: code).first_or_create!
   end
 
   # TODO: Codes for sure will need to be amended
@@ -57,6 +57,38 @@ if Rails.env.development?
     'Sulphate' => 'sulphate',
     'Nitrate' => 'nitrate'
   }.each do |name, code|
-    Parameter.where(label: name, code: code).first_or_create
+    Parameter.where(label: name, code: code).first_or_create!
+  end
+
+  {
+    'Dexie' => 'Stark Industries',
+    'Maverick' => 'Stark Industries',
+    'Ironboat' => 'Stark Industries',
+    'Battie' => 'Wayne Enterprise'
+  }.each do |vessel_name, group_name|
+    group = VesselGroup.where(name: group_name).first_or_create!
+    vessel = group.vessels.where(name: vessel_name).first_or_initialize
+
+    vessel.email = "#{vessel_name.parameterize.underscore}@#{group.name.parameterize.underscore}.dev"
+    vessel.chemical_program = Vessel.chemical_programs.values.sample
+    vessel.company_name = group_name
+    vessel.save!
+
+    unless vessel.systems.exists?
+      vessel.systems << System.all.sample(3)
+    end
+
+    unless vessel.vessel_system_parameters.exists?
+      vessel.vessel_systems.each do |vessel_system|
+        Parameter.all.sample(5).each do |parameter|
+          VesselSystemParameter.create!(
+            vessel_system: vessel_system,
+            parameter: parameter,
+            min_satisfactory: [10, 20, 50, 100, 200].sample,
+            max_satisfactory: [250, 300, 500, 1000].sample
+          )
+        end
+      end
+    end
   end
 end

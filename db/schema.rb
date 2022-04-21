@@ -71,17 +71,15 @@ ActiveRecord::Schema.define(version: 202204020181742) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "vessel_parameters", force: :cascade do |t|
-    t.bigint "vessel_id", null: false
+  create_table "vessel_system_parameters", force: :cascade do |t|
+    t.bigint "vessel_system_id", null: false
     t.bigint "parameter_id", null: false
-    t.bigint "system_id", null: false
     t.float "min_satisfactory"
     t.float "max_satisfactory"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["parameter_id"], name: "index_vessel_parameters_on_parameter_id"
-    t.index ["system_id"], name: "index_vessel_parameters_on_system_id"
-    t.index ["vessel_id"], name: "index_vessel_parameters_on_vessel_id"
+    t.index ["parameter_id"], name: "index_vessel_system_parameters_on_parameter_id"
+    t.index ["vessel_system_id"], name: "index_vessel_system_parameters_on_vessel_system_id"
   end
 
   create_table "vessel_systems", force: :cascade do |t|
@@ -98,16 +96,15 @@ ActiveRecord::Schema.define(version: 202204020181742) do
     t.string "company_name"
     t.datetime "last_data_upload", precision: 6
     t.string "email"
-    t.string "chemical_program"
+    t.integer "chemical_program"
     t.bigint "vessel_group_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["vessel_group_id"], name: "index_vessels_on_vessel_group_id"
   end
 
-  add_foreign_key "vessel_parameters", "parameters"
-  add_foreign_key "vessel_parameters", "systems"
-  add_foreign_key "vessel_parameters", "vessels"
+  add_foreign_key "vessel_system_parameters", "parameters"
+  add_foreign_key "vessel_system_parameters", "vessel_systems"
   add_foreign_key "vessel_systems", "systems"
   add_foreign_key "vessel_systems", "vessels"
   add_foreign_key "vessels", "vessel_groups"

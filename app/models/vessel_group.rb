@@ -1,3 +1,3 @@
 class VesselGroup < ApplicationRecord
-  has_many :vessels
+  has_many :vessels, dependent: :nullify
 end

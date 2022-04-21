@@ -1,18 +1,30 @@
 ActiveAdmin.register VesselSystem do
+  belongs_to :vessel
 
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
-  # permit_params :vessel_id, :system_id
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:vessel_id, :system_id]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
-  
+  actions :index, :new, :create, :destroy
+
+  # ==============
+  # ==== LIST ====
+  # ==============
+
+  config.filters = false
+
+
+  index do
+    selectable_column
+    column 'Name' do |vessel_system|
+      vessel_system.system.name
+    end
+    column 'Code' do |vessel_system|
+      vessel_system.system.code
+    end
+    column :created_at
+    actions
+  end
+
+  # ==============
+  # ==== EDIT ====
+  # ==============
+
+  permit_params :vessel_id, :system_id
 end

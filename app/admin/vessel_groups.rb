@@ -1,7 +1,23 @@
 ActiveAdmin.register VesselGroup do
-  config.filters = false
-  permit_params :name
+  menu priority: 2
 
+  # ==============
+  # ==== LIST ====
+  # ==============
+
+  config.filters = false
+
+  index do
+    selectable_column
+    id_column
+    column :name
+    column :created_at
+    actions
+  end
+
+  # ==============
+  # ==== SHOW ====
+  # ==============
 
   show do
     columns do
@@ -26,4 +42,10 @@ ActiveAdmin.register VesselGroup do
       end
     end
   end
+
+  # ==============
+  # ==== EDIT ====
+  # ==============
+
+  permit_params :name
 end

@@ -1,4 +1,4 @@
-ActiveAdmin.register VesselParameter do
+ActiveAdmin.register VesselSystemParameter do
   belongs_to :vessel
   # See permitted parameters documentation:
   # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
