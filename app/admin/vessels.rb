@@ -1,5 +1,6 @@
 ActiveAdmin.register Vessel do
   menu priority: 1
+  decorate_with VesselDecorator
 
   # ==============
   # ==== LIST ====
@@ -10,8 +11,9 @@ ActiveAdmin.register Vessel do
 
   index do
     selectable_column
-    id_column
-    column :name
+    column 'Name' do |vessel|
+      link_to vessel.name, admin_vessel_path(vessel)
+    end
     column :vessel_group
     column :company_name
     column :created_at
@@ -47,13 +49,11 @@ ActiveAdmin.register Vessel do
 
       column do
         panel 'Parameters' do
-          # header_action link_to('Manage parameters', admin_vessel_vessel_parameters_path(vessel))
+          header_action link_to('Manage parameters', admin_vessel_vessel_system_parameters_path(vessel))
 
           table_for vessel.vessel_system_parameters do
             column 'Name' do |vessel_system_parameter|
-              "#{vessel_system_parameter.parameter.label} (#{vessel_system_parameter.vessel_system.system.name})"
-              # link_to "#{vessel_system_parameter.parameter.name} (#{vessel_system_parameter.system.name}",
-              #         edit_admin_vessel_vessel_parameter_path(vessel, vessel_parameter)
+              link_to vessel_system_parameter.label, edit_admin_vessel_vessel_system_parameter_path(vessel, vessel_system_parameter)
             end
             column :min_satisfactory
             column :max_satisfactory
@@ -75,7 +75,7 @@ ActiveAdmin.register Vessel do
       f.input :vessel_group
       f.input :company_name
       f.input :email
-      f.input :chemical_program, collection: Vessel.chemical_programs
+      f.input :chemical_program, collection: Vessel.chemical_programs.map{|name, _id| [name.humanize, name]}
     end
     f.actions
   end

@@ -1,23 +1,39 @@
 ActiveAdmin.register VesselSystemParameter do
   belongs_to :vessel
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
-  permit_params :vessel_id, :parameter_id, :min_satisfactory, :max_satisfactory
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:vessel_id, :parameter_id, :min_satisfactory, :max_satisfactory]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
+
+  actions :index, :new, :create, :edit, :update, :destroy
+
+  # ==============
+  # ==== LIST ====
+  # ==============
+
+  config.filters = false
+
+  index do
+    selectable_column
+    column 'Parameter' do |vessel_system_parameter|
+      vessel_system_parameter.parameter.label
+    end
+    column 'System' do |vessel_system_parameter|
+      vessel_system_parameter.vessel_system.system.name
+    end
+    column :min_satisfactory
+    column :max_satisfactory
+
+    actions
+  end
+
+
+  # ==============
+  # ==== EDIT ====
+  # ==============
+
+  permit_params :vessel_system_id, :parameter_id, :min_satisfactory, :max_satisfactory
 
   form  do |f|
     inputs "Details" do
-      input :parameter_id, as: :select, collection: Parameter.pluck(:label, :id)
+      input :parameter_id, as: :select, collection: Parameter.all.map { |p| ["#{p.label} (#{p.unit})", p.id] }
+      input :vessel_system_id, as: :select, collection: vessel.vessel_systems.map { |vs| [vs.system.name, vs.id] }
       input :min_satisfactory
       input :max_satisfactory
       end

@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 202204020181742) do
   create_table "parameters", force: :cascade do |t|
     t.string "label"
     t.string "code"
+    t.string "unit"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -74,11 +75,13 @@ ActiveRecord::Schema.define(version: 202204020181742) do
   create_table "vessel_system_parameters", force: :cascade do |t|
     t.bigint "vessel_system_id", null: false
     t.bigint "parameter_id", null: false
+    t.bigint "vessel_id", null: false
     t.float "min_satisfactory"
     t.float "max_satisfactory"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["parameter_id"], name: "index_vessel_system_parameters_on_parameter_id"
+    t.index ["vessel_id"], name: "index_vessel_system_parameters_on_vessel_id"
     t.index ["vessel_system_id"], name: "index_vessel_system_parameters_on_vessel_system_id"
   end
 
@@ -105,6 +108,7 @@ ActiveRecord::Schema.define(version: 202204020181742) do
 
   add_foreign_key "vessel_system_parameters", "parameters"
   add_foreign_key "vessel_system_parameters", "vessel_systems"
+  add_foreign_key "vessel_system_parameters", "vessels"
   add_foreign_key "vessel_systems", "systems"
   add_foreign_key "vessel_systems", "vessels"
   add_foreign_key "vessels", "vessel_groups"

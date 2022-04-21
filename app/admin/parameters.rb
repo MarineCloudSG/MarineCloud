@@ -12,6 +12,7 @@ ActiveAdmin.register Parameter do
     id_column
     column :label
     column :code
+    column :unit
     actions
   end
 
@@ -19,5 +20,5 @@ ActiveAdmin.register Parameter do
   # ==== EDIT ====
   # ==============
 
-  permit_params :label, :code, :system
+  permit_params :label, :code, :unit
 end

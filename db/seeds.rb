@@ -57,7 +57,8 @@ if Rails.env.development?
     'Sulphate' => 'sulphate',
     'Nitrate' => 'nitrate'
   }.each do |name, code|
-    Parameter.where(label: name, code: code).first_or_create!
+    unit = ['mg/l Cl2', 'mg/l CaCO3', 'uS/cm', 'pH', 'mg/L', 'mmol/L'].sample
+    Parameter.where(label: name, code: code, unit: unit).first_or_create!
   end
 
   {
