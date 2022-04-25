@@ -24,9 +24,9 @@
     @apply mt-2 text-sm text-gray-500;
 }
 
-.tooltip {
-    @apply invisible absolute;
-}
+/*.tooltip {*/
+/*    @apply invisible absolute;*/
+/*}*/
 
 .has-tooltip:hover .tooltip {
     @apply visible z-50;

@@ -11,7 +11,10 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
-  resources :vessels
+  resources :vessels do
+    # post 'photometer_data_uploads', to: 'photometer_data_uploads#create'
+    resources :photometer_data_uploads, only: :create
+  end
 
   root 'vessels#index'
 end

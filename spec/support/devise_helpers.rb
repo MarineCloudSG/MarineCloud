@@ -3,7 +3,7 @@ module DeviseRequestSpecHelpers
 
   def create_user_and_sign_in
     user = build(:user)
-    user.skip_confirmation!
+    # user.skip_confirmation!
     user.save!
     sign_in user
     user

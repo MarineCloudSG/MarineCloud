@@ -53,7 +53,7 @@ ActiveAdmin.register Vessel do
 
           table_for vessel.vessel_system_parameters do
             column 'Name' do |vessel_system_parameter|
-              link_to vessel_system_parameter.label, edit_admin_vessel_vessel_system_parameter_path(vessel, vessel_system_parameter)
+              link_to vessel_system_parameter.name, edit_admin_vessel_vessel_system_parameter_path(vessel, vessel_system_parameter)
             end
             column :min_satisfactory
             column :max_satisfactory

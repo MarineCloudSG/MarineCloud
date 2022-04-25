@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class VesselsController < BaseController
   def show
     super do
@@ -7,7 +9,7 @@ class VesselsController < BaseController
         end
 
         OpenStruct.new(
-          name: vessel_system_parameter.parameter.label,
+          name: vessel_system_parameter.parameter.name,
           last_value: values[Date.current.iso8601],
           trend: values
         )

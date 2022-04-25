@@ -1,8 +1,8 @@
 class VesselSystemParameterDecorator < ApplicationDecorator
   delegate_all
 
-  def label
-    "#{object.parameter.label} (#{object.vessel_system.system.name})"
+  def name
+    "#{object.parameter.name} (#{object.vessel_system.system.name})"
   end
 
   def min_satisfactory

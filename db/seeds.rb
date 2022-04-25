@@ -39,26 +39,26 @@ if Rails.env.development?
     System.where(name: name, code: code).first_or_create!
   end
 
-  # TODO: Codes for sure will need to be amended
+  # TODO: Update final values
   {
-    'P-Alkalinity' => 'p_alkalinity',
-    'M-Alkalinity' => 'm_alkalinity',
-    'Phosphate' => 'phosphate',
-    'Chloride' => 'chloride',
-    'Sulfite' => 'sulfite',
-    'Deha' => 'deha',
-    'Hydrazine' => 'hydrazine',
-    'Copper' => 'copper',
-    'Iron' => 'iron',
-    'PH' => 'ph',
-    'Conductivity' => 'conductivity',
-    'Hardness' => 'hardness',
-    'Nitrite' => 'nitrite',
-    'Sulphate' => 'sulphate',
-    'Nitrate' => 'nitrate'
-  }.each do |name, code|
-    unit = ['mg/l Cl2', 'mg/l CaCO3', 'uS/cm', 'pH', 'mg/L', 'mmol/L'].sample
-    Parameter.where(label: name, code: code, unit: unit).first_or_create!
+    'P-Alkalinity' => { unit: '', csv_code: 1 },
+    'M-Alkalinity' => { unit: '', csv_code: 2 },
+    'Phosphate' => { unit: '', csv_code: 3 },
+    'Chloride' => { unit: 'mg/l', csv_code: 101 },
+    'Sulfite' => { unit: '', csv_code: 5 },
+    'Deha' => { unit: '', csv_code: 6 },
+    'Hydrazine' => { unit: '', csv_code: 7 },
+    'Copper' => { unit: '', csv_code: 8 },
+    'Iron' => { unit: '', csv_code: 9 },
+    'PH' => { unit: '', csv_code: 330 },
+    'Conductivity' => { unit: 'mg/l CaCO3', csv_code: 190 },
+    'Hardness' => { unit: 'mg/l CaCO3', csv_code: 200 },
+    'Nitrite' => { unit: '', csv_code: 13 },
+    'Sulphate' => { unit: '', csv_code: 14 },
+    'Nitrate' => { unit: '', csv_code: 15 }
+  }.each do |name, data|
+    parameter = Parameter.where(name: name, unit: data[:unit]).first_or_create!
+    ParameterSource.where(parameter: parameter, source: :photometer_csv, code: data[:csv_code]).first_or_create!
   end
 
   {

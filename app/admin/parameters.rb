@@ -5,12 +5,12 @@ ActiveAdmin.register Parameter do
   # ==== LIST ====
   # ==============
 
-  filter :label
+  filter :name
 
   index do
     selectable_column
     id_column
-    column :label
+    column :name
     column :code
     column :unit
     actions
@@ -20,5 +20,5 @@ ActiveAdmin.register Parameter do
   # ==== EDIT ====
   # ==============
 
-  permit_params :label, :code, :unit
+  permit_params :name, :code, :unit
 end

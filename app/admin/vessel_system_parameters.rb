@@ -12,7 +12,7 @@ ActiveAdmin.register VesselSystemParameter do
   index do
     selectable_column
     column 'Parameter' do |vessel_system_parameter|
-      vessel_system_parameter.parameter.label
+      vessel_system_parameter.parameter.name
     end
     column 'System' do |vessel_system_parameter|
       vessel_system_parameter.vessel_system.system.name
@@ -32,7 +32,7 @@ ActiveAdmin.register VesselSystemParameter do
 
   form  do |f|
     inputs "Details" do
-      input :parameter_id, as: :select, collection: Parameter.all.map { |p| ["#{p.label} (#{p.unit})", p.id] }
+      input :parameter_id, as: :select, collection: Parameter.all.map { |p| ["#{p.name} (#{p.unit})", p.id] }
       input :vessel_system_id, as: :select, collection: vessel.vessel_systems.map { |vs| [vs.system.name, vs.id] }
       input :min_satisfactory
       input :max_satisfactory

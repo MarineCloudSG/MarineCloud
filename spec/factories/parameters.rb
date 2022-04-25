@@ -1,7 +1,5 @@
 FactoryBot.define do
   factory :parameter do
-    label { "MyString" }
-    code { "MyString" }
-    system { "MyString" }
+    name { "MyString" }
   end
 end

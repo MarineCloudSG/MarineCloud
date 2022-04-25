@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :vessel do
     name { "MyString" }
-    group { nil }
+    vessel_group
   end
 end
