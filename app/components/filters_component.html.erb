@@ -10,6 +10,16 @@
         <%= f.select :month, [:January, :February] %>
         <%= f.select :year, [:'2022', :'2021'] %>
       </div>
+
+      <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+        <%= f.label :vessel_system %>
+        <%= f.select :system, [:boiler, :feedwater, :engine_cooling] %>
+      </div>
+
+      <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+        <%= f.label :parameters %>
+        <%= f.select :parameter, [:p_alkalinity, :Phosphate, :Chloride] %>
+      </div>
     </div>
   <% end %>
 </a>
