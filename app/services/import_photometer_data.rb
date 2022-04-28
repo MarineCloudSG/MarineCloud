@@ -10,8 +10,6 @@ class ImportPhotometerData < Patterns::Service
 
   private
 
-  PARAMETER_SOURCE = :photometer_csv
-
   attr_reader :filepath, :vessel
 
   def save_measurement(row)
@@ -21,7 +19,7 @@ class ImportPhotometerData < Patterns::Service
   end
 
   def measurement_parameter_source(row)
-    ParameterSource.find_by!(source: PARAMETER_SOURCE, code: row.fetch(:method_number))
+    ParameterSource.find_by!(source: ParameterSource::PHOTOMETER_CSV_SOURCE, code: row.fetch(:method_number))
   end
 
   def photometer_data

@@ -12,8 +12,8 @@ Rails.application.routes.draw do
   end
 
   resources :vessels do
-    # post 'photometer_data_uploads', to: 'photometer_data_uploads#create'
     resources :photometer_data_uploads, only: :create
+    resources :manual_measurements_data_uploads, only: :create
   end
 
   root 'vessels#index'
