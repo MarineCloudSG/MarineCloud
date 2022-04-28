@@ -14,9 +14,14 @@
   </div>
 
   <section class="lg:col-start-3 lg:col-span-1">
-    <%= render BlankStateComponent.new(
-      title: 'Comments will be here',
-      url: '#'
-    ) %>
+    <div class="relative">
+      <div class="absolute inset-0 flex items-center" aria-hidden="true">
+        <div class="w-full border-t border-gray-300"></div>
+      </div>
+      <div class="relative flex justify-center">
+        <span class="px-3 bg-gray-100 text-lg font-medium text-gray-900"> Comments </span>
+      </div>
+    </div>
+        <%= render CommentsComponent.new %>
   </section>
 </div>
