@@ -20,5 +20,8 @@ const application = Application.start();
 import NotificationController from "./controllers/notification_controller"
 application.register("notification", NotificationController)
 
+import { Dropdown } from "tailwindcss-stimulus-components"
+application.register('dropdown', Dropdown)
+
 import TabNavigationComponentController from "../components/tab_navigation_component_controller"
 application.register("tab-navigation-component", TabNavigationComponentController)
