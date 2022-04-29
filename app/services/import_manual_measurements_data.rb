@@ -5,12 +5,17 @@ class ImportManualMeasurementsData < Patterns::Service
   end
 
   def call
-    data.map { |row| save_measurement(row) }
+    import
+    save_measurements_import
   end
 
   private
 
   attr_reader :filepath, :vessel
+
+  def import
+    data.map { |row| save_measurement(row) }
+  end
 
   def data
     manual_measurements[:data]
@@ -28,5 +33,9 @@ class ImportManualMeasurementsData < Patterns::Service
 
   def manual_measurements
     ManualMeasurementsDataParser.read(filepath)
+  end
+
+  def save_measurements_import
+    MeasurementsImport.create!(vessel: vessel, filename: filepath)
   end
 end

@@ -112,6 +112,9 @@ GEM
     crack (0.4.5)
       rexml
     crass (1.0.6)
+    cronex (0.11.1)
+      tzinfo
+      unicode
     cssbundling-rails (1.0.0)
       railties (>= 6.0.0)
     debug (1.4.0)
@@ -417,6 +420,7 @@ GEM
       railties (>= 6.0.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
+    unicode (0.4.4.4)
     unicode-display_width (2.1.0)
     view_component (2.49.0)
       activesupport (>= 5.0.0, < 8.0)
@@ -459,6 +463,7 @@ DEPENDENCIES
   activeadmin
   bootsnap
   chartkick
+  cronex
   cssbundling-rails
   debug
   devise

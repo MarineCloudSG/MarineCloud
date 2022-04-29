@@ -10,7 +10,8 @@ RSpec.describe 'PhotometerDataUploads', type: :request do
       allow(ImportPhotometerData).to receive(:call)
 
       create_user_and_sign_in
-      post "/vessels/#{vessel.id}/photometer_data_uploads", params: { vessel: { photometer_data_file: file } }
+      post "/vessels/#{vessel.id}/photometer_data_uploads",
+           params: { vessel: { photometer_data_file: file } }
 
       expect(response).to have_http_status(:success)
       expect(ImportPhotometerData).to have_received(:call)

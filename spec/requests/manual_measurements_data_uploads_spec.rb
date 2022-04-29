@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Manual measurement data uploads', type: :request do
   describe 'POST /create' do
-    it 'imports xlsx data' do
+    it 'imports xlsx data and persists information about import occurence' do
       vessel = create :vessel
       file = fixture_file_upload('manual_measurements_february_feed_water.xlsx',
                                  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
@@ -18,14 +18,14 @@ RSpec.describe 'Manual measurement data uploads', type: :request do
       create :manual_xls_parameter_source, code: 'PH', parameter: (create :parameter, name: 'pH')
       create :manual_xls_parameter_source, code: 'CONDUCTIVITY', parameter: (create :parameter, name: 'Conductivity')
       create :manual_xls_parameter_source, code: 'APPEARANCE', parameter: (create :parameter, name: 'Appearance')
+      create_user_and_sign_in
 
       expect do
         post "/vessels/#{vessel.id}/manual_measurements_data_uploads",
              params: { vessel: { manual_measurements_data_file: file } }
-      end.to change { Measurement.where(taken_at: date_range).count }
-        .by(145)
-        .and change { Measurement.where(taken_at: date_range, parameter: chloride_source.parameter).count }
-        .by(5)
+      end.to change { Measurement.where(taken_at: date_range).count }.by(145)
+        .and change { Measurement.where(taken_at: date_range, parameter: chloride_source.parameter).count }.by(5)
+        .and change { vessel.measurements_imports.count }.by(1)
       expect(response).to have_http_status(:success)
       expect(Measurement.where(taken_at: date_range).first)
         .to have_attributes(value: '651', parameter: hardness_source.parameter)

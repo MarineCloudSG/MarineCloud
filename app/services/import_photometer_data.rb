@@ -5,12 +5,17 @@ class ImportPhotometerData < Patterns::Service
   end
 
   def call
-    photometer_data.map { |row| save_measurement(row) }
+    import
+    save_measurements_import
   end
 
   private
 
   attr_reader :filepath, :vessel
+
+  def import
+    photometer_data.each { |row| save_measurement(row) }
+  end
 
   def save_measurement(row)
     parameter_source = measurement_parameter_source(row)
@@ -24,5 +29,9 @@ class ImportPhotometerData < Patterns::Service
 
   def photometer_data
     PhotometerDataParser.read(filepath)
+  end
+
+  def save_measurements_import
+    MeasurementsImport.create!(vessel: vessel, filename: filepath)
   end
 end

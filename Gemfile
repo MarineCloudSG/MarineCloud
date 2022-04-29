@@ -144,6 +144,8 @@ group :test do
 
   # Coverage reports
   gem "simplecov", require: false
+
+  gem "cronex"
 end
 
 group :development do

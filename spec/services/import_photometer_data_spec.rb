@@ -17,11 +17,16 @@ RSpec.describe ImportPhotometerData do
       end
 
       expect do
-        measurements = ImportPhotometerData.call(filepath: file.path, vessel: vessel).result
-        expect(measurements[0]).to have_attributes(parameter: parameter, value: '0.57', vessel: vessel)
-        expect(measurements[1]).to have_attributes(parameter: parameter, value: 'Underrange', vessel: vessel)
-        expect(measurements[2]).to have_attributes(parameter: parameter, value: 'Overrange', vessel: vessel)
-      end.to change { Measurement.all.count }.by 3
+        ImportPhotometerData.call(filepath: file.path, vessel: vessel).result
+      end.to change { Measurement.all.count }.by(3)
+        .and change { MeasurementsImport.all.count }.by(1)
+      expect(Measurement.all).to match_array(
+        [
+          have_attributes(parameter: parameter, value: '0.57', vessel: vessel),
+          have_attributes(parameter: parameter, value: 'Underrange', vessel: vessel),
+          have_attributes(parameter: parameter, value: 'Overrange', vessel: vessel)
+        ]
+      )
 
       file.unlink
     end

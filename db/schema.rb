@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 202204020181745) do
+ActiveRecord::Schema.define(version: 202204020181748) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,14 @@ ActiveRecord::Schema.define(version: 202204020181745) do
     t.index ["parameter_id"], name: "index_measurements_on_parameter_id"
     t.index ["parameter_source_id"], name: "index_measurements_on_parameter_source_id"
     t.index ["vessel_id"], name: "index_measurements_on_vessel_id"
+  end
+
+  create_table "measurements_imports", force: :cascade do |t|
+    t.bigint "vessel_id", null: false
+    t.string "filename"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["vessel_id"], name: "index_measurements_imports_on_vessel_id"
   end
 
   create_table "parameter_sources", force: :cascade do |t|
@@ -118,23 +126,26 @@ ActiveRecord::Schema.define(version: 202204020181745) do
   create_table "vessels", force: :cascade do |t|
     t.string "name"
     t.string "company_name"
-    t.datetime "last_data_upload", precision: 6
     t.string "email"
     t.integer "chemical_program"
     t.bigint "vessel_group_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_vessels_on_user_id"
     t.index ["vessel_group_id"], name: "index_vessels_on_vessel_group_id"
   end
 
   add_foreign_key "measurements", "parameter_sources"
   add_foreign_key "measurements", "parameters"
   add_foreign_key "measurements", "vessels"
+  add_foreign_key "measurements_imports", "vessels"
   add_foreign_key "parameter_sources", "parameters"
   add_foreign_key "vessel_system_parameters", "parameters"
   add_foreign_key "vessel_system_parameters", "vessel_systems"
   add_foreign_key "vessel_system_parameters", "vessels"
   add_foreign_key "vessel_systems", "systems"
   add_foreign_key "vessel_systems", "vessels"
+  add_foreign_key "vessels", "users"
   add_foreign_key "vessels", "vessel_groups"
 end
