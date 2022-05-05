@@ -11,6 +11,8 @@
 if Rails.env.development?
   unless User.where(email: 'user@example.com').exists?
     user = User.new(
+      first_name: 'Toby',
+      last_name: 'Smith',
       email: 'user@example.com',
       password: 'password',
       password_confirmation: 'password'

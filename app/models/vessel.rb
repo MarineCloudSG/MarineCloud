@@ -9,6 +9,7 @@ class Vessel < ApplicationRecord
   has_many :parameters, through: :vessel_system_parameters
   has_many :measurements, through: :vessel_system_parameters
   has_many :measurements_imports
+  has_many :comments, class_name: VesselComment.name
 
   def last_data_upload
     measurements_imports.maximum(:created_at)

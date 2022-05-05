@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :vessels do
     resources :photometer_data_uploads, only: :create
     resources :manual_measurements_data_uploads, only: :create
+    resources :vessel_comments, only: :create
   end
 
   root 'vessels#index'

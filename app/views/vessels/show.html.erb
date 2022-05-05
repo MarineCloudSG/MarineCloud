@@ -14,7 +14,7 @@
   <div class="space-y-6 lg:col-start-1 lg:col-span-2">
     <%= render FiltersComponent.new %>
 
-    <% @metrics_by_system.each do |system, trackable_metrics| %>
+    <% metrics_by_system.each do |system, trackable_metrics| %>
       <%= render partial: 'partials/separator', locals: { system: system } %>
       <% trackable_metrics.each do |trackable_metric| %>
         <%= render partial: 'partials/line_chart', locals: { trackable_metric: trackable_metric } %>
@@ -31,6 +31,17 @@
         <span class="px-3 bg-gray-100 text-lg font-medium text-gray-900"> Comments </span>
       </div>
     </div>
-        <%= render CommentsComponent.new %>
+    <div>
+      <div>
+        <%= render partial: 'vessel_comments/post_vessel_comment', locals: {
+          vessel: resource,
+          year: date_range.end.year,
+          month: date_range.end.month
+        } %>
+        <ul role="list" class="divide-y divide-gray-200">
+          <%= render comments %>
+        </ul>
+      </div>
+    </div>
   </section>
 </div>

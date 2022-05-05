@@ -2,13 +2,26 @@
 
 class VesselsController < BaseController
   def show
-    super do
-      @metrics_by_system = VesselTrackableMetricsBySystem.result_for(
-        vessel: resource,
-        start_date: start_date,
-        end_date: end_date
-      )
-    end
+    render locals: {
+      vessel: resource,
+      date_range: start_date..end_date,
+      comments: comments,
+      metrics_by_system: metrics_by_system
+    }
+  end
+
+  private
+
+  def comments
+    resource.comments.order(year: :desc, month: :desc, created_at: :desc)
+  end
+
+  def metrics_by_system
+    VesselTrackableMetricsBySystem.result_for(
+      vessel: resource,
+      start_date: start_date,
+      end_date: end_date
+    )
   end
 
   def end_date

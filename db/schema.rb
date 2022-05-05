@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 202204020181754) do
+ActiveRecord::Schema.define(version: 202204020181756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,8 +93,22 @@ ActiveRecord::Schema.define(version: 202204020181754) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "first_name"
+    t.string "last_name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "vessel_comments", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "vessel_id", null: false
+    t.integer "month"
+    t.integer "year"
+    t.string "message"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_vessel_comments_on_user_id"
+    t.index ["vessel_id"], name: "index_vessel_comments_on_vessel_id"
   end
 
   create_table "vessel_groups", force: :cascade do |t|
@@ -142,6 +156,8 @@ ActiveRecord::Schema.define(version: 202204020181754) do
   add_foreign_key "measurements_imports", "vessels"
   add_foreign_key "parameter_sources", "parameters"
   add_foreign_key "parameter_sources", "systems"
+  add_foreign_key "vessel_comments", "users"
+  add_foreign_key "vessel_comments", "vessels"
   add_foreign_key "vessel_system_parameters", "parameters"
   add_foreign_key "vessel_system_parameters", "vessel_systems"
   add_foreign_key "vessel_systems", "systems"
