@@ -21,8 +21,8 @@ class VesselTrackableMetric
 
   def data
     VesselSystemParameterValuesByDate.result_for(
-      start_day: start_date,
-      end_day: end_date,
+      start_date: start_date,
+      end_date: end_date,
       vessel_system_parameter: vessel_system_parameter
     )
   end

@@ -19,14 +19,14 @@ class VesselSystemParameterValuesByDate < Patterns::Calculation
   end
 
   def date_range
-    start_day..end_day
+    start_date..end_date
   end
 
-  def end_day
-    options.fetch(:end_day).to_date
+  def end_date
+    options.fetch(:end_date).to_date
   end
 
-  def start_day
-    options.fetch(:start_day).to_date
+  def start_date
+    options.fetch(:start_date).to_date
   end
 end

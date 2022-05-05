@@ -1,0 +1,11 @@
+<div class="relative block w-full border-2 border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+  <h3 class="text-lg leading-6 font-medium text-gray-900">Selected period</h3>
+  <%= form_with method: :get do |f| %>
+    <div>
+      <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
+        <%= f.date_field :start_date, {value: start_date, class: 'form-control', onchange: 'this.form.submit()'}  %>
+        <%= f.date_field :end_date, {value: end_date, class: 'form-control', onchange: 'this.form.submit()'} %>
+      </div>
+    </div>
+  <% end %>
+</div>

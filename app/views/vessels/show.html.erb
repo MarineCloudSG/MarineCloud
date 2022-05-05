@@ -12,7 +12,7 @@
 
 <div class="mt-8 max-w-3xl mx-auto grid grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
   <div class="space-y-6 lg:col-start-1 lg:col-span-2">
-    <%= render FiltersComponent.new %>
+    <%= render partial: 'partials/vessel_filters', locals: { start_date: date_range.begin, end_date: date_range.end, vessel: resource } %>
 
     <% metrics_by_system.each do |system, trackable_metrics| %>
       <%= render partial: 'partials/separator', locals: { system: system } %>

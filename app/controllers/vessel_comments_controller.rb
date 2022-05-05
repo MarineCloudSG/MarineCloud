@@ -3,7 +3,7 @@ class VesselCommentsController < BaseController
     comment = vessel.comments.build(comment_params)
     comment.user = current_user
     comment.save!
-    redirect_to vessel, notice: 'Comment was succesfully published'
+    redirect_to vessel, notice: 'Comment was successfully published'
   end
 
   private

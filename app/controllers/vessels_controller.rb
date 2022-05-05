@@ -25,10 +25,10 @@ class VesselsController < BaseController
   end
 
   def end_date
-    start_date.end_of_month
+    params.fetch(:end_date, start_date.end_of_month).to_date
   end
 
   def start_date
-    Date.today.beginning_of_month - 1.month
+    params.fetch(:start_date, Date.today.beginning_of_month - 1.month).to_date
   end
 end
