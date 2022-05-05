@@ -30,7 +30,7 @@ ActiveAdmin.register VesselSystemParameter do
 
   permit_params :vessel_system_id, :parameter_id, :min_satisfactory, :max_satisfactory
 
-  form  do |f|
+  form do |f|
     inputs "Details" do
       input :parameter_id, as: :select, collection: Parameter.all.map { |p| ["#{p.name} (#{p.unit})", p.id] }
       input :vessel_system_id, as: :select, collection: vessel.vessel_systems.map { |vs| [vs.system.name, vs.id] }

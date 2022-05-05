@@ -5,4 +5,5 @@ class ParameterSource < ApplicationRecord
 
   enum source: SOURCES_AVAILABLE
   belongs_to :parameter
+  belongs_to :system, optional: true
 end

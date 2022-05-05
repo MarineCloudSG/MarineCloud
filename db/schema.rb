@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 202204020181749) do
+ActiveRecord::Schema.define(version: 202204020181753) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,16 +40,14 @@ ActiveRecord::Schema.define(version: 202204020181749) do
   end
 
   create_table "measurements", force: :cascade do |t|
-    t.bigint "parameter_id", null: false
-    t.bigint "vessel_id", null: false
     t.bigint "parameter_source_id"
     t.datetime "taken_at", precision: 6
     t.float "value"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["parameter_id"], name: "index_measurements_on_parameter_id"
+    t.bigint "vessel_system_parameter_id", null: false
     t.index ["parameter_source_id"], name: "index_measurements_on_parameter_source_id"
-    t.index ["vessel_id"], name: "index_measurements_on_vessel_id"
+    t.index ["vessel_system_parameter_id"], name: "index_measurements_on_vessel_system_parameter_id"
   end
 
   create_table "measurements_imports", force: :cascade do |t|
@@ -66,7 +64,9 @@ ActiveRecord::Schema.define(version: 202204020181749) do
     t.bigint "parameter_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "system_id"
     t.index ["parameter_id"], name: "index_parameter_sources_on_parameter_id"
+    t.index ["system_id"], name: "index_parameter_sources_on_system_id"
   end
 
   create_table "parameters", force: :cascade do |t|
@@ -104,13 +104,11 @@ ActiveRecord::Schema.define(version: 202204020181749) do
   create_table "vessel_system_parameters", force: :cascade do |t|
     t.bigint "vessel_system_id", null: false
     t.bigint "parameter_id", null: false
-    t.bigint "vessel_id", null: false
     t.float "min_satisfactory"
     t.float "max_satisfactory"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["parameter_id"], name: "index_vessel_system_parameters_on_parameter_id"
-    t.index ["vessel_id"], name: "index_vessel_system_parameters_on_vessel_id"
     t.index ["vessel_system_id"], name: "index_vessel_system_parameters_on_vessel_system_id"
   end
 
@@ -132,18 +130,18 @@ ActiveRecord::Schema.define(version: 202204020181749) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id"
+    t.string "flag"
     t.index ["user_id"], name: "index_vessels_on_user_id"
     t.index ["vessel_group_id"], name: "index_vessels_on_vessel_group_id"
   end
 
   add_foreign_key "measurements", "parameter_sources"
-  add_foreign_key "measurements", "parameters"
-  add_foreign_key "measurements", "vessels"
+  add_foreign_key "measurements", "vessel_system_parameters"
   add_foreign_key "measurements_imports", "vessels"
   add_foreign_key "parameter_sources", "parameters"
+  add_foreign_key "parameter_sources", "systems"
   add_foreign_key "vessel_system_parameters", "parameters"
   add_foreign_key "vessel_system_parameters", "vessel_systems"
-  add_foreign_key "vessel_system_parameters", "vessels"
   add_foreign_key "vessel_systems", "systems"
   add_foreign_key "vessel_systems", "vessels"
   add_foreign_key "vessels", "users"

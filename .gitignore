@@ -40,5 +40,6 @@
 /coverage/
 .idea/*
 *.DS_Store
+*.xlsx#
 
 /config/credentials/development.key

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ImportManualMeasurementsData < Patterns::Service
   def initialize(filepath:, vessel:)
     @filepath = filepath
@@ -5,7 +7,14 @@ class ImportManualMeasurementsData < Patterns::Service
   end
 
   def call
-    import
+    parser_results.each do |row|
+      Measurement.create!(
+        vessel_system_parameter: row.vessel_system_parameter,
+        parameter_source: row.parameter_source,
+        taken_at: row.taken_at,
+        value: row.value
+      )
+    end
     save_measurements_import
   end
 
@@ -13,26 +22,8 @@ class ImportManualMeasurementsData < Patterns::Service
 
   attr_reader :filepath, :vessel
 
-  def import
-    data.map { |row| save_measurement(row) }
-  end
-
-  def data
-    manual_measurements[:data]
-  end
-
-  def save_measurement(row)
-    parameter_source = measurement_parameter_source(row)
-    Measurement.create(parameter: parameter_source.parameter, parameter_source: parameter_source,
-                       vessel: vessel, taken_at: row.fetch(:taken_at), value: row.fetch(:value).to_f)
-  end
-
-  def measurement_parameter_source(row)
-    ParameterSource.find_by!(source: ParameterSource::MANUAL_XLSX_SOURCE, code: row.fetch(:parameter))
-  end
-
-  def manual_measurements
-    ManualMeasurementsDataParser.read(filepath)
+  def parser_results
+    ManualMeasurementsDataParser.read(filepath).fetch(:data).map { |row| ParsedManualMeasurementDataRow.new(row, vessel) }
   end
 
   def save_measurements_import

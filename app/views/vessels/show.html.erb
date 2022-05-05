@@ -1,7 +1,7 @@
 <%= render partial: 'partials/upload_photometer_data_modal' %>
 <%= render partial: 'partials/upload_manual_measurements_data_modal' %>
 
-<%= render HeaderComponent.new title: resource.name do %>
+<%= render HeaderComponent.new title: resource.name, subheader: (VesselSubheaderComponent.new vessel: resource) do %>
   <button class="btn-secondary mr-2" type="button" data-modal-toggle="uploadPhotometerDataModal">
     Upload photometer data
   </button>
@@ -14,10 +14,11 @@
   <div class="space-y-6 lg:col-start-1 lg:col-span-2">
     <%= render FiltersComponent.new %>
 
-    <%= render partial: 'partials/separator' %>
-
-    <% @trackable_metrics.each do |trackable_metric| %>
-      <%= render partial: 'partials/line_chart', locals: { trackable_metric: trackable_metric } %>
+    <% @metrics_by_system.each do |system, trackable_metrics| %>
+      <%= render partial: 'partials/separator', locals: { system: system } %>
+      <% trackable_metrics.each do |trackable_metric| %>
+        <%= render partial: 'partials/line_chart', locals: { trackable_metric: trackable_metric } %>
+      <% end %>
     <% end %>
   </div>
 

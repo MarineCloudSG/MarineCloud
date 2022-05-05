@@ -3,6 +3,7 @@ FactoryBot.define do
     source { ParameterSource.sources.values.sample }
     code { "MyString" }
     parameter
+    system { nil }
   end
 
   factory :photometer_csv_parameter_source, parent: :parameter_source do

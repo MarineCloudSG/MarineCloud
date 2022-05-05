@@ -5,7 +5,14 @@ class ImportPhotometerData < Patterns::Service
   end
 
   def call
-    import
+    parser_results.each do |row|
+      Measurement.create!(
+        vessel_system_parameter: row.vessel_system_parameter,
+        parameter_source: row.parameter_source,
+        taken_at: row.taken_at,
+        value: row.value
+      )
+    end
     save_measurements_import
   end
 
@@ -13,22 +20,8 @@ class ImportPhotometerData < Patterns::Service
 
   attr_reader :filepath, :vessel
 
-  def import
-    photometer_data.each { |row| save_measurement(row) }
-  end
-
-  def save_measurement(row)
-    parameter_source = measurement_parameter_source(row)
-    vessel.measurements.create(parameter: parameter_source.parameter, parameter_source: parameter_source,
-                               vessel: vessel, taken_at: row.fetch(:taken_at), value: row.fetch(:value).to_f)
-  end
-
-  def measurement_parameter_source(row)
-    ParameterSource.find_by!(source: ParameterSource::PHOTOMETER_CSV_SOURCE, code: row.fetch(:method_number))
-  end
-
-  def photometer_data
-    PhotometerDataParser.read(filepath)
+  def parser_results
+    PhotometerDataParser.read(filepath).map{ |row| ParsedVesselPhotometerDataRow.new(row, vessel) }
   end
 
   def save_measurements_import
