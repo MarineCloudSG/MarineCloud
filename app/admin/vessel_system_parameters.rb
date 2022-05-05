@@ -1,5 +1,6 @@
 ActiveAdmin.register VesselSystemParameter do
   belongs_to :vessel
+  decorate_with VesselSystemParameterDecorator
 
   actions :index, :new, :create, :edit, :update, :destroy
 
@@ -19,6 +20,9 @@ ActiveAdmin.register VesselSystemParameter do
     end
     column :min_satisfactory
     column :max_satisfactory
+    column 'Satisfactory range' do |vessel_system_parameter|
+      vessel_system_parameter.satisfactory_range_text
+    end
 
     actions
   end

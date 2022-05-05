@@ -59,6 +59,9 @@ if Rails.env.development?
     'Nitrate' => { unit: '', csv_code: 15 }
   }.each do |name, data|
     parameter = Parameter.where(name: name, unit: data[:unit]).first_or_create!
+    parameter.min_satisfactory = [10, 20, 50, 100, 200].sample
+    parameter.max_satisfactory = [250, 300, 500, 1000].sample
+    parameter.save!
     ParameterSource.where(parameter: parameter, source: :photometer_csv, code: data[:csv_code]).first_or_create!
   end
 

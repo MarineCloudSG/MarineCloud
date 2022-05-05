@@ -5,6 +5,15 @@ class VesselSystemParameterDecorator < ApplicationDecorator
     "#{object.parameter.name} (#{object.vessel_system.system.name})"
   end
 
+  def satisfactory_range_text
+    min, max = object.satisfactory_range
+    result ||= "#{min} => #{max}" if min.present? && max.present?
+    result ||= "< #{max}" if max.present?
+    result ||= "> #{min}" if min.present?
+
+    "#{result} #{object.parameter.unit}"
+  end
+
   def min_satisfactory
     return '-' if object.min_satisfactory.blank?
 

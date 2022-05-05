@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :vessel_system do
-    vessel { nil }
-    system { nil }
+    vessel
+    system
   end
 
   factory :vessel_system_with_parameters_and_xls_sources, parent: :vessel_system do
