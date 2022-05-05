@@ -20,7 +20,7 @@ class ImportPhotometerData < Patterns::Service
   def save_measurement(row)
     parameter_source = measurement_parameter_source(row)
     vessel.measurements.create(parameter: parameter_source.parameter, parameter_source: parameter_source,
-                               vessel: vessel, taken_at: row.fetch(:taken_at), value: row.fetch(:value))
+                               vessel: vessel, taken_at: row.fetch(:taken_at), value: row.fetch(:value).to_f)
   end
 
   def measurement_parameter_source(row)

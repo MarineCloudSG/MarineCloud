@@ -9,7 +9,7 @@ class VesselsController < BaseController
         end
 
         OpenStruct.new(
-          name: vessel_system_parameter.parameter.label,
+          name: vessel_system_parameter.parameter.name,
           last_value: values[Date.current.iso8601],
           trend: values
         )

@@ -28,9 +28,9 @@ RSpec.describe 'Manual measurement data uploads', type: :request do
         .and change { vessel.measurements_imports.count }.by(1)
       expect(response).to have_http_status(:success)
       expect(Measurement.where(taken_at: date_range).first)
-        .to have_attributes(value: '651', parameter: hardness_source.parameter)
+        .to have_attributes(value: 651, parameter: hardness_source.parameter)
       expect(Measurement.where(taken_at: date_range).last)
-        .to have_attributes(value: '496', parameter: temperature_source.parameter)
+        .to have_attributes(value: 496, parameter: temperature_source.parameter)
     end
   end
 end
