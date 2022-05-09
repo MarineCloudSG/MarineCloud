@@ -3,50 +3,24 @@ class VesselTrackableMetricsBySystem < Patterns::Calculation
   private
 
   def result
-    vessel.vessel_system_parameters.map { |vsp| metrics(vsp) }.group_by(&:system)
+    vessel.vessel_system_parameters
+          .map { |vsp| metric(vsp) }
+          .group_by(&:system)
   end
 
-  def metrics(vessel_system_parameter)
-    values = values(vessel_system_parameter)
-    OpenStruct.new(
-      name: vessel_system_parameter.parameter.name,
-      system: vessel_system_parameter.system.name,
-      data: trackable_metrics_data(values, vessel_system_parameter.satisfactory_range)
-    )
-  end
-
-  def trackable_metrics_data(values, range)
-    dates = values.to_a.map { |v| v[0] }
-    @out = [{ name: 'Measurements', data: values }]
-    @out << data_line(dates, 'Satisfactory max', range[1]) if range[1].present?
-    @out << data_line(dates, 'Satisfactory min', range[0]) if range[0].present?
-  end
-
-  def data_line(dates, name, value)
-    { name: name, data: dates.map { |date| data_line_point(date, value) }, points: false }
-  end
-
-  def data_line_point(date, value)
-    [date, value]
-  end
-
-  def values(vessel_system_parameter)
-    VesselSystemParameterValuesByDate.result_for(
-      start_day: start_day,
-      end_day: end_day,
-      vessel_system_parameter: vessel_system_parameter
-    )
+  def metric(vessel_system_parameters)
+    VesselTrackableMetric.new(vessel_system_parameters, start_date: start_date, end_date: end_date)
   end
 
   def vessel
     options.fetch(:vessel)
   end
 
-  def end_day
-    options.fetch(:end_day)
+  def end_date
+    options.fetch(:end_date)
   end
 
-  def start_day
-    options.fetch(:start_day)
+  def start_date
+    options.fetch(:start_date)
   end
 end

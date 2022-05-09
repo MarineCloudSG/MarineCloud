@@ -5,17 +5,17 @@ class VesselsController < BaseController
     super do
       @metrics_by_system = VesselTrackableMetricsBySystem.result_for(
         vessel: resource,
-        start_day: start_day,
-        end_day: end_day
+        start_date: start_date,
+        end_date: end_date
       )
     end
   end
 
-  def end_day
-    start_day.end_of_month
+  def end_date
+    start_date.end_of_month
   end
 
-  def start_day
+  def start_date
     Date.today.beginning_of_month - 1.month
   end
 end

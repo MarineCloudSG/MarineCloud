@@ -1,5 +1,18 @@
 <div class="px-4 py-5 mb-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
   <dt class="text-xl font-semibold text-gray-900 truncate"><%= trackable_metric.name %></dt>
   <dd class="mt-1">&nbsp;</dd>
-  <%= line_chart trackable_metric.data, height: "150px" %>
+  <%= line_chart trackable_metric.data, height: "150px", library: {
+    yAxis: {
+      plotLines: trackable_metric.satisfactory_range_limits.map do |limit|
+        {
+          label: {
+            text: limit.label
+          },
+          width: 2.5,
+          value: limit.value,
+          color: limit.color
+        }
+      end
+    }
+  }, code: true %>
 </div>

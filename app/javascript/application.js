@@ -5,7 +5,7 @@ import "@hotwired/turbo-rails"
 import "flowbite"
 
 // Charts
-import "chartkick/chart.js"
+import "chartkick/highcharts"
 
 // ActiveStorage
 import * as ActiveStorage from "@rails/activestorage"

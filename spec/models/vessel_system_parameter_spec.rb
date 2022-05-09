@@ -18,7 +18,7 @@ RSpec.describe VesselSystemParameter, type: :model do
     end
 
     context 'when there is no min_satisfactory or max_satisfactory' do
-      it 'output range from parameter' do
+      it 'returns range from parameter' do
         param = create :parameter, min_satisfactory: 10, max_satisfactory: 20
 
         expect((create :vessel_system_parameter, parameter: param, min_satisfactory: nil,
