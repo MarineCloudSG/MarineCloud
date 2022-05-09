@@ -19,11 +19,28 @@ class ParsedVesselPhotometerDataRow
     row.fetch(:taken_at)
   end
 
+  def state
+    return :overrange if raw_value == VALUE_OVERRANGE_LABEL
+    return :underrange if raw_value == VALUE_UNDERRANGE_LABEL
+
+    :in_range
+  end
+
   def value
-    row.fetch(:value)
+    return range[:to] if raw_value == VALUE_OVERRANGE_LABEL
+    return range[:from] if raw_value == VALUE_UNDERRANGE_LABEL
+
+    raw_value.to_f
+  end
+
+  def value_in_range?
+    raw_value != VALUE_UNDERRANGE_LABEL && raw_value != VALUE_OVERRANGE_LABEL
   end
 
   private
+
+  VALUE_OVERRANGE_LABEL = 'Overrange'
+  VALUE_UNDERRANGE_LABEL = 'Underrange'
 
   attr_reader :row, :vessel
 
@@ -37,5 +54,13 @@ class ParsedVesselPhotometerDataRow
 
   def system
     parameter_source.system
+  end
+
+  def raw_value
+    row.fetch(:value)
+  end
+
+  def range
+    row.fetch(:range)
   end
 end

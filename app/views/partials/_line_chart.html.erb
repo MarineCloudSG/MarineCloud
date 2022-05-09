@@ -1,18 +1,35 @@
 <div class="px-4 py-5 mb-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
   <dt class="text-xl font-semibold text-gray-900 truncate"><%= trackable_metric.name %></dt>
   <dd class="mt-1">&nbsp;</dd>
-  <%= line_chart trackable_metric.data, height: "150px", library: {
-    yAxis: {
-      plotLines: trackable_metric.satisfactory_range_limits.map do |limit|
+  <%= line_chart trackable_metric.values, **{
+    id: "vessel-chart-#{trackable_metric.vessel_system_parameter.id}",
+    height: "150px",
+    library: {
+      xAxis: {
+        showFirstLabel: true,
+        type: 'date'
+      },
+      yAxis: {
+        min: 0,
+        plotLines: trackable_metric.satisfactory_range_limits.map do |limit|
+          {
+            width: 2.5,
+            value: limit.value,
+            color: limit.color
+          }
+        end
+      },
+      annotations: [
         {
-          label: {
-            text: limit.label
-          },
-          width: 2.5,
-          value: limit.value,
-          color: limit.color
+          labels: trackable_metric.out_of_range_values.map do |date, value|
+            {
+              point: { x: date.to_time.to_i * 1000, y: value, xAxis: 0, yAxis: 0 },
+              text: 'Value out of range!'
+            }
+          end
         }
-      end
-    }
-  }, code: true %>
+      ]
+    },
+  }
+  %>
 </div>

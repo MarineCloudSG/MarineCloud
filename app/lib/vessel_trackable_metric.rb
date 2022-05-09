@@ -1,9 +1,10 @@
 class VesselTrackableMetric
-  def initialize(vessel_system_parameter, start_date:, end_date:)
+  def initialize(vessel_system_parameter, date_range:)
     @vessel_system_parameter = vessel_system_parameter
-    @start_date = start_date
-    @end_date = end_date
+    @date_range = date_range
   end
+
+  attr_reader :vessel_system_parameter, :date_range
 
   def name
     vessel_system_parameter.parameter.name
@@ -19,17 +20,26 @@ class VesselTrackableMetric
     limits << chart_limit_line(label: 'Satisfactory min', value: range[0], color: '#ff0000') if range[0].present?
   end
 
-  def data
-    VesselSystemParameterValuesByDate.result_for(
-      start_date: start_date,
-      end_date: end_date,
-      vessel_system_parameter: vessel_system_parameter
-    )
+  def values
+    data_to_values(data)
+  end
+
+  def out_of_range_values
+    data_to_values(data.reject { |row| row[1][:state].to_sym == :in_range })
   end
 
   private
 
-  attr_reader :vessel_system_parameter, :start_date, :end_date
+  def data_to_values(data)
+    data.map { |date, measurement| [date, measurement[:value].to_f] }
+  end
+
+  def data
+    @data ||= VesselSystemParameterMeasurementsByDate.result_for(
+      date_range: date_range,
+      vessel_system_parameter: vessel_system_parameter
+    )
+  end
 
   def chart_limit_line(label:, value:, color:)
     OpenStruct.new(label: label, value: value.to_i, color: color)

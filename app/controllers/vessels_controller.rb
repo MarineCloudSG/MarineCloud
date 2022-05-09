@@ -4,7 +4,7 @@ class VesselsController < BaseController
   def show
     render locals: {
       vessel: resource,
-      date_range: start_date..end_date,
+      date_range: date_range,
       comments: comments,
       metrics_by_system: metrics_by_system
     }
@@ -19,9 +19,12 @@ class VesselsController < BaseController
   def metrics_by_system
     VesselTrackableMetricsBySystem.result_for(
       vessel: resource,
-      start_date: start_date,
-      end_date: end_date
+      date_range: date_range
     )
+  end
+
+  def date_range
+    start_date..end_date
   end
 
   def end_date

@@ -5,7 +5,11 @@ import "@hotwired/turbo-rails"
 import "flowbite"
 
 // Charts
-import "chartkick/highcharts"
+import Highcharts from "highcharts"
+require('highcharts/modules/annotations')(Highcharts)
+
+import Chartkick from "chartkick"
+Chartkick.use(Highcharts)
 
 // ActiveStorage
 import * as ActiveStorage from "@rails/activestorage"

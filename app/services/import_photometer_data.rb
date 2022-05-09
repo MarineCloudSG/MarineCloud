@@ -14,7 +14,8 @@ class ImportPhotometerData < Patterns::Service
         vessel_system_parameter: row.vessel_system_parameter,
         parameter_source: row.parameter_source,
         taken_at: row.taken_at,
-        value: row.value
+        value: row.value,
+        state: row.state
       )
     end
     save_measurements_import
@@ -25,7 +26,7 @@ class ImportPhotometerData < Patterns::Service
   attr_reader :filepath, :vessel
 
   def parser_results
-    PhotometerDataParser.read(filepath).map{ |row| ParsedVesselPhotometerDataRow.new(row, vessel) }
+    PhotometerDataParser.read(filepath).map { |row| ParsedVesselPhotometerDataRow.new(row, vessel) }
   end
 
   def save_measurements_import

@@ -100,10 +100,19 @@ if Rails.env.development?
         parameter_digits = rand(0..3)
         parameter_margin = rand(0.0..[system_parameter.min_satisfactory, system_parameter.max_satisfactory].min)
         last_month.each do |date|
+          state = :in_range
           min_val = system_parameter.min_satisfactory - rand(0.0..parameter_margin)
           max_val = system_parameter.max_satisfactory + rand(0.0..parameter_margin)
           value = rand(min_val..max_val).round(parameter_digits)
-          Measurement.create!(taken_at: date, value: value, vessel_system_parameter: system_parameter)
+          if value > system_parameter.max_satisfactory
+            state = :overrange
+            value = system_parameter.max_satisfactory
+          end
+          if value < system_parameter.min_satisfactory
+            state = :underrange
+            value = system_parameter.min_satisfactory
+          end
+          Measurement.create!(taken_at: date, value: value, vessel_system_parameter: system_parameter, state: state)
         end
         MeasurementsImport.create!(vessel: vessel, filename: 'foo.xlsx')
       end

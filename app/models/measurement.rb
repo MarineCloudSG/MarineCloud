@@ -5,4 +5,6 @@ class Measurement < ApplicationRecord
   has_one :vessel_system, through: :vessel_system_parameter
   has_one :system, through: :vessel_system
   has_one :vessel, through: :vessel_system
+
+  enum state: %i[in_range overrange underrange]
 end
