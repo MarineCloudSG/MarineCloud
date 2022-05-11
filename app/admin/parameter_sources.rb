@@ -21,5 +21,5 @@ ActiveAdmin.register ParameterSource do
   # ==== EDIT ====
   # ==============
 
-  permit_params :source, :code, :parameter, :system
+  permit_params :source, :code, :parameter_id, :system_id
 end
