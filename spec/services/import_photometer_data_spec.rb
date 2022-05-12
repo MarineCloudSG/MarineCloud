@@ -18,9 +18,10 @@ RSpec.describe ImportPhotometerData do
               1,1/1/2003,12:54:14 am,2018420101,101,Chlorine L,0.02-4 mg/l Cl2,3,Overrange,mg/l free Cl2,1.90,mg/l comb. Cl2,2.47,mg/l total Cl2,,,0,V012.013.4.003.067,V012.013.4.003.067,0,0,19,0,0,2,0,3,0,4,0,,'
         f.close
       end
+      uploaded_file = Rack::Test::UploadedFile.new(file.path, 'text/csv')
 
       expect do
-        ImportPhotometerData.call(filepath: file.path, vessel: vessel).result
+        ImportPhotometerData.call(file: uploaded_file, vessel: vessel).result
       end.to change { Measurement.all.count }.by 3
       measurements = Measurement.all
       expect(measurements[0]).to have_attributes(parameter: parameter, value: 0.57, vessel: vessel)
@@ -38,9 +39,23 @@ RSpec.describe ImportPhotometerData do
                 1,1/1/2003,12:54:14 am,2018420,101,Chlorine L,0.02-4 mg/l Cl2,3,0.57,mg/l free Cl2,1.90,mg/l comb. Cl2,2.47,mg/l total Cl2,,,0,V012.013.4.003.067,V012.013.4.003.067,0,0,19,0,0,2,0,3,0,4,0,,'
           f.close
         end
+        uploaded_file = Rack::Test::UploadedFile.new(file.path, 'text/csv')
 
-        expect { ImportPhotometerData.call(filepath: file.path, vessel: vessel) }
+        expect { ImportPhotometerData.call(file: uploaded_file, vessel: vessel) }
           .to raise_error(ActiveRecord::RecordNotFound)
+
+        file.unlink
+      end
+    end
+
+    context 'when file is not text/csv' do
+      it 'raises an error' do
+        vessel = create :vessel
+        file = Tempfile.new
+        uploaded_file = Rack::Test::UploadedFile.new(file.path, 'image/jpeg')
+
+        expect { ImportPhotometerData.call(file: uploaded_file, vessel: vessel) }
+          .to raise_error(ArgumentError)
 
         file.unlink
       end

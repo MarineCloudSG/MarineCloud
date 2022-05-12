@@ -1,6 +1,10 @@
 class ImportPhotometerData < Patterns::Service
-  def initialize(filepath:, vessel:)
-    @filepath = filepath
+  InvalidFileFormat = Class.new(ArgumentError)
+
+  def initialize(file:, vessel:)
+    raise InvalidFileFormat unless file.content_type.eql?('text/csv')
+
+    @filepath = file.path
     @vessel = vessel
   end
 

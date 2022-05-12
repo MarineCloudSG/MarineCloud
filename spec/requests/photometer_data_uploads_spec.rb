@@ -8,13 +8,27 @@ RSpec.describe 'PhotometerDataUploads', type: :request do
       vessel = create :vessel
       file = fixture_file_upload('photometer_data.csv', 'text/csv')
       allow(ImportPhotometerData).to receive(:call)
-
       create_user_and_sign_in
+
       post "/vessels/#{vessel.id}/photometer_data_uploads",
            params: { vessel: { photometer_data_file: file } }
 
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(302)
       expect(ImportPhotometerData).to have_received(:call)
+    end
+
+    context 'file is not text/csv' do
+      it 'raises an error' do
+        vessel = create :vessel
+        file = Tempfile.new
+        create_user_and_sign_in
+
+        post "/vessels/#{vessel.id}/photometer_data_uploads",
+             params: { vessel: { photometer_data_file: Rack::Test::UploadedFile.new(file, 'image/jpeg') } }
+
+        expect(response).to have_http_status(302)
+        expect(flash[:alert]).to eq 'Upload failed - please upload CSV file'
+      end
     end
   end
 end

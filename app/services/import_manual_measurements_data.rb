@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
 class ImportManualMeasurementsData < Patterns::Service
-  def initialize(filepath:, vessel:)
-    @filepath = filepath
+  InvalidFileFormat = Class.new(ArgumentError)
+
+  def initialize(file:, vessel:)
+    raise InvalidFileFormat unless file.content_type.eql?(XLSX_TYPE)
+
+    @filepath = file.path
     @vessel = vessel
   end
 
@@ -21,6 +25,8 @@ class ImportManualMeasurementsData < Patterns::Service
   private
 
   attr_reader :filepath, :vessel
+
+  XLSX_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 
   def parser_results
     ManualMeasurementsDataParser.read(filepath).fetch(:data).map { |row| ParsedManualMeasurementDataRow.new(row, vessel) }

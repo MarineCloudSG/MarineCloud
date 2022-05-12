@@ -35,9 +35,25 @@ RSpec.describe 'Manual measurement data uploads', type: :request do
              params: { vessel: { manual_measurements_data_file: file } }
       end.to change { vessel.measurements.count }.by(145)
          .and change { vessel.measurements_imports.count }.by(1)
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(302)
       expect(vessel.measurements.first).to have_attributes(value: 651)
       expect(vessel.measurements.last).to have_attributes(value: 496)
+    end
+
+    context 'file is not xlsx type' do
+      it 'displays an error and redirects to vessel dashboard' do
+        vessel = create :vessel
+        file = Tempfile.new
+        create_user_and_sign_in
+
+        post "/vessels/#{vessel.id}/manual_measurements_data_uploads",
+             params: { vessel: { manual_measurements_data_file: Rack::Test::UploadedFile.new(file.path, 'image/jpeg') } }
+
+        expect(response).to have_http_status(302)
+        expect(flash[:alert]).to eq 'Upload failed - please upload XLSX file'
+
+        file.unlink
+      end
     end
   end
 end
