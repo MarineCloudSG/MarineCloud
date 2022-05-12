@@ -5,10 +5,11 @@ require 'rails_helper'
 RSpec.describe 'PhotometerDataUploads', type: :request do
   describe 'POST /create' do
     it 'imports photometer data' do
-      vessel = create :vessel
+      user = create :user
+      vessel = create :vessel, user: user
       file = fixture_file_upload('photometer_data.csv', 'text/csv')
       allow(ImportPhotometerData).to receive(:call)
-      create_user_and_sign_in
+      sign_in user
 
       post "/vessels/#{vessel.id}/photometer_data_uploads",
            params: { vessel: { photometer_data_file: file } }
@@ -19,9 +20,10 @@ RSpec.describe 'PhotometerDataUploads', type: :request do
 
     context 'file is not text/csv' do
       it 'raises an error' do
-        vessel = create :vessel
+        user = create :user
+        vessel = create :vessel, user: user
         file = Tempfile.new
-        create_user_and_sign_in
+        sign_in user
 
         post "/vessels/#{vessel.id}/photometer_data_uploads",
              params: { vessel: { photometer_data_file: Rack::Test::UploadedFile.new(file, 'image/jpeg') } }

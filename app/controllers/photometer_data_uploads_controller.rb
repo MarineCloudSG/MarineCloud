@@ -1,5 +1,6 @@
 class PhotometerDataUploadsController < BaseController
   def create
+    authorize vessel, :update?
     photometer_data_file = params[:vessel][:photometer_data_file]
     ImportPhotometerData.call(file: photometer_data_file, vessel: vessel)
     redirect_to vessel, notice: 'Upload completed succesfully'
@@ -10,6 +11,10 @@ class PhotometerDataUploadsController < BaseController
   private
 
   def vessel
-    Vessel.find(params.fetch(:vessel_id))
+    @vessel ||= VesselDecorator.decorate(Vessel.find(vessel_id))
+  end
+
+  def vessel_id
+    params[:vessel_id]
   end
 end

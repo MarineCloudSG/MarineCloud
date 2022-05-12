@@ -19,7 +19,8 @@ end
 RSpec.describe 'Manual measurement data uploads', type: :request do
   describe 'POST /create' do
     it 'imports xlsx data and persists information about import occurence' do
-      vessel = create :vessel
+      user = create :user
+      vessel = create :vessel, user: user
       file = fixture_file_upload('manual_measurements_february_feed_water.xlsx',
                                  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
       system = create :system, name: 'FEEDWATER'
@@ -28,7 +29,8 @@ RSpec.describe 'Manual measurement data uploads', type: :request do
         vessel: vessel,
         codes: %w[HARDNESS CHLORIDE PH CONDUCTIVITY APPEARANCE TEMPERATURE]
       )
-      create_user_and_sign_in
+      sign_in user
+
 
       expect do
         post "/vessels/#{vessel.id}/manual_measurements_data_uploads",
@@ -42,9 +44,10 @@ RSpec.describe 'Manual measurement data uploads', type: :request do
 
     context 'file is not xlsx type' do
       it 'displays an error and redirects to vessel dashboard' do
-        vessel = create :vessel
+        user = create :user
+        vessel = create :vessel, user: user
         file = Tempfile.new
-        create_user_and_sign_in
+        sign_in user
 
         post "/vessels/#{vessel.id}/manual_measurements_data_uploads",
              params: { vessel: { manual_measurements_data_file: Rack::Test::UploadedFile.new(file.path, 'image/jpeg') } }

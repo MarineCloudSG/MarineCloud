@@ -28,13 +28,14 @@ class BaseController < ApplicationController
     super
   end
 
-  def show?
+  def show
     authorize resource, :show?
     super
   end
 
-  def destroy?
+  def destroy
     authorize resource, :destroy?
+    super
   end
 
   protected

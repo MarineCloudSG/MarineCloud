@@ -15,6 +15,7 @@ SimpleCov.start
 # it.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require 'pundit/rspec'
 RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-core/docs/expectation-framework-integration/aggregating-failures#enable-failure-aggregation-globally-using-%60define-derived-metadata
   # config.define_derived_metadata do |meta|

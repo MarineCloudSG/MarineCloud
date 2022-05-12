@@ -2,12 +2,14 @@
 
 class VesselsController < BaseController
   def show
-    render locals: {
-      vessel: resource,
-      date_range: date_range,
-      comments: comments,
-      metrics_by_system: metrics_by_system
-    }
+    super do
+      return render locals: {
+        vessel: resource,
+        date_range: date_range,
+        comments: comments,
+        metrics_by_system: metrics_by_system
+      }
+    end
   end
 
   private
@@ -26,6 +28,8 @@ class VesselsController < BaseController
   def date_range
     start_date..end_date
   end
+
+  private
 
   def end_date
     params.fetch(:end_date, start_date.end_of_month).to_date

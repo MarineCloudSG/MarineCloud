@@ -18,13 +18,14 @@ ActiveAdmin.register User do
   # ==== EDIT ====
   # ==============
 
-  permit_params :email, :password, :password_confirmation
+  permit_params :email, :password, :password_confirmation, vessel_group_ids: []
 
   form  do |f|
     inputs "Details" do
       input :email
       input :password
       input :password_confirmation
+      input :vessel_groups, as: :check_boxes, collection: VesselGroup.all
     end
     actions
   end

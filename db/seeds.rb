@@ -68,6 +68,9 @@ if Rails.env.development?
   end
 
   last_month = (Date.current - 1.month).all_month
+  seed_systems = ActiveModel::Type::Boolean.new.cast(ENV.fetch('SEED_SYSTEMS', true))
+  seed_parameters = ActiveModel::Type::Boolean.new.cast(ENV.fetch('SEED_PARAMETERS', true))
+  seed_measurements = ActiveModel::Type::Boolean.new.cast(ENV.fetch('SEED_MEASUREMENTS', true))
 
   {
     'Dexie' => 'Stark Industries',
@@ -76,6 +79,11 @@ if Rails.env.development?
     'Battie' => 'Wayne Enterprise'
   }.each do |vessel_name, group_name|
     group = VesselGroup.where(name: group_name).first_or_create!
+    user = User.find_by!(email: 'user@example.com')
+    unless user.vessel_groups.include?(group)
+      user.vessel_groups << group
+      user.save!
+    end
     vessel = group.vessels.where(name: vessel_name).first_or_initialize
 
     vessel.email = "#{vessel_name.parameterize.underscore}@#{group.name.parameterize.underscore}.dev"
@@ -83,9 +91,11 @@ if Rails.env.development?
     vessel.company_name = group_name
     vessel.flag = 'Jolly Roger'
     vessel.save!
+    next unless seed_systems
 
     vessel.systems << System.all.sample(3) unless vessel.systems.exists?
 
+    next unless seed_parameters
     next if vessel.vessel_system_parameters.exists?
 
     vessel.vessel_systems.each do |vessel_system|
@@ -96,6 +106,7 @@ if Rails.env.development?
           min_satisfactory: [10, 20, 50, 100, 200].sample,
           max_satisfactory: [250, 300, 500, 1000].sample
         )
+        next unless seed_measurements
 
         parameter_digits = rand(0..3)
         parameter_margin = rand(0.0..[system_parameter.min_satisfactory, system_parameter.max_satisfactory].min)

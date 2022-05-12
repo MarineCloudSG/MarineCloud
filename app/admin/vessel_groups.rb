@@ -50,5 +50,15 @@ ActiveAdmin.register VesselGroup do
   # ==== EDIT ====
   # ==============
 
-  permit_params :name
+  permit_params :name, user_ids: [], vessel_ids: []
+
+  form do |f|
+    inputs do
+      input :name
+      input :vessels, as: :select, collection: Vessel.all
+      input :users, as: :check_boxes, collection: User.pluck(:email, :id)
+    end
+
+    actions
+  end
 end

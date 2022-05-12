@@ -6,7 +6,7 @@ class VesselPolicy < ApplicationPolicy
     end
 
     def resolve
-      scope
+      scope.where(id: user.managed_vessels.select(:id))
     end
 
     private
@@ -19,7 +19,7 @@ class VesselPolicy < ApplicationPolicy
   end
 
   def show?
-    owner_of?(record)
+    managing_vessel?(record)
   end
 
   def create?
@@ -27,10 +27,16 @@ class VesselPolicy < ApplicationPolicy
   end
 
   def update?
-    owner_of?(record)
+    managing_vessel?(record)
   end
 
   def destroy?
-    owner_of?(record)
+    managing_vessel?(record)
+  end
+
+  private
+
+  def managing_vessel?(record)
+    user.managed_vessels.where(id: record.id).exists?
   end
 end
