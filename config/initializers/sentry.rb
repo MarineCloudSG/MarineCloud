@@ -9,4 +9,16 @@ Sentry.init do |config|
   config.traces_sampler = lambda do |context|
     true
   end
+
+  config.excluded_exceptions = [
+      'AbstractController::ActionNotFound',
+      'ActionController::BadRequest',
+      'ActionController::NotImplemented',
+      'ActionController::RoutingError',
+      'ActionController::UnknownAction',
+      'ActionController::UnknownFormat',
+      'ActionDispatch::Http::MimeNegotiation::InvalidType',
+      'ActionController::UnknownHttpMethod',
+      'ActionDispatch::Http::Parameters::ParseError',
+    ]
 end
