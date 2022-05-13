@@ -9,7 +9,7 @@ Sentry.init do |config|
   config.traces_sampler = lambda do |context|
     true
   end
-
+  config.capture_exception_frame_locals = true
   config.excluded_exceptions = [
       'AbstractController::ActionNotFound',
       'ActionController::BadRequest',
