@@ -162,6 +162,7 @@ group :development do
   gem "letter_opener"
 end
 
-# group :production do
-#   gem 'sassc'
-# end
+group :production do
+  gem "sentry-ruby"
+  gem "sentry-rails"
+end
