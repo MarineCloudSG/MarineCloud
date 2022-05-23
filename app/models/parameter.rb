@@ -1,3 +1,3 @@
 class Parameter < ApplicationRecord
-  has_many :parameter_sources
+  # has_many :parameter_sources
 end

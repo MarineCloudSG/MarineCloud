@@ -5,11 +5,10 @@ class ParsedManualMeasurementDataRow
   end
 
   def vessel_system_parameter
-    VesselSystemParameter.find_by!(vessel_system: vessel_system, parameter: parameter)
-  end
-
-  def parameter_source
-    ParameterSource.find_by!(source: ParameterSource::MANUAL_XLSX_SOURCE, code: row.fetch(:parameter))
+    VesselSystemParameter.find_by!(
+      vessel_system: vessel_system,
+      code: row.fetch(:parameter)
+    )
   end
 
   def taken_at
@@ -31,7 +30,7 @@ class ParsedManualMeasurementDataRow
   end
 
   def parameter
-    parameter_source.parameter
+    vessel_system_parameter.parameter
   end
 
   def system

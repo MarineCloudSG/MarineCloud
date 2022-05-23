@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 202204020181759) do
+ActiveRecord::Schema.define(version: 202204020181760) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,28 +46,20 @@ ActiveRecord::Schema.define(version: 202204020181759) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "vessel_system_parameter_id", null: false
+    t.bigint "measurements_import_id", null: false
     t.integer "state", default: 0
     t.index ["parameter_source_id"], name: "index_measurements_on_parameter_source_id"
     t.index ["vessel_system_parameter_id"], name: "index_measurements_on_vessel_system_parameter_id"
+    t.index ["measurements_import_id"], name: "index_measurements_on_measurements_import_id"
   end
 
   create_table "measurements_imports", force: :cascade do |t|
     t.bigint "vessel_id", null: false
     t.string "filename"
+    t.integer "source"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["vessel_id"], name: "index_measurements_imports_on_vessel_id"
-  end
-
-  create_table "parameter_sources", force: :cascade do |t|
-    t.integer "source"
-    t.string "code"
-    t.bigint "parameter_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "system_id"
-    t.index ["parameter_id"], name: "index_parameter_sources_on_parameter_id"
-    t.index ["system_id"], name: "index_parameter_sources_on_system_id"
   end
 
   create_table "parameters", force: :cascade do |t|
@@ -128,6 +120,7 @@ ActiveRecord::Schema.define(version: 202204020181759) do
     t.bigint "parameter_id", null: false
     t.float "min_satisfactory"
     t.float "max_satisfactory"
+    t.string "code"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["parameter_id"], name: "index_vessel_system_parameters_on_parameter_id"
@@ -137,6 +130,7 @@ ActiveRecord::Schema.define(version: 202204020181759) do
   create_table "vessel_systems", force: :cascade do |t|
     t.bigint "vessel_id", null: false
     t.bigint "system_id", null: false
+    t.string "code"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["system_id"], name: "index_vessel_systems_on_system_id"
@@ -157,11 +151,9 @@ ActiveRecord::Schema.define(version: 202204020181759) do
     t.index ["vessel_group_id"], name: "index_vessels_on_vessel_group_id"
   end
 
-  add_foreign_key "measurements", "parameter_sources"
   add_foreign_key "measurements", "vessel_system_parameters"
+  add_foreign_key "measurements", "measurements_imports"
   add_foreign_key "measurements_imports", "vessels"
-  add_foreign_key "parameter_sources", "parameters"
-  add_foreign_key "parameter_sources", "systems"
   add_foreign_key "vessel_comments", "users"
   add_foreign_key "vessel_comments", "vessels"
   add_foreign_key "vessel_system_parameters", "parameters"

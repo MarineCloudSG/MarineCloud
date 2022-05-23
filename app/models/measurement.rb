@@ -1,6 +1,6 @@
 class Measurement < ApplicationRecord
   belongs_to :vessel_system_parameter
-  belongs_to :parameter_source, optional: true
+  belongs_to :measurements_import
   has_one :parameter, through: :vessel_system_parameter
   has_one :vessel_system, through: :vessel_system_parameter
   has_one :system, through: :vessel_system

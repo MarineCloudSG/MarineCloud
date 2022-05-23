@@ -20,6 +20,7 @@ ActiveAdmin.register VesselSystemParameter do
     end
     column :min_satisfactory
     column :max_satisfactory
+    column :code
     column 'Satisfactory range' do |vessel_system_parameter|
       vessel_system_parameter.satisfactory_range_text
     end

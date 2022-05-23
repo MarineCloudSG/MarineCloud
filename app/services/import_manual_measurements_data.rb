@@ -11,15 +11,15 @@ class ImportManualMeasurementsData < Patterns::Service
   end
 
   def call
+    import = save_measurements_import
     parser_results.each do |row|
       Measurement.create!(
+        measurements_import: import,
         vessel_system_parameter: row.vessel_system_parameter,
-        parameter_source: row.parameter_source,
         taken_at: row.taken_at,
         value: row.value
       )
     end
-    save_measurements_import
   end
 
   private
@@ -33,6 +33,6 @@ class ImportManualMeasurementsData < Patterns::Service
   end
 
   def save_measurements_import
-    MeasurementsImport.create!(vessel: vessel, filename: filepath)
+    MeasurementsImport.create!(vessel: vessel, filename: filepath, source: MeasurementsImport::MANUAL_XLSX_SOURCE)
   end
 end

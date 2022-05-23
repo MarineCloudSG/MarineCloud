@@ -5,12 +5,8 @@ class ParsedVesselPhotometerDataRow
   end
 
   def vessel_system_parameter
-    VesselSystemParameter.find_by!(vessel_system: vessel_system, parameter: parameter_source.parameter)
-  end
-
-  def parameter_source
-    ParameterSource.find_by!(
-      source: ParameterSource::PHOTOMETER_CSV_SOURCE,
+    VesselSystemParameter.find_by!(
+      vessel_system: vessel_system,
       code: row.fetch(:method_number)
     )
   end
@@ -45,15 +41,15 @@ class ParsedVesselPhotometerDataRow
   attr_reader :row, :vessel
 
   def vessel_system
-    VesselSystem.find_by!(vessel: vessel, system: parameter_source.system)
+    VesselSystem.find_by!(vessel: vessel, code: row.fetch(:code))
   end
 
   def parameter
-    parameter_source.parameter
+    vessel_system_parameter.parameter
   end
 
   def system
-    parameter_source.system
+    vessel_system.system
   end
 
   def raw_value

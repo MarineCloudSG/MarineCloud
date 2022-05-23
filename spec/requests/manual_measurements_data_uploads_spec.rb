@@ -9,8 +9,7 @@ def create_vessel_system_with_parameters_and_sources(vessel:, system:, codes:)
     name = code.humanize
     parameter = Parameter.find_by(name: name)
     parameter ||= create :parameter, name: name
-    create :vessel_system_parameter, vessel_system: vessel_system, parameter: parameter
-    create :manual_xls_parameter_source, parameter: parameter, system: system, code: code
+    create :vessel_system_parameter, vessel_system: vessel_system, parameter: parameter, code: code
   end
 
   vessel_system

@@ -43,7 +43,7 @@ if Rails.env.development?
   end
 
   # TODO: Update final values
-  {
+  parameters_data = {
     'P-Alkalinity' => { unit: '', csv_code: 1 },
     'M-Alkalinity' => { unit: '', csv_code: 2 },
     'Phosphate' => { unit: '', csv_code: 3 },
@@ -59,12 +59,12 @@ if Rails.env.development?
     'Nitrite' => { unit: '', csv_code: 13 },
     'Sulphate' => { unit: '', csv_code: 14 },
     'Nitrate' => { unit: '', csv_code: 15 }
-  }.each do |name, data|
+  }
+  parameters_data.each do |name, data|
     parameter = Parameter.where(name: name, unit: data[:unit]).first_or_create!
     parameter.min_satisfactory = [10, 20, 50, 100, 200].sample
     parameter.max_satisfactory = [250, 300, 500, 1000].sample
     parameter.save!
-    ParameterSource.where(parameter: parameter, source: :photometer_csv, code: data[:csv_code]).first_or_create!
   end
 
   last_month = (Date.current - 1.month).all_month
@@ -102,6 +102,7 @@ if Rails.env.development?
       Parameter.all.sample(5).each do |parameter|
         system_parameter = VesselSystemParameter.create!(
           vessel_system: vessel_system,
+          code: parameters_data[parameter.name][:csv_code],
           parameter: parameter,
           min_satisfactory: [10, 20, 50, 100, 200].sample,
           max_satisfactory: [250, 300, 500, 1000].sample
@@ -110,6 +111,8 @@ if Rails.env.development?
 
         parameter_digits = rand(0..3)
         parameter_margin = rand(0.0..[system_parameter.min_satisfactory, system_parameter.max_satisfactory].min)
+
+        import = MeasurementsImport.create!(vessel: vessel, filename: 'foo.xlsx')
         last_month.each do |date|
           state = :in_range
           min_val = system_parameter.min_satisfactory - rand(0.0..parameter_margin)
@@ -123,9 +126,14 @@ if Rails.env.development?
             state = :underrange
             value = system_parameter.min_satisfactory
           end
-          Measurement.create!(taken_at: date, value: value, vessel_system_parameter: system_parameter, state: state)
+          Measurement.create!(
+            taken_at: date,
+            value: value,
+            vessel_system_parameter: system_parameter,
+            state: state,
+            measurements_import: import
+          )
         end
-        MeasurementsImport.create!(vessel: vessel, filename: 'foo.xlsx')
       end
     end
   end
