@@ -15,7 +15,7 @@ class SortableListComponent < ViewComponent::Base
 
   def move_up_link
     link_to helpers.public_send("#{@route}_path", @resource.position, new_position: @resource.position - 1),
-            class: "inline-flex items-center p-1 border border-transparent rounded-full shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
+            class: "inline-flex items-center p-1 border border-transparent rounded-full shadow-sm text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500",
             data: { 'turbo-method' => :put } do
       helpers.heroicon("chevron-up", options: { class: "h-5 w-5", disable_default_class: true })
     end
@@ -23,7 +23,7 @@ class SortableListComponent < ViewComponent::Base
 
   def move_down_link
     link_to helpers.public_send("#{@route}_path", @resource.position, new_position: @resource.position + 1),
-            class: "inline-flex items-center p-1 border border-transparent rounded-full shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
+            class: "inline-flex items-center p-1 border border-transparent rounded-full shadow-sm text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500",
             data: { 'turbo-method' => :put } do
       helpers.heroicon("chevron-down", options: { class: "h-5 w-5", disable_default_class: true })
     end

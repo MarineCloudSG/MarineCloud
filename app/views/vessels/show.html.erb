@@ -2,10 +2,10 @@
 <%= render partial: 'partials/upload_manual_measurements_data_modal' %>
 
 <%= render HeaderComponent.new title: resource.name, subheader: (VesselSubheaderComponent.new vessel: resource) do %>
-  <button class="btn-secondary mr-2" type="button" data-modal-toggle="uploadPhotometerDataModal">
+  <button class="btn-secondary mr-2 text-white bg-sky-600" type="button" data-modal-toggle="uploadPhotometerDataModal">
     Upload photometer data
   </button>
-  <button class="btn-secondary mr-2" type="button" data-modal-toggle="uploadManualMeasurementsDataModal">
+  <button class="btn-secondary mr-2 text-white bg-sky-600" type="button" data-modal-toggle="uploadManualMeasurementsDataModal">
     Upload manual measurements data
   </button>
 <% end %>
