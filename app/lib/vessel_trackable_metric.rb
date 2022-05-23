@@ -25,7 +25,11 @@ class VesselTrackableMetric
   end
 
   def out_of_range_values
-    data_to_values(data.reject { |row| row[1][:state].to_sym == :in_range })
+    data.reject { |row| row[1][:state].to_sym == :in_range }.map do |date, measurement|
+      [date, {
+        value: measurement[:value].to_f, state: measurement[:state]
+      }]
+    end
   end
 
   private

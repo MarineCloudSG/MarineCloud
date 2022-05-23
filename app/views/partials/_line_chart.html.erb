@@ -21,10 +21,13 @@
       },
       annotations: [
         {
-          labels: trackable_metric.out_of_range_values.map do |date, value|
+          labels: trackable_metric.out_of_range_values.map do |date, data|
             {
-              point: { x: date.to_time.to_i * 1000, y: value, xAxis: 0, yAxis: 0 },
-              text: 'Value out of range!'
+              point: { x: date.to_time.to_i * 1000, y: data[:value], xAxis: 0, yAxis: 0 },
+              backgroundColor: "rgba(0, 0, 0, 0.35)",
+              borderColor: "rgba(0, 0, 0, 0)",
+              color: "black",
+              text: data[:state]
             }
           end
         }
