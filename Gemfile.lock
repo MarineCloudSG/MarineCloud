@@ -237,6 +237,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jsbundling-rails (1.0.0)
       railties (>= 6.0.0)
+    json (2.6.2)
     kaminari (1.2.2)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.2.2)
@@ -316,6 +317,10 @@ GEM
       activerecord (>= 4.2.6)
       ruby2_keywords
       virtus
+    rails_real_favicon (0.1.1)
+      json (>= 1.7, < 3)
+      rails
+      rubyzip (~> 2)
     railties (7.0.0)
       actionpack (= 7.0.0)
       activesupport (= 7.0.0)
@@ -493,6 +498,7 @@ DEPENDENCIES
   pundit
   rails
   rails-patterns
+  rails_real_favicon
   redis (~> 4.0)
   roo
   rspec-rails

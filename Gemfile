@@ -164,4 +164,7 @@ group :development do
 
   # Handling emails in local development environment
   gem "letter_opener"
+
+  # favicon generating
+  gem 'rails_real_favicon'
 end
