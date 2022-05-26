@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v2
 
 
-  build:
+  deploy:
     if: github.event_name == 'push'
     needs: [ test ]
     runs-on: ubuntu-latest
