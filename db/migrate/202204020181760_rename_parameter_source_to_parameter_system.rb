@@ -1,6 +1,6 @@
 class RenameParameterSourceToParameterSystem < ActiveRecord::Migration[7.0]
   def change
-    remove_index :measurements, :parameter_source_id
+    remove_reference :measurements, :parameter_source
     drop_table :parameter_sources
     add_column :measurements_imports, :source, :integer
     add_column :vessel_system_parameters, :code, :string
