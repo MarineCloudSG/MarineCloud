@@ -112,7 +112,7 @@ if Rails.env.development?
         parameter_digits = rand(0..3)
         parameter_margin = rand(0.0..[system_parameter.min_satisfactory, system_parameter.max_satisfactory].min)
 
-        import = MeasurementsImport.create!(vessel: vessel, filename: 'foo.xlsx')
+        import = MeasurementsImport.create!(vessel: vessel, filename: 'foo.xlsx', source: MeasurementsImport::MANUAL_XLSX_SOURCE)
         last_month.each do |date|
           state = :in_range
           min_val = system_parameter.min_satisfactory - rand(0.0..parameter_margin)
