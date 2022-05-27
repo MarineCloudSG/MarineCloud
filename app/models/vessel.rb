@@ -8,7 +8,7 @@ class Vessel < ApplicationRecord
   has_many :vessel_system_parameters, through: :vessel_systems
   has_many :parameters, through: :vessel_system_parameters
   has_many :measurements, through: :vessel_system_parameters
-  has_many :measurements_imports
+  has_many :measurements_imports, dependent: :delete_all
   has_many :comments, class_name: VesselComment.name
 
   def last_data_upload

@@ -41,6 +41,7 @@ ActiveAdmin.register VesselSystemParameter do
       input :vessel_system_id, as: :select, collection: vessel.vessel_systems.map { |vs| [vs.system.name, vs.id] }
       input :min_satisfactory
       input :max_satisfactory
+      input :code
       end
     actions
   end

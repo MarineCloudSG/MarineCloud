@@ -5,10 +5,8 @@ class ParsedManualMeasurementDataRow
   end
 
   def vessel_system_parameter
-    VesselSystemParameter.find_by!(
-      vessel_system: vessel_system,
-      code: row.fetch(:parameter)
-    )
+    VesselSystemParameter.joins(:parameter).where(
+      'lower(parameters.name) = ?', row.fetch(:parameter).downcase).where(vessel_system: vessel_system).take!
   end
 
   def taken_at

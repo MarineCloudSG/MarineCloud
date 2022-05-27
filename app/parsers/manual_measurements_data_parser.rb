@@ -82,7 +82,7 @@ class ManualMeasurementsDataParser
       value = row[column_id]
       next if value.nil?
 
-      taken_at = Date.new(headers.fetch(:year), headers.fetch(:month), column_id - FIRST_DAY_COLUMN + 1)
+      taken_at = Date.parse([headers.fetch(:year), headers.fetch(:month), column_id - FIRST_DAY_COLUMN + 1].join("-"))
       @data << { system: @system, parameter: parameter, value: value, taken_at: taken_at }
     end
   end

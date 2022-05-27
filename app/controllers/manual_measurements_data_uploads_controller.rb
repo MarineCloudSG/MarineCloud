@@ -6,6 +6,8 @@ class ManualMeasurementsDataUploadsController < BaseController
     redirect_to vessel, notice: 'Upload completed succesfully'
   rescue ImportManualMeasurementsData::InvalidFileFormat
     redirect_to vessel, alert: 'Upload failed - please upload XLSX file'
+  rescue ActiveRecord::RecordNotFound => exc
+    redirect_to vessel, alert: "Missing #{exc.model}"
   end
 
   private
