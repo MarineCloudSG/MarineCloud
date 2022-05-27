@@ -3,13 +3,10 @@ class VesselSystemParameterMeasurementsByDate < Patterns::Calculation
   private
 
   def result
-    measurements_with_photometer_precedence.map do |row|
+    measurements_with_photometer_precedence.map do |measurement|
       [
-        row[0].to_date,
-        {
-          value: row[1],
-          state: row[2]
-        }
+        measurement.taken_at.to_date,
+        measurement
       ]
     end
   end
@@ -25,7 +22,7 @@ class VesselSystemParameterMeasurementsByDate < Patterns::Calculation
       else
         selected_source = MeasurementsImport::MANUAL_XLSX_SOURCE
       end
-      measurements += base_query.order(:taken_at).where(measurements_imports: { source: selected_source }).pluck(:taken_at, :value, :state)
+      measurements += base_query.order(:taken_at).where(measurements_imports: { source: selected_source })
       current_start_date = current_start_date.next_month.beginning_of_month
     end
     measurements

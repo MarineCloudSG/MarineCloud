@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 202204020181762) do
+ActiveRecord::Schema.define(version: 202204020181763) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,16 @@ ActiveRecord::Schema.define(version: 202204020181762) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "source"
     t.index ["vessel_id"], name: "index_measurements_imports_on_vessel_id"
+  end
+
+  create_table "parameter_recommendations", force: :cascade do |t|
+    t.bigint "parameter_id", null: false
+    t.decimal "value_min"
+    t.decimal "value_max"
+    t.string "message"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["parameter_id"], name: "index_parameter_recommendations_on_parameter_id"
   end
 
   create_table "parameters", force: :cascade do |t|
@@ -164,6 +174,7 @@ ActiveRecord::Schema.define(version: 202204020181762) do
   add_foreign_key "import_logs", "vessels"
   add_foreign_key "measurements", "vessel_system_parameters"
   add_foreign_key "measurements_imports", "vessels"
+  add_foreign_key "parameter_recommendations", "parameters"
   add_foreign_key "vessel_comments", "users"
   add_foreign_key "vessel_comments", "vessels"
   add_foreign_key "vessel_system_parameters", "parameters"

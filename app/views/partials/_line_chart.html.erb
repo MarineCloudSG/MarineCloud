@@ -1,6 +1,9 @@
 <div class="px-4 py-5 mb-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
   <dt class="text-xl font-semibold text-gray-900 truncate"><%= trackable_metric.name %></dt>
   <dd class="mt-1">&nbsp;</dd>
+  <script>
+    recommendationRules['<%= "vessel-chart-#{trackable_metric.vessel_system_parameter.id}" %>'] = <%= raw trackable_metric.recommendations.to_json %>;
+  </script>
   <%= line_chart trackable_metric.values, **{
     id: "vessel-chart-#{trackable_metric.vessel_system_parameter.id}",
     height: "150px",
@@ -31,7 +34,10 @@
             }
           end
         }
-      ]
+      ],
+      tooltip: {
+        formatter: js_function_name('metricsTooltipFormatter')
+      }
     },
   }
   %>

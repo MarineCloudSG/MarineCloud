@@ -27,17 +27,22 @@ class VesselTrackableMetric
   end
 
   def out_of_range_values
-    data.reject { |row| row[1][:state].to_sym == :in_range }.map do |date, measurement|
+    data.reject { |row| row[1].state.to_sym == :in_range }.map do |date, measurement|
       [date, {
-        value: measurement[:value].to_f, state: measurement[:state]
+        value: measurement.value.to_f, state: measurement.state
       }]
     end
+  end
+
+  def recommendations
+    ParameterRecommendation.where(parameter: vessel_system_parameter.parameter)
+                           .map { |r| { min: r.value_min, max: r.value_max, message: r.message } }
   end
 
   private
 
   def data_to_values(data)
-    data.map { |date, measurement| [date, measurement[:value].to_f] }
+    data.map { |date, measurement| [date, measurement.value.to_f] }
   end
 
   def data

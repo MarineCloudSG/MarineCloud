@@ -32,3 +32,6 @@ application.register('dropdown', Dropdown)
 
 import TabNavigationComponentController from "../components/tab_navigation_component_controller"
 application.register("tab-navigation-component", TabNavigationComponentController)
+
+import metricsTooltipFormatter from './metrics_tooltip_formater'
+window.metricsTooltipFormatter = metricsTooltipFormatter
