@@ -1,7 +1,7 @@
 ActiveAdmin.register VesselSystem do
   belongs_to :vessel
 
-  actions :index, :new, :create, :destroy
+  # actions :index, :new, :create, :destroy, :edit
 
   # ==============
   # ==== LIST ====
@@ -26,5 +26,12 @@ ActiveAdmin.register VesselSystem do
   # ==== EDIT ====
   # ==============
 
-  permit_params :vessel_id, :system_id
+  permit_params :vessel_id, :system_id, :code
+   form do |f|
+    f.inputs do
+      f.input :system
+      f.input :code
+    end
+    f.actions
+  end
 end

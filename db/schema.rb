@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 202204020181760) do
+ActiveRecord::Schema.define(version: 202204020181761) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,8 +39,17 @@ ActiveRecord::Schema.define(version: 202204020181760) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "import_logs", force: :cascade do |t|
+    t.bigint "measurements_import_id", null: false
+    t.bigint "vessel_id", null: false
+    t.text "msg"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["measurements_import_id"], name: "index_import_logs_on_measurements_import_id"
+    t.index ["vessel_id"], name: "index_import_logs_on_vessel_id"
+  end
+
   create_table "measurements", force: :cascade do |t|
-    t.bigint "parameter_source_id"
     t.datetime "taken_at", precision: 6
     t.float "value"
     t.datetime "created_at", precision: 6, null: false
@@ -48,9 +57,8 @@ ActiveRecord::Schema.define(version: 202204020181760) do
     t.bigint "vessel_system_parameter_id", null: false
     t.bigint "measurements_import_id", null: false
     t.integer "state", default: 0
-    t.index ["parameter_source_id"], name: "index_measurements_on_parameter_source_id"
-    t.index ["vessel_system_parameter_id"], name: "index_measurements_on_vessel_system_parameter_id"
     t.index ["measurements_import_id"], name: "index_measurements_on_measurements_import_id"
+    t.index ["vessel_system_parameter_id"], name: "index_measurements_on_vessel_system_parameter_id"
   end
 
   create_table "measurements_imports", force: :cascade do |t|
@@ -82,8 +90,8 @@ ActiveRecord::Schema.define(version: 202204020181760) do
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
+    t.datetime "reset_password_sent_at", precision: 6
+    t.datetime "remember_created_at", precision: 6
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "first_name"
@@ -151,8 +159,10 @@ ActiveRecord::Schema.define(version: 202204020181760) do
     t.index ["vessel_group_id"], name: "index_vessels_on_vessel_group_id"
   end
 
-  add_foreign_key "measurements", "vessel_system_parameters"
+  add_foreign_key "import_logs", "measurements_imports"
+  add_foreign_key "import_logs", "vessels"
   add_foreign_key "measurements", "measurements_imports"
+  add_foreign_key "measurements", "vessel_system_parameters"
   add_foreign_key "measurements_imports", "vessels"
   add_foreign_key "vessel_comments", "users"
   add_foreign_key "vessel_comments", "vessels"

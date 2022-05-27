@@ -6,6 +6,8 @@ class PhotometerDataUploadsController < BaseController
     redirect_to vessel, notice: 'Upload completed succesfully'
   rescue ImportPhotometerData::InvalidFileFormat
     redirect_to vessel, alert: 'Upload failed - please upload CSV file'
+  rescue ParsedVesselPhotometerDataRow::HandledImportException
+    redirect_to vessel, alert: "Error occured. Contact administrator in order to fix it"
   end
 
   private

@@ -41,7 +41,7 @@ RSpec.describe ImportPhotometerData do
         uploaded_file = Rack::Test::UploadedFile.new(file.path, 'text/csv')
 
         expect { ImportPhotometerData.call(file: uploaded_file, vessel: vessel) }
-          .to raise_error(ActiveRecord::RecordNotFound)
+          .to raise_error(ParsedVesselPhotometerDataRow::HandledImportException)
 
         file.unlink
       end

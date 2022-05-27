@@ -1,14 +1,22 @@
 class ParsedVesselPhotometerDataRow
-  def initialize(row, vessel)
+  class HandledImportException < StandardError; end
+  def initialize(row, vessel, import)
     @row = row
     @vessel = vessel
+    @import = import
   end
 
   def vessel_system_parameter
-    VesselSystemParameter.find_by!(
-      vessel_system: vessel_system,
-      code: row.fetch(:method_number)
-    )
+    parameter_code = row.fetch(:method_number)
+    begin
+      VesselSystemParameter.find_by!(
+        vessel_system: vessel_system,
+        code: parameter_code
+      )
+    rescue ActiveRecord::RecordNotFound
+      ImportLog.create(measurements_import: import, msg: "missing assigment of parameter with code #{parameter_code} from system #{vessel_system.system.name}", vessel: vessel)
+      raise HandledImportException
+    end
   end
 
   def taken_at
@@ -38,10 +46,20 @@ class ParsedVesselPhotometerDataRow
   VALUE_OVERRANGE_LABEL = 'Overrange'
   VALUE_UNDERRANGE_LABEL = 'Underrange'
 
-  attr_reader :row, :vessel
+  attr_reader :row, :vessel, :import
 
   def vessel_system
-    VesselSystem.find_by!(vessel: vessel, code: row.fetch(:code))
+    system_code = row.fetch(:code)
+    begin
+      VesselSystem.find_by!(vessel: vessel, code: system_code)
+    rescue ActiveRecord::RecordNotFound
+      begin
+        VesselSystem.joins(:system).find_by!(vessel: vessel, systems: { code: system_code })
+      rescue ActiveRecord::RecordNotFound
+        ImportLog.create(measurements_import: import, msg: "missing assigment system by code #{system_code}", vessel: vessel)
+        raise HandledImportException
+      end
+    end
   end
 
   def parameter

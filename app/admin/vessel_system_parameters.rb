@@ -33,7 +33,7 @@ ActiveAdmin.register VesselSystemParameter do
   # ==== EDIT ====
   # ==============
 
-  permit_params :vessel_system_id, :parameter_id, :min_satisfactory, :max_satisfactory
+  permit_params :vessel_system_id, :parameter_id, :min_satisfactory, :max_satisfactory, :code
 
   form do |f|
     inputs "Details" do
