@@ -18,6 +18,7 @@ class VesselTrackableMetric
     limits = []
     limits << chart_limit_line(label: 'Satisfactory max', value: range[1], color: '#00ff00') if range[1].present?
     limits << chart_limit_line(label: 'Satisfactory min', value: range[0], color: '#ff0000') if range[0].present?
+    limits
   end
 
   def values
