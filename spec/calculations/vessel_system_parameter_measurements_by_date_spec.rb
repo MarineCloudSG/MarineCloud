@@ -28,7 +28,7 @@ RSpec.describe VesselSystemParameterMeasurementsByDate do
         it 'takes proper results' do
           expect(subject.count).to be expected_measurements.count
           subject.zip(expected_measurements).each do |result, measurement|
-            expect(result[1][:value]).to eq(measurement.value)
+            expect(result.value).to eq(measurement.value)
           end
         end
       end
@@ -38,7 +38,7 @@ RSpec.describe VesselSystemParameterMeasurementsByDate do
         it 'takes proper results' do
           expect(subject.count).to be expected_measurements.count
           subject.zip(expected_measurements).each do |result, measurement|
-            expect(result[1][:value]).to eq(measurement.value)
+            expect(result.value).to eq(measurement.value)
           end
         end
       end
@@ -53,7 +53,7 @@ RSpec.describe VesselSystemParameterMeasurementsByDate do
           end
           expect(subject.count).to be expected_measurements.count
           subject.zip(expected_measurements).each do |result, measurement|
-            expect(result[1][:value]).to eq(measurement.value)
+            expect(result.value).to eq(measurement.value)
           end
         end
       end
@@ -82,7 +82,7 @@ RSpec.describe VesselSystemParameterMeasurementsByDate do
         it 'takes proper results' do
           expect(subject.count).to be expected_measurements.count
           subject.zip(expected_measurements).each do |result, measurement|
-            expect(result[1][:value]).to eq(measurement.value)
+            expect(result.value).to eq(measurement.value)
           end
         end
       end

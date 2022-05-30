@@ -3,15 +3,6 @@ class VesselSystemParameterMeasurementsByDate < Patterns::Calculation
   private
 
   def result
-    measurements_with_photometer_precedence.map do |measurement|
-      [
-        measurement.taken_at.to_date,
-        measurement
-      ]
-    end
-  end
-
-  def measurements_with_photometer_precedence
     measurements = []
     current_start_date = date_range.first
     while current_start_date < date_range.last

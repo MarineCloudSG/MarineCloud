@@ -6,7 +6,8 @@ class VesselSystemParameterDecorator < ApplicationDecorator
   end
 
   def satisfactory_range_text
-    min, max = object.satisfactory_range
+    min = object.lowest_satisfactory_range
+    max = object.highest_satisfactory_range
     result ||= "#{min} => #{max}" if min.present? && max.present?
     result ||= "< #{max}" if max.present?
     result ||= "> #{min}" if min.present?

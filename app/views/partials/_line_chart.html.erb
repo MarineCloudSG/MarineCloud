@@ -1,11 +1,11 @@
 <div class="px-4 py-5 mb-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
-  <dt class="text-xl font-semibold text-gray-900 truncate"><%= trackable_metric.name %></dt>
+  <dt class="text-xl font-semibold text-gray-900 truncate"><%= chart_data.name %></dt>
   <dd class="mt-1">&nbsp;</dd>
   <script>
-    recommendationRules['<%= "vessel-chart-#{trackable_metric.vessel_system_parameter.id}" %>'] = <%= raw trackable_metric.recommendations.to_json %>;
+    recommendationRules['<%= "vessel-chart-#{chart_data.vessel_system_parameter.id}" %>'] = <%= raw chart_data.recommendations.to_json %>;
   </script>
-  <%= line_chart trackable_metric.values, **{
-    id: "vessel-chart-#{trackable_metric.vessel_system_parameter.id}",
+  <%= line_chart chart_data.metric.values, **{
+    id: "vessel-chart-#{chart_data.vessel_system_parameter.id}",
     height: "150px",
     library: {
       xAxis: {
@@ -14,7 +14,7 @@
       },
       yAxis: {
         min: 0,
-        plotLines: trackable_metric.satisfactory_range_limits.map do |limit|
+        plotLines: chart_data.metric.satisfactory_range_limits.map do |limit|
           {
             width: 2.5,
             value: limit.value,
@@ -24,7 +24,7 @@
       },
       annotations: [
         {
-          labels: trackable_metric.out_of_range_values.map do |date, data|
+          labels: chart_data.metric.out_of_range_values.map do |date, data|
             {
               point: { x: date.to_time.to_i * 1000, y: data[:value], xAxis: 0, yAxis: 0 },
               backgroundColor: "rgba(0, 0, 0, 0.35)",
@@ -41,24 +41,29 @@
     },
   }
   %>
-  <div class="mt-2">
-    <h3 class="text-lg leading-6 font-medium text-gray-900">Current recommendation: RECOMMENDATION TEXT</h3>
-    <h3 class="text-sm leading-6 font-medium text-gray-900">% of measurements match the satisfactory range</h3>
+  <% if chart_data.satisfactory_statistics.count > 1 %>
+    <div class="mt-2">
+    <h3 class="text-lg leading-6 font-medium text-gray-900">% of measurements match the satisfactory range</h3>
+      <dl class="mt-1 grid grid-cols-1 gap-5 sm:grid-cols-<%= chart_data.satisfactory_statistics.count %>">
+        <div class="px-4 py-1 bg-white shadow rounded-lg overflow-hidden sm:p-2 bg-green-100">
+          <dt class="text-sm font-medium text-gray-500 truncate">within</dt>
+          <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= chart_data.satisfactory_statistics[:in_range].round %>%</dd>
+        </div>
 
-    <dl class="mt-1 grid grid-cols-1 gap-5 sm:grid-cols-3">  <!-- zmien na sm:grid-cols-2 jesli dwie kolumny tylko --->
+        <% if chart_data.satisfactory_statistics[:overrange].present? %>
+          <div class="px-4 py-1 bg-white shadow rounded-lg overflow-hidden sm:p-2 bg-red-100">
+            <dt class="text-sm font-medium text-gray-500 truncate">above</dt>
+            <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= chart_data.satisfactory_statistics[:overrange].round %>%</dd>
+          </div>
+        <% end %>
 
-      <div class="px-4 py-1 bg-white shadow rounded-lg overflow-hidden sm:p-2 bg-green-100">
-        <dt class="text-sm font-medium text-gray-500 truncate">within</dt>
-        <dd class="mt-1 text-3xl font-semibold text-gray-900">70%</dd>
-      </div>
-      <div class="px-4 py-1 bg-white shadow rounded-lg overflow-hidden sm:p-2 bg-red-100">
-        <dt class="text-sm font-medium text-gray-500 truncate">above</dt>
-        <dd class="mt-1 text-3xl font-semibold text-gray-900">20%</dd>
-      </div>
-      <div class="px-4 py-1 bg-white shadow rounded-lg overflow-hidden sm:p-2 bg-red-100">
-        <dt class="text-sm font-medium text-gray-500 truncate">below</dt>
-        <dd class="mt-1 text-3xl font-semibold text-gray-900">10%</dd>
-      </div>
-    </dl>
-  </div>
+        <% if chart_data.satisfactory_statistics[:underrange].present? %>
+          <div class="px-4 py-1 bg-white shadow rounded-lg overflow-hidden sm:p-2 bg-red-100">
+            <dt class="text-sm font-medium text-gray-500 truncate">below</dt>
+            <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= chart_data.satisfactory_statistics[:underrange].round %>%</dd>
+          </div>
+        <% end %>
+      </dl>
+    </div>
+  <% end %>
 </div>

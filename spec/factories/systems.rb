@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :system do
-    name { "MyString" }
-    code { "MyString" }
+    name { Faker::Name.unique.name }
+    code { Faker::Name.unique.name }
   end
 end

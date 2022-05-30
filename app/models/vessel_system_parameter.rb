@@ -5,9 +5,15 @@ class VesselSystemParameter < ApplicationRecord
   has_one :system, through: :vessel_system
   has_many :measurements, dependent: :delete_all
 
-  def satisfactory_range
-    return [min_satisfactory, max_satisfactory] if min_satisfactory.present? || max_satisfactory.present?
+  def lowest_satisfactory_range
+    overrides_satisfactory? ? min_satisfactory : parameter.min_satisfactory
+  end
 
-    [parameter.min_satisfactory, parameter.max_satisfactory]
+  def highest_satisfactory_range
+    overrides_satisfactory? ? max_satisfactory : parameter.max_satisfactory
+  end
+
+  def overrides_satisfactory?
+    min_satisfactory.present? || max_satisfactory.present?
   end
 end

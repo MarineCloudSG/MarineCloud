@@ -15,7 +15,7 @@ class VesselsController < BaseController
         vessel: resource,
         date_range: date_range,
         comments: comments,
-        metrics_by_system: metrics_by_system
+        charts_data_by_system: charts_data_by_system
       }
     end
   end
@@ -26,8 +26,8 @@ class VesselsController < BaseController
     resource.comments.order(year: :desc, month: :desc, created_at: :desc)
   end
 
-  def metrics_by_system
-    VesselTrackableMetricsBySystem.result_for(
+  def charts_data_by_system
+    VesselChartsDataBySystem.result_for(
       vessel: resource,
       date_range: date_range
     )
