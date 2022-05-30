@@ -15,15 +15,19 @@ class VesselsController < BaseController
         vessel: resource,
         date_range: date_range,
         comments: comments,
-        charts_data_by_system: charts_data_by_system
+        charts_data_by_system: charts_data_by_system,
+        assigned_date: date_range.end.to_date.beginning_of_month
       }
     end
   end
 
   private
 
+
   def comments
-    resource.comments.order(year: :desc, month: :desc, created_at: :desc)
+    resource.comments
+            .where(assigned_date: date_range)
+            .order(assigned_date: :desc, created_at: :desc)
   end
 
   def charts_data_by_system
@@ -37,14 +41,16 @@ class VesselsController < BaseController
     start_date..end_date
   end
 
-  private
-
   def end_date
-    params.fetch(:end_date, start_date.end_of_month).to_date
+    params[:end_date]&.to_date || start_date.beginning_of_month + 1.month
   end
 
   def start_date
-    params.fetch(:start_date, Date.today.beginning_of_month - 1.month).to_date
+    params[:start_date]&.to_date || default_start_date
+  end
+
+  def default_start_date
+    Date.today.beginning_of_month - 1.month
   end
 
   def vessel_group_ids

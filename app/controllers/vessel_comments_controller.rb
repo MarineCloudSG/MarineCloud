@@ -13,6 +13,6 @@ class VesselCommentsController < BaseController
   end
 
   def comment_params
-    params.require(:vessel_comment).permit(:message, :month, :year)
+    params.require(:vessel_comment).permit(:message, :assigned_date)
   end
 end

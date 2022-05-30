@@ -4,8 +4,7 @@
   </div>
   <div class="min-w-0 flex-1">
     <%= form_for [vessel, VesselComment.new] do |f| %>
-      <%= f.hidden_field :year, { value: year } %>
-      <%= f.hidden_field :month, { value: month } %>
+      <%= f.hidden_field :assigned_date, { value: assigned_date } %>
       <div class="border-b border-gray-200 focus-within:border-sky-600">
         <label for="comment" class="sr-only">Add your comment</label>
         <%= f.text_area :message,

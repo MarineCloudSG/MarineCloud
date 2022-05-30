@@ -39,8 +39,7 @@
       <div>
         <%= render partial: 'vessel_comments/post_vessel_comment', locals: {
           vessel: resource,
-          year: date_range.end.year,
-          month: date_range.end.month
+          assigned_date: assigned_date
         } %>
         <ul role="list" class="divide-y divide-gray-200">
           <%= render comments %>

@@ -4,10 +4,9 @@ RSpec.describe SendDataImportReminders do
 
   describe '.call' do
     it 'sends email to every vessel with no measurement last month' do
-      user = create :user
-      vessel1 = create :vessel, user: user
-      vessel2 = create :vessel, user: user
-      vessel3 = create :vessel, user: user
+      vessel1 = create :vessel, user: (create :user)
+      vessel2 = create :vessel, user: (create :user)
+      vessel3 = create :vessel, user: (create :user)
       create :measurements_import, vessel: vessel2, created_at: DateTime.new(2020, 1, 23)
       mailer = VesselMailer.new
       mail = double

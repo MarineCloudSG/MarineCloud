@@ -5,7 +5,7 @@ RSpec.describe User, type: :model do
     it "retrieves all vessels with user's id or vessel group managed by user" do
       user = create :user
       vessel1 = create :vessel, user: user
-      vessel2 = create :vessel, user: user
+      vessel2 = create :vessel
       vessel3 = create :vessel
       vessel4 = create :vessel
       create :vessel_group, users: [user], vessels: [vessel2]
