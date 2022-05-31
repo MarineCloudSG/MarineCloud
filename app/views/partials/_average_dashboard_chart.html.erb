@@ -1,0 +1,23 @@
+<div class="px-4 py-5 mb-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+  <dt class="text-xl font-semibold text-gray-900 truncate"><%= parameter.name %></dt>
+  <dd class="mt-1"><%= system.name %></dd>
+  <%= column_chart measurements,
+                   id: "average-vessel-chart-#{system.name}-#{parameter.name}",
+                   height: '150px',
+                   library: {
+                     yAxis: {
+                       min: 0,
+                       plotLines: [{
+                                     width: 2.5,
+                                     value: parameter.min_satisfactory,
+                                     color: '#ff0000'
+                                   },{
+                                     width: 2.5,
+                                     value: parameter.max_satisfactory,
+                                     color: '#00ff00'
+                                   }]
+                     },
+                   }
+  %>
+</div>
+

@@ -8,3 +8,17 @@
     ) %>
   <% end %>
 </div>
+
+<div class="grid grid-cols-1 mt-6">
+  <%= render partial: 'partials/dashboard_vessel_filters', locals: { start_date: date_range.begin, end_date: date_range.end, vessel_group_ids: vessel_group_ids } %>
+
+  <% system_parameters.each do |system, parameter| %>
+      <%= render partial: 'partials/average_dashboard_chart',
+                     locals: {
+                        measurements: AverageVesselSystemParameterMeasurements.result_for(
+                          system: system, parameter: parameter, vessel_group_ids: vessel_group_ids,
+                          date_range: date_range
+                        ), system: system, parameter: parameter }
+      %>
+<% end %>
+</div>

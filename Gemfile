@@ -150,6 +150,8 @@ group :test do
   gem "simplecov", require: false
 
   gem "cronex"
+
+  gem "faker"
 end
 
 group :development do

@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 
 class VesselsController < BaseController
+  def index
+    render locals: {
+      system_parameters: system_parameters,
+      date_range: date_range,
+      vessel_group_ids: vessel_group_ids
+    }
+  end
+
   def show
     super do
       return render locals: {
@@ -37,5 +45,19 @@ class VesselsController < BaseController
 
   def start_date
     params.fetch(:start_date, Date.today.beginning_of_month - 1.month).to_date
+  end
+
+  def vessel_group_ids
+    params.fetch(:vessel_group_ids, current_user.vessel_groups.pluck(:id)).map(&:to_i)
+  end
+
+  def vessel_ids
+    Vessel.joins(:vessel_group).where(vessel_group_id: vessel_group_ids).pluck(:id).uniq
+  end
+
+  def system_parameters
+    SystemParametersForVesselIdsQuery.call(vessel_ids: vessel_ids)
+                                     .map { |vsp| [vsp.system, vsp.parameter] }
+                                     .uniq
   end
 end

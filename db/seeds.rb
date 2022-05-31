@@ -76,7 +76,11 @@ if Rails.env.development?
     'Dexie' => 'Stark Industries',
     'Maverick' => 'Stark Industries',
     'Ironboat' => 'Stark Industries',
-    'Battie' => 'Wayne Enterprise'
+    'Ironboat2' => 'Stark Industries',
+    'Ironboat3' => 'Stark Industries',
+    'Battie' => 'Wayne Enterprise',
+    'Battie2' => 'Wayne Enterprise',
+    'Battie3' => 'Wayne Enterprise',
   }.each do |vessel_name, group_name|
     group = VesselGroup.where(name: group_name).first_or_create!
     user = User.find_by!(email: 'user@example.com')
@@ -99,7 +103,7 @@ if Rails.env.development?
     next if vessel.vessel_system_parameters.exists?
 
     vessel.vessel_systems.each do |vessel_system|
-      Parameter.all.sample(5).each do |parameter|
+      Parameter.all.sample(7).each do |parameter|
         system_parameter = VesselSystemParameter.create!(
           vessel_system: vessel_system,
           code: parameters_data[parameter.name][:csv_code],

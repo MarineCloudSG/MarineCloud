@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 202204020181761) do
+ActiveRecord::Schema.define(version: 202204020181762) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,8 +55,8 @@ ActiveRecord::Schema.define(version: 202204020181761) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "vessel_system_parameter_id", null: false
-    t.bigint "measurements_import_id", null: false
     t.integer "state", default: 0
+    t.bigint "measurements_import_id"
     t.index ["measurements_import_id"], name: "index_measurements_on_measurements_import_id"
     t.index ["vessel_system_parameter_id"], name: "index_measurements_on_vessel_system_parameter_id"
   end
@@ -64,9 +64,9 @@ ActiveRecord::Schema.define(version: 202204020181761) do
   create_table "measurements_imports", force: :cascade do |t|
     t.bigint "vessel_id", null: false
     t.string "filename"
-    t.integer "source"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "source"
     t.index ["vessel_id"], name: "index_measurements_imports_on_vessel_id"
   end
 
@@ -90,8 +90,8 @@ ActiveRecord::Schema.define(version: 202204020181761) do
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at", precision: 6
-    t.datetime "remember_created_at", precision: 6
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "first_name"
@@ -128,9 +128,9 @@ ActiveRecord::Schema.define(version: 202204020181761) do
     t.bigint "parameter_id", null: false
     t.float "min_satisfactory"
     t.float "max_satisfactory"
-    t.string "code"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "code"
     t.index ["parameter_id"], name: "index_vessel_system_parameters_on_parameter_id"
     t.index ["vessel_system_id"], name: "index_vessel_system_parameters_on_vessel_system_id"
   end
@@ -138,9 +138,9 @@ ActiveRecord::Schema.define(version: 202204020181761) do
   create_table "vessel_systems", force: :cascade do |t|
     t.bigint "vessel_id", null: false
     t.bigint "system_id", null: false
-    t.string "code"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "code"
     t.index ["system_id"], name: "index_vessel_systems_on_system_id"
     t.index ["vessel_id"], name: "index_vessel_systems_on_vessel_id"
   end
@@ -155,13 +155,13 @@ ActiveRecord::Schema.define(version: 202204020181761) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "flag"
     t.bigint "user_id"
+    t.index ["name"], name: "index_vessels_on_name", unique: true
     t.index ["user_id"], name: "index_vessels_on_user_id"
     t.index ["vessel_group_id"], name: "index_vessels_on_vessel_group_id"
   end
 
   add_foreign_key "import_logs", "measurements_imports"
   add_foreign_key "import_logs", "vessels"
-  add_foreign_key "measurements", "measurements_imports"
   add_foreign_key "measurements", "vessel_system_parameters"
   add_foreign_key "measurements_imports", "vessels"
   add_foreign_key "vessel_comments", "users"

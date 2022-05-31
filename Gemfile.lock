@@ -201,6 +201,8 @@ GEM
       railties (>= 5.0.0)
     factory_trace (0.4.1)
       factory_bot (>= 4.0)
+    faker (2.20.0)
+      i18n (>= 1.8.11, < 2)
     ffi (1.15.5)
     formtastic (4.0.0)
       actionpack (>= 5.2.0)
@@ -485,6 +487,7 @@ DEPENDENCIES
   dry-rails (~> 0.1)
   factory_bot_rails
   factory_trace
+  faker
   grover
   heroicon
   inherited_resources
