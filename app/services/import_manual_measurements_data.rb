@@ -28,10 +28,23 @@ class ImportManualMeasurementsData < Patterns::Service
   XLSX_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 
   def parser_results
-    ManualMeasurementsDataParser.read(filepath).fetch(:data).map { |row| ParsedManualMeasurementDataRow.new(row, vessel, measurements_import) }
+    parser_output.fetch(:data).map { |row| ParsedManualMeasurementDataRow.new(row, vessel, measurements_import) }
+  end
+
+  def tested_by
+    parser_output.fetch(:headers)[:tested_by]
+  end
+
+  def parser_output
+    @parser_output ||= ManualMeasurementsDataParser.read(filepath)
   end
 
   def measurements_import
-    @measurements_import ||= MeasurementsImport.create!(vessel: vessel, filename: filepath, source: MeasurementsImport::MANUAL_XLSX_SOURCE)
+    @measurements_import ||= MeasurementsImport.create!(
+      vessel: vessel,
+      filename: filepath,
+      source: MeasurementsImport::MANUAL_XLSX_SOURCE,
+      tested_by: tested_by
+    )
   end
 end
