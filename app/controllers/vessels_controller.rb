@@ -3,7 +3,7 @@
 class VesselsController < BaseController
   def index
     render locals: {
-      system_parameters: system_parameters,
+      grouped_system_parameters: grouped_system_parameters,
       date_range: date_range,
       vessel_group_ids: vessel_group_ids
     }
@@ -55,9 +55,8 @@ class VesselsController < BaseController
     Vessel.joins(:vessel_group).where(vessel_group_id: vessel_group_ids).pluck(:id).uniq
   end
 
-  def system_parameters
-    SystemParametersForVesselIdsQuery.call(vessel_ids: vessel_ids)
-                                     .map { |vsp| [vsp.system, vsp.parameter] }
-                                     .uniq
+  def grouped_system_parameters
+    SystemParametersForVesselIdsQuery.call(vessel_ids: vessel_ids).group_by(&:system)
+
   end
 end

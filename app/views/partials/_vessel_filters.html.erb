@@ -3,8 +3,8 @@
   <%= form_with method: :get do |f| %>
     <div>
       <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
-        <%= f.date_field :start_date, {value: start_date, class: 'form-control', onchange: 'this.form.submit()'}  %>
-        <%= f.date_field :end_date, {value: end_date, class: 'form-control', onchange: 'this.form.submit()'} %>
+        <%= f.date_field :start_date, {value: start_date, class: 'form-control', onchange: 'if(!this.value)return;this.form.submit()'}  %>
+        <%= f.date_field :end_date, {value: end_date, class: 'form-control', onchange: 'if(!this.value)return;this.form.submit()'} %>
       </div>
     </div>
   <% end %>

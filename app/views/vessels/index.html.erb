@@ -11,14 +11,21 @@
 
 <div class="grid grid-cols-1 mt-6">
   <%= render partial: 'partials/dashboard_vessel_filters', locals: { start_date: date_range.begin, end_date: date_range.end, vessel_group_ids: vessel_group_ids } %>
+  <% grouped_system_parameters.each do |system, system_parameters| %>
+    <div class="grid grid-cols-1 mt-6">
+      <%= render partial: 'partials/separator', locals: { system: system.name } %>
+      <% system_parameters.each do |system_parameter| %>
 
-  <% system_parameters.each do |system, parameter| %>
-      <%= render partial: 'partials/average_dashboard_chart',
+        <div class="grid grid-cols-1 mt-6">
+          <%= render partial: 'partials/average_dashboard_chart',
                      locals: {
-                        measurements: AverageVesselSystemParameterMeasurements.result_for(
-                          system: system, parameter: parameter, vessel_group_ids: vessel_group_ids,
-                          date_range: date_range
-                        ), system: system, parameter: parameter }
-      %>
-<% end %>
+                       measurements: AverageVesselSystemParameterMeasurements.result_for(
+                         system: system, parameter: system_parameter.parameter, vessel_group_ids: vessel_group_ids,
+                         date_range: date_range
+                       ), system: system, parameter: system_parameter.parameter }
+          %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 </div>

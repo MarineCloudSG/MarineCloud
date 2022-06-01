@@ -3,8 +3,8 @@
   <%= form_with method: :get do |f| %>
     <div>
       <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5">
-        <%= f.date_field :start_date, {value: start_date, class: 'form-control', onchange: 'this.form.submit()'}  %>
-        <%= f.date_field :end_date, {value: end_date, class: 'form-control', onchange: 'this.form.submit()'} %>
+        <%= f.date_field :start_date, {value: start_date, class: 'form-control', onchange: 'if(!this.value)return;this.form.submit()'}  %>
+        <%= f.date_field :end_date, {value: end_date, class: 'form-control', onchange: 'if(!this.value)return;this.form.submit()'} %>
 
         <div>
           <button id="dropdownVesselGroupButton" data-dropdown-toggle="dropdownVesselGroup" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
