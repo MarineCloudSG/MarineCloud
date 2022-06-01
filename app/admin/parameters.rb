@@ -11,7 +11,6 @@ ActiveAdmin.register Parameter do
     selectable_column
     id_column
     column :name
-    column :code
     column :unit
     column :min_satisfactory
     column :max_satisfactory
@@ -22,5 +21,5 @@ ActiveAdmin.register Parameter do
   # ==== EDIT ====
   # ==============
 
-  permit_params :name, :code, :unit, :min_satisfactory, :max_satisfactory
+  permit_params :name, :unit, :min_satisfactory, :max_satisfactory
 end

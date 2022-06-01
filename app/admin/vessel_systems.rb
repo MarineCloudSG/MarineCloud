@@ -16,7 +16,7 @@ ActiveAdmin.register VesselSystem do
       vessel_system.system.name
     end
     column 'Code' do |vessel_system|
-      vessel_system.system.code
+      vessel_system.code.presence || vessel_system.system.code
     end
     column :created_at
     actions
