@@ -2,7 +2,7 @@
   <dt class="text-xl font-semibold text-gray-900 truncate"><%= chart_data.name %></dt>
   <dd class="mt-1">&nbsp;</dd>
   <script>
-    recommendationRules['<%= "vessel-chart-#{chart_data.vessel_system_parameter.id}" %>'] = <%= raw chart_data.recommendations.to_json %>;
+    recommendationRules['<%= "vessel-chart-#{chart_data.vessel_system_parameter.id}" %>'] = <%= raw chart_data.recommendations_json %>;
   </script>
   <%= line_chart chart_data.metric.values, **{
     id: "vessel-chart-#{chart_data.vessel_system_parameter.id}",
@@ -43,7 +43,10 @@
   %>
   <% if chart_data.satisfactory_statistics.count > 1 %>
     <div class="mt-2">
-    <h3 class="text-lg leading-6 font-medium text-gray-900">% of measurements match the satisfactory range</h3>
+      <% if chart_data.latest_recommendations.any? %>
+        <h3 class="text-lg leading-6 font-medium text-gray-900">Current recommendation: <%= chart_data.latest_recommendations.join(', ') %></h3>
+      <% end %>
+      <h3 class="text-lg leading-6 font-medium text-gray-900">% of measurements match the satisfactory range</h3>
       <dl class="mt-1 grid grid-cols-1 gap-5 sm:grid-cols-<%= chart_data.satisfactory_statistics.count %>">
         <div class="px-4 py-1 bg-white shadow rounded-lg overflow-hidden sm:p-2 bg-green-100">
           <dt class="text-sm font-medium text-gray-500 truncate">within</dt>

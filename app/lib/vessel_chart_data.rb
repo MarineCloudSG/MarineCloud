@@ -29,10 +29,18 @@ class VesselChartData
     )
   end
 
+  def latest_recommendations
+    @latest_recommendations ||= recommendations.select { |r| r.applies_for_value?(measurements.last.value) }.map(&:message)
+  end
+
+  def recommendations_json
+    recommendations.map { |r| { min: r.value_min, max: r.value_max, message: r.message } }.to_json
+  end
+
   def recommendations
     @recommendations ||= ParameterRecommendation.where(
       parameter: vessel_system_parameter.parameter,
       chemical_program: vessel_system_parameter.chemical_program
-    ).map { |r| { min: r.value_min, max: r.value_max, message: r.message } }
+    )
   end
 end
