@@ -1,10 +1,9 @@
+# frozen_string_literal: true
+
 class ImportPhotometerData < Patterns::Service
-  InvalidFileFormat = Class.new(ArgumentError)
 
-  def initialize(file:, vessel:)
-    raise InvalidFileFormat unless file.content_type.eql?('text/csv')
-
-    @filepath = file.path
+  def initialize(filepath:, vessel:)
+    @filepath = filepath
     @vessel = vessel
   end
 
@@ -25,10 +24,15 @@ class ImportPhotometerData < Patterns::Service
   attr_reader :filepath, :vessel, :measurements_import
 
   def parser_results
-    PhotometerDataParser.read(filepath).map { |row| ParsedVesselPhotometerDataRow.new(row, vessel, measurements_import) }
+    PhotometerDataParser.read(filepath).map { |row| parser_row(row) }
+  end
+
+  def parser_row(row)
+    ParsedVesselPhotometerDataRow.new(row, vessel, measurements_import)
   end
 
   def measurements_import
-    @measurements_import ||= MeasurementsImport.create!(vessel: vessel, filename: filepath, source: MeasurementsImport::PHOTOMETER_CSV_SOURCE)
+    @measurements_import ||= MeasurementsImport.create!(vessel: vessel, filename: filepath,
+                                                        source: MeasurementsImport::PHOTOMETER_CSV_SOURCE)
   end
 end
