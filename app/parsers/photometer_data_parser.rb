@@ -16,7 +16,7 @@ class PhotometerDataParser
   attr_reader :filepath
 
   def csv_rows
-    @csv_rows ||= CSV.open(filepath, headers: true, liberal_parsing: true)
+    @csv_rows ||= CSV.open(filepath, headers: true, liberal_parsing: true, col_sep: ';')
   end
 
   def row_to_hash(row)
