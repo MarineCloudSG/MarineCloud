@@ -16,13 +16,16 @@ class VesselsController < BaseController
         date_range: date_range,
         comments: comments,
         charts_data_by_system: charts_data_by_system,
-        assigned_date: date_range.end.to_date.beginning_of_month
+        assigned_date: date_range.end.to_date.beginning_of_month,
+        available_systems: available_systems,
+        selected_system: selected_system,
+        available_parameters: available_parameters,
+        selected_parameters: selected_parameters
       }
     end
   end
 
   private
-
 
   def comments
     resource.comments
@@ -33,7 +36,9 @@ class VesselsController < BaseController
   def charts_data_by_system
     VesselChartsDataBySystem.result_for(
       vessel: resource,
-      date_range: date_range
+      date_range: date_range,
+      system: selected_system,
+      parameter_ids: selected_parameter_ids
     )
   end
 
@@ -63,6 +68,39 @@ class VesselsController < BaseController
 
   def grouped_system_parameters
     SystemParametersForVesselIdsQuery.call(vessel_ids: vessel_ids).group_by(&:system)
+  end
 
+  def available_systems
+    resource.systems
+  end
+
+  def selected_system_id
+    params[:system_id]
+  end
+
+  def selected_system
+    return if selected_system_id.blank?
+
+    available_systems.find(selected_system_id)
+  end
+
+  def available_parameter_ids
+    params = VesselSystemParameter.joins(:vessel_system).select(:parameter_id).distinct.where(vessel_systems: { vessel: resource })
+    params = params.where(vessel_systems: { system: selected_system }) unless selected_system.nil?
+    params
+  end
+
+  def available_parameters
+    Parameter.where(id: available_parameter_ids)
+  end
+
+  def selected_parameter_ids
+    params[:parameter_ids] || available_parameter_ids
+  end
+
+  def selected_parameters
+    return available_parameters if selected_parameter_ids.blank?
+
+    available_parameters.where(id: selected_parameter_ids)
   end
 end

@@ -4,3 +4,8 @@
 
 import { application } from "./application"
 
+import NotificationController from "./notification_controller.js"
+application.register("notification", NotificationController)
+
+import VesselFiltersController from "./vessel_filters_controller.js"
+application.register("vessel-filters", VesselFiltersController)

@@ -12,8 +12,9 @@ RSpec.describe VesselChartsDataBySystem do
       vsp2 = create :vessel_system_parameter, vessel_system: vessel_system1
       vsp3 = create :vessel_system_parameter, vessel_system: vessel_system2
       date_range = Date.new(2020, 5, 1).all_month
+      parameter_ids = [vsp1.parameter_id, vsp2.parameter_id, vsp3.parameter_id]
 
-      result = VesselChartsDataBySystem.result_for(vessel: vessel_system1.vessel, date_range: date_range)
+      result = VesselChartsDataBySystem.result_for(vessel: vessel_system1.vessel, date_range: date_range, parameter_ids: parameter_ids)
       first = result['First system']
       second = result['Second system']
 
