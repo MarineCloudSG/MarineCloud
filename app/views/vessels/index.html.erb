@@ -13,7 +13,7 @@
   <%= render partial: 'partials/dashboard_vessel_filters', locals: { start_date: date_range.begin, end_date: date_range.end, vessel_group_ids: vessel_group_ids } %>
   <% grouped_system_parameters.each do |system, system_parameters| %>
     <div class="grid grid-cols-1 mt-6">
-      <%= render partial: 'partials/separator', locals: { system: system.name } %>
+      <%= render partial: 'partials/separator', locals: { system_name: system.name } %>
       <% system_parameters.each do |system_parameter| %>
 
         <div class="grid grid-cols-1 mt-6">
