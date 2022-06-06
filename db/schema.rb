@@ -181,7 +181,6 @@ ActiveRecord::Schema.define(version: 202204020181769) do
     t.string "name"
     t.string "company_name"
     t.string "email"
-    t.integer "chemical_program"
     t.bigint "vessel_group_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
