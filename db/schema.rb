@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 202204020181764) do
+ActiveRecord::Schema.define(version: 202204020181769) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,27 @@ ActiveRecord::Schema.define(version: 202204020181764) do
     t.datetime "remember_created_at", precision: 6
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
+
+  create_table "chemical_program_parameters", force: :cascade do |t|
+    t.bigint "chemical_program_id", null: false
+    t.bigint "system_id", null: false
+    t.bigint "parameter_id", null: false
+    t.float "min_satisfactory"
+    t.float "max_satisfactory"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["chemical_program_id", "system_id", "parameter_id"], name: "index_chemical_program_parameter_system", unique: true
+    t.index ["chemical_program_id"], name: "index_chemical_program_parameters_on_chemical_program_id"
+    t.index ["parameter_id"], name: "index_chemical_program_parameters_on_parameter_id"
+    t.index ["system_id"], name: "index_chemical_program_parameters_on_system_id"
+  end
+
+  create_table "chemical_programs", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_chemical_programs_on_name", unique: true
   end
 
   create_table "import_logs", force: :cascade do |t|
@@ -78,6 +99,8 @@ ActiveRecord::Schema.define(version: 202204020181764) do
     t.string "message"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "chemical_program_id", null: false
+    t.index ["chemical_program_id"], name: "index_parameter_recommendations_on_chemical_program_id"
     t.index ["parameter_id"], name: "index_parameter_recommendations_on_parameter_id"
   end
 
@@ -86,8 +109,6 @@ ActiveRecord::Schema.define(version: 202204020181764) do
     t.string "unit"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.float "min_satisfactory"
-    t.float "max_satisfactory"
   end
 
   create_table "systems", force: :cascade do |t|
@@ -166,15 +187,21 @@ ActiveRecord::Schema.define(version: 202204020181764) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "flag"
     t.bigint "user_id"
+    t.bigint "chemical_program_id", null: false
+    t.index ["chemical_program_id"], name: "index_vessels_on_chemical_program_id"
     t.index ["name"], name: "index_vessels_on_name", unique: true
     t.index ["user_id"], name: "index_vessels_on_user_id"
     t.index ["vessel_group_id"], name: "index_vessels_on_vessel_group_id"
   end
 
+  add_foreign_key "chemical_program_parameters", "chemical_programs"
+  add_foreign_key "chemical_program_parameters", "parameters"
+  add_foreign_key "chemical_program_parameters", "systems"
   add_foreign_key "import_logs", "measurements_imports"
   add_foreign_key "import_logs", "vessels"
   add_foreign_key "measurements", "vessel_system_parameters"
   add_foreign_key "measurements_imports", "vessels"
+  add_foreign_key "parameter_recommendations", "chemical_programs"
   add_foreign_key "parameter_recommendations", "parameters"
   add_foreign_key "vessel_comments", "users"
   add_foreign_key "vessel_comments", "vessels"
@@ -182,6 +209,7 @@ ActiveRecord::Schema.define(version: 202204020181764) do
   add_foreign_key "vessel_system_parameters", "vessel_systems"
   add_foreign_key "vessel_systems", "systems"
   add_foreign_key "vessel_systems", "vessels"
+  add_foreign_key "vessels", "chemical_programs"
   add_foreign_key "vessels", "users"
   add_foreign_key "vessels", "vessel_groups"
 end

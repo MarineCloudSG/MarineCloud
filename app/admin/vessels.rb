@@ -70,7 +70,7 @@ ActiveAdmin.register Vessel do
   # ==== EDIT ====
   # ==============
 
-  permit_params :name, :vessel_group_id, :company_name, :email, :chemical_program, :user_id
+  permit_params :name, :vessel_group_id, :company_name, :email, :chemical_program_id, :user_id
 
   form do |f|
     f.inputs do
@@ -78,7 +78,7 @@ ActiveAdmin.register Vessel do
       f.input :vessel_group
       f.input :company_name
       f.input :email
-      f.input :chemical_program, collection: Vessel.chemical_programs.map{|name, _id| [name.humanize, name]}
+      f.input :chemical_program
       f.input :user, label: 'Managed by', collection: User.pluck(:email, :id)
     end
     f.actions

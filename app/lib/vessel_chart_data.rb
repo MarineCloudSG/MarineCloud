@@ -30,7 +30,9 @@ class VesselChartData
   end
 
   def recommendations
-    @recommendations ||= ParameterRecommendation.where(parameter: vessel_system_parameter.parameter)
-                                                .map { |r| { min: r.value_min, max: r.value_max, message: r.message } }
+    @recommendations ||= ParameterRecommendation.where(
+      parameter: vessel_system_parameter.parameter,
+      chemical_program: vessel_system_parameter.chemical_program
+    ).map { |r| { min: r.value_min, max: r.value_max, message: r.message } }
   end
 end

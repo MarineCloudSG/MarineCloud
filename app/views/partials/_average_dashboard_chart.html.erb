@@ -9,11 +9,11 @@
                        min: 0,
                        plotLines: [{
                                      width: 2.5,
-                                     value: parameter.min_satisfactory,
+                                     value: parameter.chemical_program_parameters.minimum(:min_satisfactory),
                                      color: '#ff0000'
                                    },{
                                      width: 2.5,
-                                     value: parameter.max_satisfactory,
+                                     value: parameter.chemical_program_parameters.maximum(:max_satisfactory),
                                      color: '#00ff00'
                                    }]
                      },

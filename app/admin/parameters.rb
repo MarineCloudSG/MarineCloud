@@ -12,8 +12,6 @@ ActiveAdmin.register Parameter do
     id_column
     column :name
     column :unit
-    column :min_satisfactory
-    column :max_satisfactory
     actions
   end
 
@@ -21,5 +19,5 @@ ActiveAdmin.register Parameter do
   # ==== EDIT ====
   # ==============
 
-  permit_params :name, :unit, :min_satisfactory, :max_satisfactory
+  permit_params :name, :unit
 end
