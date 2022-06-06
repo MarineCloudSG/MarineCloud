@@ -2,6 +2,8 @@
 
 class VesselsController < BaseController
   def index
+    return redirect_to action: :show, id: managed_vessels.first.id if managed_vessels.count == 1
+
     render locals: {
       grouped_system_parameters: grouped_system_parameters,
       date_range: date_range,
@@ -26,6 +28,10 @@ class VesselsController < BaseController
   end
 
   private
+
+  def managed_vessels
+    current_user.managed_vessels
+  end
 
   def comments
     resource.comments

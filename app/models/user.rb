@@ -5,7 +5,7 @@ class User < ApplicationRecord
   # :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :recoverable, :rememberable, :validatable
 
-  has_many :vessels
+  has_one :vessel
   has_and_belongs_to_many :vessel_groups
 
   def managed_vessels
