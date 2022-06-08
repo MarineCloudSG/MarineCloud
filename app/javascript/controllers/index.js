@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import ExportPageController from "./export_page_controller.js"
+application.register("export-page", ExportPageController)
+
 import NotificationController from "./notification_controller.js"
 application.register("notification", NotificationController)
 

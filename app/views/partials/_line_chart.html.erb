@@ -1,5 +1,5 @@
 <div class="px-4 py-5 mb-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
-  <dt class="text-xl font-semibold text-gray-900 truncate"><%= chart_data.name %></dt>
+  <dt class="chart-name text-xl font-semibold text-gray-900 truncate"><%= chart_data.name %></dt>
   <dd class="mb-2"><%= chart_data.vessel_system_parameter.parameter.unit %>&nbsp;</dd>
   <script>
     recommendationRules['<%= "vessel-chart-#{chart_data.vessel_system_parameter.id}" %>'] = <%= raw chart_data.recommendations_json %>;
@@ -43,7 +43,7 @@
           load: js_function_name('setOutOfRangeValues')
         }
       }
-    },
+    }
   }
   %>
   <% if chart_data.satisfactory_statistics.count > 1 %>
@@ -52,7 +52,7 @@
         <h3 class="text-lg leading-6 font-medium text-gray-900">Current recommendation: <%= chart_data.latest_recommendations.join(', ') %></h3>
       <% end %>
       <h3 class="text-sm leading-6 font-medium text-gray-900">% of measurements match the satisfactory range</h3>
-      <dl class="mt-1 grid grid-cols-1 gap-5 sm:grid-cols-<%= chart_data.satisfactory_statistics.count %>">
+      <dl class="chart-statistics mt-1 grid grid-cols-1 gap-5 sm:grid-cols-<%= chart_data.satisfactory_statistics.count %>">
         <div class="px-4 py-1 bg-white shadow rounded-lg overflow-hidden sm:p-2 bg-green-100">
           <dt class="text-sm font-medium text-gray-500 truncate">within</dt>
           <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= chart_data.satisfactory_statistics[:in_range].round %>%</dd>

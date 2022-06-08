@@ -3,4 +3,5 @@
 @import "tailwindcss/components";
 @import "./custom.css";
 @import "tailwindcss/utilities.css";
+@import "./export.css";
 

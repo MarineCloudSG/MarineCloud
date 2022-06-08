@@ -13,6 +13,7 @@ class VesselsController < BaseController
 
   def show
     super do
+      @export_page = params.fetch(:export_page, false)
       @vessel_tested_by = vessel_tested_by
 
       return render locals: {
@@ -24,7 +25,8 @@ class VesselsController < BaseController
         available_systems: available_systems,
         selected_system: selected_system,
         available_parameters: available_parameters,
-        selected_parameters: selected_parameters
+        selected_parameters: selected_parameters,
+        export_url: params.permit(:start_date, :end_date, :system_id, parameter_ids: []).merge({export_page: true})
       }
     end
   end

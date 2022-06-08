@@ -123,8 +123,8 @@ ActiveRecord::Schema.define(version: 202204020181774) do
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
+    t.datetime "reset_password_sent_at", precision: 6
+    t.datetime "remember_created_at", precision: 6
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "first_name"
@@ -189,7 +189,7 @@ ActiveRecord::Schema.define(version: 202204020181774) do
     t.bigint "chemical_program_id", null: false
     t.index ["chemical_program_id"], name: "index_vessels_on_chemical_program_id"
     t.index ["name"], name: "index_vessels_on_name", unique: true
-    t.index ["user_id"], name: "index_vessels_on_user_id", unique: true
+    t.index ["user_id"], name: "index_vessels_on_user_id"
     t.index ["vessel_group_id"], name: "index_vessels_on_vessel_group_id"
   end
 

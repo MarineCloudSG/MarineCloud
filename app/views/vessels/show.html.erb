@@ -1,58 +1,60 @@
 <%= render partial: 'partials/upload_photometer_data_modal' %>
 <%= render partial: 'partials/upload_manual_measurements_data_modal' %>
 
-<%= render HeaderComponent.new title: resource.name, subheader: (VesselSubheaderComponent.new vessel: resource) do %>
-  <button class="btn-secondary mr-2 text-white bg-sky-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 hover:bg-sky-700" type="button" data-modal-toggle="uploadPhotometerDataModal">
-    Upload photometer data
-  </button>
-  <button class="btn-secondary mr-2 text-white bg-sky-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 hover:bg-sky-700" type="button" data-modal-toggle="uploadManualMeasurementsDataModal">
-    Upload manual measurements data
-  </button>
-  <button class="btn-secondary mr-2 text-white bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:bg-gray-700" type="button">
-    Export
-  </button>
-<% end %>
+<section id="vessel-page">
+  <%= render HeaderComponent.new title: resource.name, subheader: (VesselSubheaderComponent.new vessel: resource) do %>
+    <button class="btn-secondary mr-2 text-white bg-sky-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 hover:bg-sky-700" type="button" data-modal-toggle="uploadPhotometerDataModal">
+      Upload photometer data
+    </button>
+    <button class="btn-secondary mr-2 text-white bg-sky-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 hover:bg-sky-700" type="button" data-modal-toggle="uploadManualMeasurementsDataModal">
+      Upload manual measurements data
+    </button>
+    <a href="<%= url_for(export_url) %>" target="__blank" class="btn btn-secondary mr-2 text-white bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:bg-gray-700" type="button">
+      Export
+    </a>
+  <% end %>
 
-<div class="mt-8 max-w-3xl mx-auto grid grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
-  <div class="space-y-6 lg:col-start-1 lg:col-span-2">
-    <%= render partial: 'partials/vessel_filters', locals: {
-      start_date: date_range.begin,
-      end_date: date_range.end,
-      vessel: resource,
-      available_systems: available_systems,
-      selected_system: selected_system,
-      available_parameters: available_parameters,
-      selected_parameters: selected_parameters
-    } %>
+  <div class="vessel-charts mt-8 max-w-3xl mx-auto grid grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
+    <div class="vessel space-y-6 lg:col-start-1 lg:col-span-2">
+      <%= render partial: 'partials/vessel_filters', locals: {
+        start_date: date_range.begin,
+        end_date: date_range.end,
+        vessel: resource,
+        available_systems: available_systems,
+        selected_system: selected_system,
+        available_parameters: available_parameters,
+        selected_parameters: selected_parameters
+      } %>
 
-    <script> const recommendationRules = {} </script>
-    <% charts_data_by_system.each do |system_name, charts_data| %>
-      <%= render partial: 'partials/separator', locals: { system_name: system_name } %>
-      <% charts_data.each do |chart_data| %>
-        <%= render partial: 'partials/line_chart', locals: { chart_data: chart_data } %>
+      <script> const recommendationRules = {} </script>
+      <% charts_data_by_system.each do |system_name, charts_data| %>
+        <%= render partial: 'partials/separator', locals: { system_name: system_name } %>
+        <% charts_data.each do |chart_data| %>
+          <%= render partial: 'partials/line_chart', locals: { chart_data: chart_data } %>
+        <% end %>
       <% end %>
-    <% end %>
-  </div>
+    </div>
 
-  <section class="lg:col-start-3 lg:col-span-1">
-    <div class="relative">
-      <div class="absolute inset-0 flex items-center" aria-hidden="true">
-        <div class="w-full border-t border-gray-300"></div>
+    <section class="discussion lg:col-start-3 lg:col-span-1">
+      <div class="relative">
+        <div class="absolute inset-0 flex items-center" aria-hidden="true">
+          <div class="w-full border-t border-gray-300"></div>
+        </div>
+        <div class="relative flex justify-center">
+          <span class="px-3 bg-gray-100 text-lg font-medium text-gray-900"> Discussion </span>
+        </div>
       </div>
-      <div class="relative flex justify-center">
-        <span class="px-3 bg-gray-100 text-lg font-medium text-gray-900"> Discussion </span>
-      </div>
-    </div>
-    <div>
       <div>
-        <%= render partial: 'vessel_comments/post_vessel_comment', locals: {
-          vessel: resource,
-          assigned_date: assigned_date
-        } %>
-        <ul role="list" class="divide-y divide-gray-200">
-          <%= render comments %>
-        </ul>
+        <div>
+          <%= render partial: 'vessel_comments/post_vessel_comment', locals: {
+            vessel: resource,
+            assigned_date: assigned_date
+          } %>
+          <ul role="list" class="divide-y divide-gray-200">
+            <%= render comments %>
+          </ul>
+        </div>
       </div>
-    </div>
-  </section>
-</div>
+    </section>
+  </div>
+</section>

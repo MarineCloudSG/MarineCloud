@@ -11,8 +11,13 @@
     <%= render "application/favicon" %>
   </head>
 
-  <body class="h-full">
-    <div class="min-h-full">
+  <body class="h-full <%= 'export-page' if @export_page %>">
+    <div class="page-export-screen" data-controller="<%= 'export-page' if @export_page %>">
+      <div class="page-export-info">
+        <h1>Exporting</h1>
+      </div>
+    </div>
+    <div class="export-content min-h-full">
       <%= render "layouts/elements/menu" %>
 
       <div class="pt-5 pb-10">

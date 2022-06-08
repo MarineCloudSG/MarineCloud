@@ -13,6 +13,8 @@
     "esbuild": "^0.14.9",
     "flowbite": "^1.4.2",
     "highcharts": "^10.1.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
     "lodash": "^4.17.21",
     "patch-package": "^6.4.7",
     "postcss": "^8.4.5",
