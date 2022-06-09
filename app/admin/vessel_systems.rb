@@ -15,9 +15,8 @@ ActiveAdmin.register VesselSystem do
     column 'Name' do |vessel_system|
       vessel_system.system.name
     end
-    column 'Code' do |vessel_system|
-      vessel_system.code.presence || vessel_system.system.code
-    end
+    column :default_code
+    column 'Code override', :code
     column :created_at
     actions
   end

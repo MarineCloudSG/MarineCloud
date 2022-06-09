@@ -42,9 +42,10 @@ ActiveAdmin.register Vessel do
         panel 'Systems' do
           header_action link_to('Manage systems', admin_vessel_vessel_systems_path(vessel))
 
-          table_for vessel.systems do
+          table_for vessel.vessel_systems do
             column :name
-            column :code
+            column :default_code
+            column 'Code override', :code
           end
         end
       end
@@ -87,7 +88,7 @@ ActiveAdmin.register Vessel do
     f.inputs "Assigned systems" do
       f.has_many :vessel_systems, allow_destroy: true do |vs|
         vs.input :system
-        vs.input :code
+        vs.input :code, label: "Code override"
         vs.has_many :vessel_system_parameters, allow_destroy: true do |vsp|
           vsp.inputs "Assigned parameters" do
           vsp.input :parameter

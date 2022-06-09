@@ -7,4 +7,7 @@ class VesselSystem < ApplicationRecord
   has_many :chemical_program_parameters, through: :chemical_program
 
   accepts_nested_attributes_for :vessel_system_parameters
+
+  delegate :name, to: :system
+  delegate :code, to: :system, prefix: :default
 end
