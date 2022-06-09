@@ -18,8 +18,10 @@ ActiveAdmin.register VesselSystemParameter do
     column 'System' do |vessel_system_parameter|
       vessel_system_parameter.vessel_system.system.name
     end
-    column :min_satisfactory
-    column :max_satisfactory
+    column :default_min_satisfactory
+    column "Min satisfactory override", :min_satisfactory
+    column :default_max_satisfactory
+    column "Max satisfactory override", :max_satisfactory
     column :code
     column 'Satisfactory range' do |vessel_system_parameter|
       vessel_system_parameter.satisfactory_range_text
@@ -39,8 +41,8 @@ ActiveAdmin.register VesselSystemParameter do
     inputs "Details" do
       input :parameter_id, as: :select, collection: Parameter.all.map { |p| ["#{p.name} (#{p.unit})", p.id] }
       input :vessel_system_id, as: :select, collection: vessel.vessel_systems.map { |vs| [vs.system.name, vs.id] }
-      input :min_satisfactory
-      input :max_satisfactory
+      input :min_satisfactory, label: "min satisfactory override"
+      input :max_satisfactory, label: "max satisfactory override"
       input :code
       end
     actions

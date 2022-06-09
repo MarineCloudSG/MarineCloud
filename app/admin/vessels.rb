@@ -24,7 +24,6 @@ ActiveAdmin.register Vessel do
   # ==== SHOW ====
   # ==============
 
-
   show do
     columns do
       column do
@@ -58,8 +57,10 @@ ActiveAdmin.register Vessel do
             column 'Name' do |vessel_system_parameter|
               link_to vessel_system_parameter.name, edit_admin_vessel_vessel_system_parameter_path(vessel, vessel_system_parameter)
             end
-            column :min_satisfactory
-            column :max_satisfactory
+            column :default_min_satisfactory
+            column "Min satisfactory override", :min_satisfactory
+            column :default_max_satisfactory
+            column "Max satisfactory override", :max_satisfactory
           end
         end
       end
@@ -70,7 +71,9 @@ ActiveAdmin.register Vessel do
   # ==== EDIT ====
   # ==============
 
-  permit_params :name, :vessel_group_id, :company_name, :email, :chemical_program_id, :user_id
+  permit_params :name, :vessel_group_id, :company_name, :email, :chemical_program_id, :user_id,
+                vessel_systems: [:id, :system_id, :code],
+                vessel_system_parameters: [:id, :parameter_id, :code, :min_satisfactory, :max_satisfactory]
 
   form do |f|
     f.inputs do
@@ -81,6 +84,21 @@ ActiveAdmin.register Vessel do
       f.input :chemical_program
       f.input :user, label: 'Managed by', collection: User.pluck(:email, :id)
     end
+    f.inputs "Assigned systems" do
+      f.has_many :vessel_systems, allow_destroy: true do |vs|
+        vs.input :system
+        vs.input :code
+        vs.has_many :vessel_system_parameters, allow_destroy: true do |vsp|
+          vsp.inputs "Assigned parameters" do
+          vsp.input :parameter
+          vsp.input :code
+          vsp.input :min_satisfactory, label: "Min satisfactory override"
+          vsp.input :max_satisfactory, label: "Max satisfactory override"
+        end
+        end
+      end
+    end
+
     f.actions
   end
 end

@@ -10,6 +10,8 @@ class Vessel < ApplicationRecord
   has_many :measurements_imports, dependent: :delete_all
   has_many :comments, class_name: VesselComment.name
 
+  accepts_nested_attributes_for :vessel_systems
+
   def last_data_upload
     measurements_imports.maximum(:created_at)
   end
