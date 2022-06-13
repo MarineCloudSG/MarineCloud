@@ -43,7 +43,7 @@ ActiveAdmin.register VesselSystemParameter do
       input :vessel_system_id, as: :select, collection: vessel.vessel_systems.map { |vs| [vs.system.name, vs.id] }
       input :min_satisfactory, label: "min satisfactory override"
       input :max_satisfactory, label: "max satisfactory override"
-      input :code
+      input :code, hint: "code is used to match specific data row from photometer data CSV file"
       end
     actions
   end
