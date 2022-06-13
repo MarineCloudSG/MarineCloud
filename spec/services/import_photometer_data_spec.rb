@@ -17,9 +17,10 @@ RSpec.describe ImportPhotometerData do
               1;1/1/2003;12:54:14 am;2018420101;101;Chlorine L;0.02-4 mg/l Cl2;3;2.25;mg/l free Cl2;1.90;mg/l comb. Cl2;2.47;mg/l total Cl2;;;11;V012.013.4.003.067;V012.013.4.003.067;0;0;19;0;0;2;0;3;0;4;0;;'
         f.close
       end
+      uploaded_file = OpenStruct.new(path: file, content_type: 'text/csv')
 
       expect do
-        ImportPhotometerData.call(filepath: file.path, vessel: vessel).result
+        ImportPhotometerData.call(file: uploaded_file, vessel: vessel).result
       end.to change { Measurement.all.count }.by 3
       measurements = Measurement.all
       expect(measurements[0]).to have_attributes(parameter: parameter, value: 0.57, vessel: vessel, state: :in_range.to_s)
@@ -37,8 +38,9 @@ RSpec.describe ImportPhotometerData do
                 1;1/1/2003;12:54:14 am;2018420;101;Chlorine L;0.02-4 mg/l Cl2;3;0.57;mg/l free Cl2;1.90;mg/l comb. Cl2;2.47;mg/l total Cl2;;;0;V012.013.4.003.067;V012.013.4.003.067;0;0;19;0;0;2;0;3;0;4;0;;'
           f.close
         end
+        uploaded_file = OpenStruct.new(path: file, content_type: 'text/csv')
 
-        expect { ImportPhotometerData.call(filepath: file.path, vessel: vessel) }
+        expect { ImportPhotometerData.call(file: uploaded_file, vessel: vessel) }
           .to raise_error(ParsedVesselPhotometerDataRow::HandledImportException)
 
         file.unlink
@@ -58,15 +60,29 @@ RSpec.describe ImportPhotometerData do
               1;1/1/2003;12:54:14 am;2018420101;101;Chlorine L;0.02-4 mg/l Cl2;3;Overrange;mg/l free Cl2;1.90;mg/l comb. Cl2;2.47;mg/l total Cl2;;;11;V012.013.4.003.067;V012.013.4.003.067;0;0;19;0;0;2;0;3;0;4;0;;'
           f.close
         end
+        uploaded_file = OpenStruct.new(path: file, content_type: 'text/csv')
 
         expect do
-          ImportPhotometerData.call(filepath: file.path, vessel: vessel).result
+          ImportPhotometerData.call(file: uploaded_file, vessel: vessel).result
         end.to change { Measurement.all.count }.by 2
         measurements = Measurement.all
         expect(measurements[0]).to have_attributes(parameter: parameter, value: 0.02, vessel: vessel, state: :underrange.to_s)
         expect(measurements[1]).to have_attributes(parameter: parameter, value: 4, vessel: vessel, state: :overrange.to_s)
 
         file.unlink
+      end
+    end
+
+    context 'when file is not csv nor xlsx' do
+      it 'raises an error' do
+        user = create :user
+        vessel = create :vessel, user: user
+        file = Tempfile.new
+        uploaded_file = OpenStruct.new(path: file, content_type: 'image/jpeg')
+
+        expect do
+          ImportPhotometerData.call(file: uploaded_file, vessel: vessel).result
+        end.to raise_error(ImportPhotometerData::UnsupportedFileTypeError)
       end
     end
   end
