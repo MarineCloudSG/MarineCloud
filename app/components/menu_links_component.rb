@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class MenuLinksComponent < ViewComponent::Base
-  renders_many :links, -> (label:, url:, controllers:, vessel_group_id: nil) do
+  renders_many :links, -> (label:, url:, controllers: nil, vessel_group_id: nil) do
     vessel_group_params = request.params[:vessel_group_ids] || []
     extra_classes = if controller_name.in?(Array.wrap(controllers)) && ((vessel_group_id.nil? && vessel_group_params.empty?) || vessel_group_params.include?(vessel_group_id))
                       @classes_current
