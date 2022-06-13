@@ -10,7 +10,10 @@
           <%= render(MenuLinksComponent.new(classes_current: "border-sky-500 text-gray-900",
                                             classes_default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700",
                                             classes_base: "inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium")) do |menu_links| %>
-            <% menu_links.link label: t(".overview"), url: vessels_path, controllers: %w[vessels] %>
+            <% menu_links.link label: t(".home"), url: vessels_path, controllers: %w[vessels] %>
+            <% current_user.vessel_groups.each do |vessel_group| %>
+              <% menu_links.link label: vessel_group.name, url: vessels_path(vessel_group_ids: [vessel_group.id]), controllers: %w[vessels], vessel_group_id: vessel_group.id.to_s %>
+            <% end %>
           <% end %>
         </div>
       </div>
