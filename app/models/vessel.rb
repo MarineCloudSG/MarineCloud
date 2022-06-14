@@ -15,4 +15,10 @@ class Vessel < ApplicationRecord
   def last_data_upload
     measurements_imports.maximum(:created_at)
   end
+
+  def last_tested_by
+    measurements_imports.where(source: MeasurementsImport::MANUAL_XLSX_SOURCE)
+                        .order(created_at: :ASC)
+                        .last&.tested_by
+  end
 end
