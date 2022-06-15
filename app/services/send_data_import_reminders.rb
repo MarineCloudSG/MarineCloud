@@ -1,7 +1,7 @@
 class SendDataImportReminders < Patterns::Service
   def call
     vessels_to_remind.each do |vessel|
-      VesselMailer.with(vessel: vessel).data_import_reminder_email.deliver
+      VesselMailer.with(vessel: vessel).data_import_reminder_email.deliver_later
     end
   end
 

@@ -66,19 +66,30 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: "www.marinecloud.pro" }
 
+  # config.action_mailer.smtp_settings = {
+  #   :user_name => 'apikey', # This is the string literal 'apikey', NOT the ID of your API key
+  #   :password => ENV['SENDGRID_API_KEY'],
+  #   :domain => 'marinecloud.pro',
+  #   :address => 'smtp.sendgrid.net',
+  #   :port => 587,
+  #   :authentication => :plain,
+  #   :enable_starttls_auto => true
+  # }
+
   config.action_mailer.smtp_settings = {
-    :user_name => 'apikey', # This is the string literal 'apikey', NOT the ID of your API key
-    :password => ENV['SENDGRID_API_KEY'],
-    :domain => 'marinecloud.pro',
-    :address => 'smtp.sendgrid.net',
-    :port => 587,
+    :port           => ENV['MAILGUN_SMTP_PORT'],
+    :address        => ENV['MAILGUN_SMTP_SERVER'],
+    :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
+    :password       => ENV['MAILGUN_SMTP_PASSWORD'],
+    #:domain         => 'marinecloud.pro',
     :authentication => :plain,
-    :enable_starttls_auto => true
   }
+  config.action_mailer.delivery_method = :smtp
+
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-  # config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = false
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).

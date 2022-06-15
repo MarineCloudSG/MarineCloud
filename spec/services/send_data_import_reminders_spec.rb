@@ -12,13 +12,13 @@ RSpec.describe SendDataImportReminders do
       mail = double
       allow(ActionMailer::Parameterized::Mailer).to receive(:new).and_return(mailer)
       allow(mailer).to receive(:data_import_reminder_email).and_return(mail)
-      allow(mail).to receive(:deliver)
+      allow(mail).to receive(:deliver_later)
 
       travel_to DateTime.new(2020, 2, 10) do
         SendDataImportReminders.call
         expect(ActionMailer::Parameterized::Mailer).to have_received(:new).with(VesselMailer, { vessel: vessel1 })
         expect(ActionMailer::Parameterized::Mailer).to have_received(:new).with(VesselMailer, { vessel: vessel3 })
-        expect(mail).to have_received(:deliver).exactly(2).times
+        expect(mail).to have_received(:deliver_later).exactly(2).times
       end
     end
   end
