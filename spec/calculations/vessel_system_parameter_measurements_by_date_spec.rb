@@ -59,6 +59,23 @@ RSpec.describe VesselSystemParameterMeasurementsByDate do
       end
     end
 
+    context "there are multiple measurements for a single day" do
+      let(:date_range) { Date.new(2020, 1, 1)..Date.new(2020, 1, 31) }
+      let(:import1) { create :measurements_import, vessel: vessel, created_at: date_range.last, source: MeasurementsImport::PHOTOMETER_CSV_SOURCE }
+      let(:import2) { create :measurements_import, vessel: vessel, created_at: date_range.last, source: MeasurementsImport::PHOTOMETER_CSV_SOURCE }
+
+      it "selects only first one" do
+        taken_at = DateTime.new(2020, 1, 7, 14, 1)
+        measurement1 = create :measurement, measurements_import: import1, taken_at: taken_at, value: 1, vessel_system_parameter: vessel_system_parameter
+        measurement2 = create :measurement, measurements_import: import1, taken_at: taken_at + 1.second, value: 2, vessel_system_parameter: vessel_system_parameter
+        measurement3 = create :measurement, measurements_import: import2, taken_at: taken_at + 2.seconds, value: 3, vessel_system_parameter: vessel_system_parameter
+        measurement4 = create :measurement, measurements_import: import2, taken_at: taken_at + 3.seconds, value: 4, vessel_system_parameter: vessel_system_parameter
+
+        expect(subject.count).to eq(1)
+        expect(subject[0].value).to eq(1)
+      end
+    end
+
     context "multiple months" do
       let(:date_range) { Date.new(2020, 1, 15)..Date.new(2020, 3, 10) }
       let(:photometer_import) { create :measurements_import, vessel: vessel, created_at: date_range.last, source: MeasurementsImport::PHOTOMETER_CSV_SOURCE }
