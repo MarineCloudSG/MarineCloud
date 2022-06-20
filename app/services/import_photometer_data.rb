@@ -16,7 +16,7 @@ class ImportPhotometerData < Patterns::Service
         measurements_import: measurements_import,
         vessel_system_parameter: row.vessel_system_parameter,
         taken_at: row.taken_at,
-        value: row.value,
+        value: adjusted_row_value(row),
         state: row.state
       )
     end
@@ -29,6 +29,14 @@ class ImportPhotometerData < Patterns::Service
   SUPPORTED_TYPES = [XLSX_TYPE, CSV_TYPE]
 
   attr_reader :file, :vessel, :measurements_import
+
+  def adjusted_row_value(row)
+    row.value * row_multiplier(row)
+  end
+
+  def row_multiplier(row)
+    row.vessel_system_parameter.parameter.photometer_value_multiplier
+  end
 
   def parser_results
     PhotometerDataParser.read(csv_file_path).map { |row| parser_row(row) }
