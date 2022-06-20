@@ -33,5 +33,6 @@ import TabNavigationComponentController from "../components/tab_navigation_compo
 application.register("tab-navigation-component", TabNavigationComponentController)
 
 
-import metricsTooltipFormatter from './metrics_tooltip_formater'
+import { metricsTooltipFormatter, setOutOfRangeValues } from './line_chart_formatters'
 window.metricsTooltipFormatter = metricsTooltipFormatter
+window.setOutOfRangeValues = setOutOfRangeValues

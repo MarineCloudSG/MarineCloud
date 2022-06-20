@@ -37,6 +37,11 @@
       ],
       tooltip: {
         formatter: js_function_name('metricsTooltipFormatter')
+      },
+      chart: {
+        events: {
+          load: js_function_name('setOutOfRangeValues')
+        }
       }
     },
   }

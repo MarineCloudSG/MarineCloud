@@ -35,3 +35,7 @@
 .singleExercise:hover .trashButton{
     display: flex;
 }
+
+.highcharts-annotation-label, .highcharts-annotation-label * {
+    display: none;
+}
