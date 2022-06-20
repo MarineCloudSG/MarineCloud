@@ -1,0 +1,2 @@
+notifications:
+  vessels__comment_created: async
