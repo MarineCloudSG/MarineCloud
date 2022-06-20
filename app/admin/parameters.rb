@@ -12,6 +12,7 @@ ActiveAdmin.register Parameter do
     id_column
     column :name
     column :unit
+    column :sort_order
     actions
   end
 
@@ -19,5 +20,5 @@ ActiveAdmin.register Parameter do
   # ==== EDIT ====
   # ==============
 
-  permit_params :name, :unit
+  permit_params :name, :unit, :sort_order
 end

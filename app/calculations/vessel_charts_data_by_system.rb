@@ -3,12 +3,15 @@ class VesselChartsDataBySystem < Patterns::Calculation
 
   def result
     vessel_system_parameters
-          .map { |vsp| VesselChartData.new(vsp, date_range: date_range) }
-          .group_by(&:system_name)
+      .map { |vsp| VesselChartData.new(vsp, date_range: date_range) }
+      .group_by(&:system_name)
   end
 
   def vessel_system_parameters
-    params = vessel.vessel_system_parameters.where(parameter_id: parameter_ids)
+    params = vessel.vessel_system_parameters
+                   .joins(:system, :parameter)
+                   .order('system.sort_order': :ASC, 'parameter.sort_order': :ASC)
+    params = params.where(parameter_id: parameter_ids)
     params = params.where(vessel_systems: { systems: system }) if system.present?
     params
   end
