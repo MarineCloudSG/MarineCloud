@@ -11,7 +11,7 @@ RSpec.describe ConvertXlsxToCsv do
       csv = CSV.new(csv_data)
       result = ConvertXlsxToCsv.call(xlsx_file).result
 
-      result_csv = CSV.open(result)
+      result_csv = CSV.open(result, col_sep: ';')
 
       csv.each do |row|
         result_row = result_csv.shift

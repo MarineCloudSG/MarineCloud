@@ -18,10 +18,10 @@ class ConvertXlsxToCsv < Patterns::Service
   end
 
   def tempfile
-    @tempfile ||= Tempfile.new('photometer.data')
+    @tempfile ||= Tempfile.new('photometer_data.csv')
   end
 
   def csv_data
-    Roo::Spreadsheet.open(filepath).to_csv
+    Roo::Spreadsheet.open(filepath).to_csv(nil, ';')
   end
 end

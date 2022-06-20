@@ -31,7 +31,7 @@ class ImportPhotometerData < Patterns::Service
   attr_reader :file, :vessel, :measurements_import
 
   def parser_results
-    PhotometerDataParser.read(file_path).map { |row| parser_row(row) }
+    PhotometerDataParser.read(csv_file_path).map { |row| parser_row(row) }
   end
 
   def parser_row(row)
@@ -39,14 +39,14 @@ class ImportPhotometerData < Patterns::Service
   end
 
   def measurements_import
-    @measurements_import ||= MeasurementsImport.create!(vessel: vessel, filename: csv_file_path,
+    @measurements_import ||= MeasurementsImport.create!(vessel: vessel, filename: input_file_path,
                                                         source: MeasurementsImport::PHOTOMETER_CSV_SOURCE)
   end
 
   def csv_file_path
-    return ConvertXlsxToCsv.call(file_path).result if xlsx?
+    return ConvertXlsxToCsv.call(input_file_path).result if xlsx?
 
-    file_path
+    input_file_path
   end
 
   def xlsx?
@@ -61,7 +61,7 @@ class ImportPhotometerData < Patterns::Service
     file.content_type
   end
 
-  def file_path
+  def input_file_path
     file.path
   end
 end
