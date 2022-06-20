@@ -1,6 +1,6 @@
 <div class="px-4 py-5 mb-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
   <dt class="text-xl font-semibold text-gray-900 truncate"><%= chart_data.name %></dt>
-  <dd class="mt-1">&nbsp;</dd>
+  <dd class="mb-2"><%= chart_data.vessel_system_parameter.parameter.unit %>&nbsp;</dd>
   <script>
     recommendationRules['<%= "vessel-chart-#{chart_data.vessel_system_parameter.id}" %>'] = <%= raw chart_data.recommendations_json %>;
   </script>
