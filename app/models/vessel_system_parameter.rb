@@ -26,4 +26,10 @@ class VesselSystemParameter < ApplicationRecord
                                      system: vessel_system.system,
                                      chemical_program: chemical_program)
   end
+
+  def recommendations
+    ParameterRecommendation.where(
+      chemical_program_parameter: chemical_program_parameter
+    )
+  end
 end

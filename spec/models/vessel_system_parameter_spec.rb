@@ -96,4 +96,29 @@ RSpec.describe VesselSystemParameter, type: :model do
       expect(vessel_system_parameter.chemical_program_parameter).to eq(chemical_program_parameter)
     end
   end
+
+  describe '#recommendations' do
+    it 'selects correct recommendations for given model' do
+      program = create :chemical_program
+      chp1 = create :chemical_program_parameter, chemical_program: program
+      chp2 = create :chemical_program_parameter, chemical_program: program
+      chp3 = create :chemical_program_parameter, chemical_program: program
+      vessel = create :vessel, chemical_program: program
+      vs1 = create :vessel_system, system: chp1.system, vessel: vessel
+      vs2 = create :vessel_system, system: chp2.system, vessel: vessel
+      vs3 = create :vessel_system, system: chp3.system, vessel: vessel
+      vsp1 = create :vessel_system_parameter, vessel_system: vs1, parameter: chp1.parameter
+      vsp2 = create :vessel_system_parameter, vessel_system: vs2, parameter: chp2.parameter
+      vsp3 = create :vessel_system_parameter, vessel_system: vs3, parameter: chp3.parameter
+      rec1 = create :parameter_recommendation, chemical_program_parameter: chp1
+      rec2 = create :parameter_recommendation, chemical_program_parameter: chp2
+      rec3 = create :parameter_recommendation, chemical_program_parameter: chp3
+      rec4 = create :parameter_recommendation, chemical_program_parameter: chp2
+      create :parameter_recommendation
+
+      expect(vsp1.recommendations).to contain_exactly(rec1)
+      expect(vsp2.recommendations).to contain_exactly(rec2, rec4)
+      expect(vsp3.recommendations).to contain_exactly(rec3)
+    end
+  end
 end

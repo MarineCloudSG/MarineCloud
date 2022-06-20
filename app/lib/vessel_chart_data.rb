@@ -38,9 +38,6 @@ class VesselChartData
   end
 
   def recommendations
-    @recommendations ||= ParameterRecommendation.where(
-      parameter: vessel_system_parameter.parameter,
-      chemical_program: vessel_system_parameter.chemical_program
-    )
+    @recommendations ||= vessel_system_parameter.recommendations
   end
 end
