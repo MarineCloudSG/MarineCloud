@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class VesselsController < BaseController
+  layout :vessel_page_layout
+
   def index
     return redirect_to action: :show, id: managed_vessels.first.id if managed_vessels.count == 1
 
@@ -16,7 +18,7 @@ class VesselsController < BaseController
       @export_page = params.fetch(:export_page, false)
       @vessel_tested_by = vessel_tested_by
 
-      return render locals: {
+      return render template: "vessels/#{vessel_show_template}", locals: {
         vessel: resource,
         date_range: date_range,
         comments: comments,
@@ -26,12 +28,32 @@ class VesselsController < BaseController
         selected_system: selected_system,
         available_parameters: available_parameters,
         selected_parameters: selected_parameters,
-        export_url: params.permit(:start_date, :end_date, :system_id, parameter_ids: []).merge({export_page: true})
+        export_url_params: export_url_params
       }
     end
   end
 
   private
+
+  def export_url_params
+    params.permit(:start_date, :end_date, :system_id, parameter_ids: []).merge({ export_page: true })
+  end
+
+  def vessel_show_template
+    return "export_show" if export_page?
+
+    "show"
+  end
+
+  def vessel_page_layout
+    return "pdf_export" if export_page?
+
+    "application"
+  end
+
+  def export_page?
+    params.fetch(:export_page, false)
+  end
 
   def vessel_tested_by
     testers = VesselTestersForDateRangeQuery.call(vessel_id: resource.id, date_range: date_range).pluck(:tested_by)

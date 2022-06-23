@@ -1,0 +1,15 @@
+<section id="vessel-page">
+  <%= render HeaderComponent.new title: resource.name, subheader: (VesselSubheaderComponent.new vessel: resource) %>
+
+  <div class="vessel-charts mt-8 max-w-3xl mx-auto grid grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
+    <div class="vessel space-y-6 lg:col-start-1 lg:col-span-2">
+      <script> const recommendationRules = {} </script>
+      <% charts_data_by_system.each do |system_name, charts_data| %>
+        <%= render partial: 'partials/separator', locals: { system_name: system_name } %>
+        <% charts_data.each do |chart_data| %>
+          <%= render partial: 'partials/line_chart', locals: { chart_data: chart_data } %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</section>

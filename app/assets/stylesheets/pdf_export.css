@@ -1,5 +1,5 @@
-.page-export-screen {
-    display: none;
+.export-page {
+    overflow: hidden;
 }
 
 .export-page .page-export-screen {
@@ -7,7 +7,7 @@
     position: fixed;
     left: 0;
     top: 0;
-    width: 1900px;
+    width: 100vw;
     height: 100vh;
     z-index: 2;
     background-color: rgba(50, 50, 50, 0.9);
@@ -27,12 +27,8 @@
     font-weight: bold;
 }
 
-.export-page .export-content > nav {
-    display: none;
-}
-
-.export-page section.comments {
-    display: none;
+.export-page .export-content {
+    width: 1900px;
 }
 
 .export-page section.vessel {
@@ -40,8 +36,17 @@
     max-width: 100%;
 }
 
-.export-page .vessel-filters {
-    display: none;
+.export-page .vessel-charts {
+    display: block;
+}
+
+.export-page .vessel-line-separator {
+    margin-top: 2em !important;
+}
+
+.export-page .vessel-line-separator .vessel-system-name {
+    line-height: 4;
+    margin-top: -3em;
 }
 
 .export-page .message-heading {
@@ -50,18 +55,18 @@
     font-weight: bold;
 }
 
-.export-page .vessel-charts {
-    display: block;
-}
-
 .export-page .vessel-charts h3 {
     margin-bottom: 1em;
 }
 
 .export-page .vessel-charts .chart-name {
     line-height: 4;
-    margin-bottom: -2em;
+    margin-bottom: -1.5em;
     margin-top: -2em;
+}
+
+.export-page .vessel-charts .chart-name + * {
+    line-height: 2;
 }
 
 .export-page .vessel-charts .chart-statistics dt {
@@ -75,13 +80,4 @@
     line-height: 2;
     margin-top: -1.5em;
     margin-left: 8px;
-}
-
-.export-page button,
-.export-page .btn {
-    display: none;
-}
-
-.export-page section.discussion {
-    display: none;
 }

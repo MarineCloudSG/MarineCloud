@@ -61,13 +61,6 @@ export default class extends Controller {
     return canvas
   }
 
-  async getScreenshotUrl() {
-    const screenshot = await this.takeScreenshot()
-    const url = screenshot.toDataURL('image/png')
-
-    return url
-  }
-
   async getOutputPDF() {
     const pageHeight = 480
     const canvas = await this.takeScreenshot()
@@ -97,16 +90,5 @@ export default class extends Controller {
     }
 
     pdf.save('result.pdf')
-  }
-
-  async goToScreenshot() {
-    const url = await this.getScreenshotUrl()
-    const el = document.createElement('a')
-    el.setAttribute('href', url)
-    el.setAttribute('download', 'vessel-dashboard.png')
-
-    document.body.appendChild(el)
-    el.click()
-    el.remove()
   }
 }
