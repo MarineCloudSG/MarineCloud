@@ -13,6 +13,8 @@ class VesselsController < BaseController
 
   def show
     super do
+      @vessel_tested_by = vessel_tested_by
+
       return render locals: {
         vessel: resource,
         date_range: date_range,
@@ -28,6 +30,13 @@ class VesselsController < BaseController
   end
 
   private
+
+  def vessel_tested_by
+    testers = VesselTestersForDateRangeQuery.call(vessel_id: resource.id, date_range: date_range).pluck(:tested_by)
+    return if testers.count > 1
+
+    testers.first
+  end
 
   def managed_vessels
     current_user.managed_vessels
