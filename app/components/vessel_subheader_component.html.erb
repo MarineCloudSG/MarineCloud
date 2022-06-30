@@ -15,8 +15,10 @@
     <dt class="text-sm font-medium text-gray-500">Last upload</dt>
     <dd class="mt-1 text-sm text-gray-900"><%= @vessel.last_data_upload_date %></dd>
   </div>
+  <% if @vessel_tested_by.present? %>
   <div class="sm:col-span-1">
     <dt class="text-sm font-medium text-gray-500">Tested by</dt>
     <dd class="mt-1 text-sm text-gray-900"><%= @vessel_tested_by %></dd>
   </div>
+  <% end %>
 </dl>
