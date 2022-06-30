@@ -9,7 +9,7 @@ RSpec.describe VesselComment, type: :model do
         .to broadcast(:vessels__comment_created,
                       comment_id: fetch_next_id_for(VesselComment),
                       vessel_id: vessel.id,
-                      message: 'New comment',
+                      message_text: 'New comment',
                       event_uid: anything)
     end
   end

@@ -8,7 +8,7 @@ class VesselComment < ApplicationRecord
     emit(:vessels__comment_created, {
            comment_id: id,
            vessel_id: vessel.id,
-           message: message
+           message_text: message
          })
   end
 end

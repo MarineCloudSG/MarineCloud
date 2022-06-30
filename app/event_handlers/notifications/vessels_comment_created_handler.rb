@@ -2,7 +2,7 @@ module Notifications
   class VesselsCommentCreatedHandler < PubSub::DomainEventHandler
     def call
       VesselMailer
-        .with(vessel: vessel, message: message)
+        .with(vessel: vessel, message_text: message)
         .new_comment_email
         .deliver_later
     end
@@ -14,7 +14,7 @@ module Notifications
     end
 
     def message
-      event_data.message
+      event_data.message_text
     end
 
     def vessel

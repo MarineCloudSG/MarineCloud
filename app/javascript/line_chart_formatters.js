@@ -67,6 +67,11 @@ export function setOutOfRangeValues(event) {
         const label = labels[i]
         const labelPoint = label.points[0]
         const dataPoint = getChartDataPoint(event.target, labelPoint.x)
+
+        if (!dataPoint) {
+            continue;
+        }
+
         dataPoint.update({color: OUT_OF_RANGE_COLOR, outOfRange: label.options.text})
     }
     event.target.redraw()

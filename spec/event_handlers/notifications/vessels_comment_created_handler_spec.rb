@@ -10,7 +10,7 @@ module Notifications
           :vessels__comment_created,
           comment_id: comment.id,
           vessel_id: vessel.id,
-          message: comment.message,
+          message_text: comment.message,
           vessel_name: comment.vessel.name)
         mailer = VesselMailer.new
         mail = double
@@ -22,7 +22,7 @@ module Notifications
 
         expect(ActionMailer::Parameterized::Mailer)
           .to have_received(:new)
-          .with(VesselMailer, { vessel: vessel, message: 'Hello there!' })
+          .with(VesselMailer, { vessel: vessel, message_text: 'Hello there!' })
         expect(mail).to have_received(:deliver_later)
       end
     end

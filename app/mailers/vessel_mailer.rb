@@ -7,7 +7,7 @@ class VesselMailer < ApplicationMailer
 
   def new_comment_email
     @vessel = params[:vessel]
-    @message = params[:message]
+    @message_text = params[:message_text]
     mail(to: vessel_emails, subject: "New comment")
   end
 
