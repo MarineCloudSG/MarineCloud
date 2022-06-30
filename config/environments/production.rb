@@ -64,7 +64,7 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
-  config.action_mailer.default_url_options = { host: "www.marinecloud.pro" }
+  config.action_mailer.default_url_options = { host: ENV['APP_HOST'] }
 
   # config.action_mailer.smtp_settings = {
   #   :user_name => 'apikey', # This is the string literal 'apikey', NOT the ID of your API key
