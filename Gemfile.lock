@@ -85,6 +85,9 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
+    appoptics_apm (4.13.0)
+      json (~> 2.0)
+      no_proxy_fix (~> 0.1.2, >= 0.1.2)
     arbre (1.5.0)
       activesupport (>= 3.0.0, < 7.1)
       ruby2_keywords (>= 0.0.2, < 1.0)
@@ -269,6 +272,7 @@ GEM
     msgpack (1.4.2)
     newrelic_rpm (8.8.0)
     nio4r (2.5.8)
+    no_proxy_fix (0.1.2)
     nokogiri (1.13.3-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.13.3-x86_64-linux)
@@ -477,6 +481,7 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin
+  appoptics_apm
   bootsnap
   chartkick
   cronex

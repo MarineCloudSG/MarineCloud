@@ -119,8 +119,9 @@ gem "roo"
 gem "sentry-ruby"
 gem "sentry-rails"
 
-# new relic
+# monitoring
 gem "newrelic_rpm"
+gem "appoptics_apm"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
