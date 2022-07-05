@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 import Highcharts from "highcharts"
 import html2canvas from 'html2canvas'
-import jsPDF from 'jspdf'
+import ScreenshotToPdf from "../lib/screenshot_to_pdf";
 
 // Connects to data-controller="export-page"
 export default class extends Controller {
@@ -51,6 +51,7 @@ export default class extends Controller {
 
     this.getOutputPDF()
         .then(() => setTimeout(() => window.close(), 1000))
+        .catch((e) => console.error(e))
         .catch(() => window.location.reload())
   }
 
@@ -62,32 +63,8 @@ export default class extends Controller {
   }
 
   async getOutputPDF() {
-    const pageHeight = 480
     const canvas = await this.takeScreenshot()
-    const image = canvas.toDataURL('image/png')
-    const pdf = new jsPDF({
-      orientation: 'p',
-      unit: 'mm',
-      format: [400, 480]
-    })
-
-    const imgWidth = 400
-    const imgHeight = ((canvas.height * imgWidth) / 2454)*1.24;
-    let heightLeft = imgHeight
-    let position = 0
-    let firstPage = true
-
-    while (heightLeft >= 0) {
-      if (!firstPage) {
-        pdf.addPage()
-      }
-
-      position = heightLeft - imgHeight
-      pdf.addImage(image, "PNG", 0, position, imgWidth, imgHeight)
-
-      heightLeft -= pageHeight
-      firstPage = false
-    }
+    const pdf = await ScreenshotToPdf.convert(canvas)
 
     pdf.save('result.pdf')
   }
