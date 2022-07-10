@@ -8,12 +8,16 @@ class VesselMailer < ApplicationMailer
   def new_comment_email
     @vessel = params[:vessel]
     @message_text = params[:message_text]
-    mail(to: vessel_emails, subject: "New comment")
+    mail(to: (vessel_emails + commenters_emails).uniq, subject: "New comment")
   end
 
   private
 
   def vessel_emails
     [@vessel.user.email, @vessel.email].uniq
+  end
+
+  def commenters_emails
+    @vessel.comments.map { |comment| comment.user.email }.uniq
   end
 end
