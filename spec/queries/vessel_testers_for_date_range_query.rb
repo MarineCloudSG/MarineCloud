@@ -8,11 +8,11 @@ RSpec.describe VesselTestersForDateRangeQuery do
       date_start = Date.new(2020, 0o1, 0o1)
       date_end = Date.new(2020, 0o2, 0o5)
       vessel = create :vessel
-      create :measurements_import, created_at: date_start + 1.day, source: MeasurementsImport::MANUAL_XLSX_SOURCE,
+      create :measurements_import, taken_at: date_start + 1.day, source: MeasurementsImport::MANUAL_XLSX_SOURCE,
                                    tested_by: 'Franek', vessel: vessel
-      create :measurements_import, created_at: date_start + 1.week, source: MeasurementsImport::MANUAL_XLSX_SOURCE,
+      create :measurements_import, taken_at: date_start + 1.week, source: MeasurementsImport::MANUAL_XLSX_SOURCE,
                                    tested_by: 'Franek', vessel: vessel
-      create :measurements_import, created_at: date_start + 1.month, source: MeasurementsImport::MANUAL_XLSX_SOURCE,
+      create :measurements_import, taken_at: date_start + 1.month, source: MeasurementsImport::MANUAL_XLSX_SOURCE,
                                    tested_by: 'Grzesiek', vessel: vessel
 
       result = VesselTestersForDateRangeQuery.call(vessel_id: vessel.id, date_range: date_start..date_end)

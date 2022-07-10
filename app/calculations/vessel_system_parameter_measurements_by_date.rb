@@ -22,7 +22,7 @@ class VesselSystemParameterMeasurementsByDate < Patterns::Calculation
         selected_source = MeasurementsImport::MANUAL_XLSX_SOURCE
       end
 
-      measurements += base_query.where(measurements_imports: { source: selected_source }).group('DATE(taken_at)')
+      measurements += base_query.where(measurements_imports: { source: selected_source }).group('DATE(measurements.taken_at)')
       current_start_date = current_start_date.next_month.beginning_of_month
     end
     measurements.pluck(:id)

@@ -35,6 +35,18 @@ class ImportManualMeasurementsData < Patterns::Service
     parser_output.fetch(:headers)[:tested_by]
   end
 
+  def taken_at_month
+    parser_output.fetch(:headers)[:month]
+  end
+
+  def taken_at_year
+    parser_output.fetch(:headers)[:year]
+  end
+
+  def taken_at
+    Date.new(taken_at_year, taken_at_month, 1).end_of_month
+  end
+
   def parser_output
     @parser_output ||= ManualMeasurementsDataParser.read(filepath)
   end
@@ -44,7 +56,8 @@ class ImportManualMeasurementsData < Patterns::Service
       vessel: vessel,
       filename: filepath,
       source: MeasurementsImport::MANUAL_XLSX_SOURCE,
-      tested_by: tested_by
+      tested_by: tested_by,
+      taken_at: taken_at
     )
   end
 end

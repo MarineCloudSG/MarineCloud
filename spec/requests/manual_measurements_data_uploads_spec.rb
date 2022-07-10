@@ -40,6 +40,7 @@ RSpec.describe 'Manual measurement data uploads', type: :request do
       expect(vessel.measurements.first).to have_attributes(value: 651)
       expect(vessel.measurements.last).to have_attributes(value: 496)
       expect(vessel.measurements_imports.last.tested_by).to eq('Andrew Flintoff')
+      expect(vessel.measurements_imports.last.taken_at).to eq(Date.new(2021, 2, 28))
     end
 
     context 'file is not xlsx type' do
