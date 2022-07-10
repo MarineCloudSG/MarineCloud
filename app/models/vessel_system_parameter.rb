@@ -4,10 +4,10 @@ class VesselSystemParameter < ApplicationRecord
   has_one :vessel, through: :vessel_system
   has_one :system, through: :vessel_system
   has_many :measurements, dependent: :delete_all
-  has_one :chemical_program, through: :vessel_system
+  has_one :chemical_provider, through: :vessel_system
 
-  delegate :min_satisfactory, to: :chemical_program_parameter, prefix: :default, allow_nil: true
-  delegate :max_satisfactory, to: :chemical_program_parameter, prefix: :default, allow_nil: true
+  delegate :min_satisfactory, to: :chemical_provider_parameter, prefix: :default, allow_nil: true
+  delegate :max_satisfactory, to: :chemical_provider_parameter, prefix: :default, allow_nil: true
 
   def lowest_satisfactory_range
     overrides_satisfactory? ? min_satisfactory : default_min_satisfactory
@@ -21,15 +21,15 @@ class VesselSystemParameter < ApplicationRecord
     min_satisfactory.present? || max_satisfactory.present?
   end
 
-  def chemical_program_parameter
-    ChemicalProgramParameter.find_by(parameter: parameter,
-                                     system: vessel_system.system,
-                                     chemical_program: chemical_program)
+  def chemical_provider_parameter
+    ChemicalProviderParameter.find_by(parameter: parameter,
+                                      system: vessel_system.system,
+                                      chemical_provider: chemical_provider)
   end
 
   def recommendations
     ParameterRecommendation.where(
-      chemical_program_parameter: chemical_program_parameter
+      chemical_provider_parameter: chemical_provider_parameter
     )
   end
 end

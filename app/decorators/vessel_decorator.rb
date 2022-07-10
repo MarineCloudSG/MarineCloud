@@ -3,8 +3,8 @@ class VesselDecorator < ApplicationDecorator
 
   decorates_association :vessel_system_parameters
 
-  def chemical_program
-    object.chemical_program.name.humanize
+  def chemical_provider
+    object.chemical_provider.name.humanize
   end
 
   def created_at_date

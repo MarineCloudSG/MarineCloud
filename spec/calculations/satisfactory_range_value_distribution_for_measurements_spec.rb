@@ -64,9 +64,9 @@ RSpec.describe SatisfactoryRangeValueDistributionForMeasurements do
     context 'values are set in chemical program' do
       context 'are not overriden' do
         it 'takes them' do
-          program = create :chemical_program
-          system = create :vessel_system, chemical_program: program
-          chemparam = create :chemical_program_parameter, min_satisfactory: 0.4, max_satisfactory: 1.5, system: system.system, chemical_program: program
+          provider = create :chemical_provider
+          system = create :vessel_system, chemical_provider: provider
+          chemparam = create :chemical_provider_parameter, min_satisfactory: 0.4, max_satisfactory: 1.5, system: system.system, chemical_provider: provider
           vsp = create :vessel_system_parameter, min_satisfactory: nil, max_satisfactory: nil, parameter: chemparam.parameter, vessel_system: system
           import = create :measurements_import
           measurements = [
@@ -88,9 +88,9 @@ RSpec.describe SatisfactoryRangeValueDistributionForMeasurements do
 
       context 'are overriden' do
         it 'ignores them' do
-          program = create :chemical_program
-          system = create :vessel_system, chemical_program: program
-          chemparam = create :chemical_program_parameter, min_satisfactory: 0.4, max_satisfactory: 1.5, system: system.system, chemical_program: program
+          program = create :chemical_provider
+          system = create :vessel_system, chemical_provider: program
+          chemparam = create :chemical_provider_parameter, min_satisfactory: 0.4, max_satisfactory: 1.5, system: system.system, chemical_provider: program
           vsp = create :vessel_system_parameter, min_satisfactory: 0.5, max_satisfactory: nil, parameter: chemparam.parameter, vessel_system: system
           import = create :measurements_import
           measurements = [

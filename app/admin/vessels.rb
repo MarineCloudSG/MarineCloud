@@ -32,7 +32,7 @@ ActiveAdmin.register Vessel do
           row :vessel_group
           row :company_name
           row :email
-          row :chemical_program
+          row :chemical_provider
           row :last_data_upload
           row 'Managed by' do
             vessel.user
@@ -72,7 +72,7 @@ ActiveAdmin.register Vessel do
   # ==== EDIT ====
   # ==============
 
-  permit_params :name, :vessel_group_id, :company_name, :email, :chemical_program_id, :user_id,
+  permit_params :name, :vessel_group_id, :company_name, :email, :chemical_provider_id, :user_id,
                 vessel_systems: [:id, :system_id, :code],
                 vessel_system_parameters: [:id, :parameter_id, :code, :min_satisfactory, :max_satisfactory]
 
@@ -82,7 +82,7 @@ ActiveAdmin.register Vessel do
       f.input :vessel_group
       f.input :company_name
       f.input :email
-      f.input :chemical_program
+      f.input :chemical_provider
       f.input :user, label: 'Managed by', collection: User.pluck(:email, :id)
     end
     f.inputs "Assigned systems" do

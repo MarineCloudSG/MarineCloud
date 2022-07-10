@@ -1,7 +1,7 @@
 class Vessel < ApplicationRecord
   belongs_to :vessel_group, optional: true
   belongs_to :user, optional: true
-  belongs_to :chemical_program
+  belongs_to :chemical_provider
   has_many :vessel_systems, dependent: :destroy
   has_many :systems, through: :vessel_systems
   has_many :vessel_system_parameters, through: :vessel_systems

@@ -69,7 +69,7 @@ if Rails.env.development?
   seed_systems = ActiveModel::Type::Boolean.new.cast(ENV.fetch('SEED_SYSTEMS', true))
   seed_parameters = ActiveModel::Type::Boolean.new.cast(ENV.fetch('SEED_PARAMETERS', true))
   seed_measurements = ActiveModel::Type::Boolean.new.cast(ENV.fetch('SEED_MEASUREMENTS', true))
-  chemical_program = ChemicalProgram.find_or_create_by!(name: 'drew')
+  chemical_provider = ChemicalProvider.find_or_create_by!(name: 'drew')
 
   {
     'Dexie' => 'Stark Industries',
@@ -90,7 +90,7 @@ if Rails.env.development?
     vessel = group.vessels.where(name: vessel_name).first_or_initialize
 
     vessel.email = "#{vessel_name.parameterize.underscore}@#{group.name.parameterize.underscore}.dev"
-    vessel.chemical_program = chemical_program
+    vessel.chemical_provider = chemical_provider
     vessel.company_name = group_name
     vessel.flag = 'Jolly Roger'
     vessel.save!

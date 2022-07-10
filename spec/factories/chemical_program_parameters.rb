@@ -1,6 +1,6 @@
 FactoryBot.define do
-  factory :chemical_program_parameter do
-    chemical_program
+  factory :chemical_provider_parameter do
+    chemical_provider
     system
     parameter
     min_satisfactory { 1.5 }

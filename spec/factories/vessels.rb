@@ -4,6 +4,6 @@ FactoryBot.define do
     email { nil }
     vessel_group
     user { nil }
-    chemical_program
+    chemical_provider
   end
 end

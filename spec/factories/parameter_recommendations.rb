@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :parameter_recommendation do
-    chemical_program_parameter
+    chemical_provider_parameter
     value_min { nil }
     value_max { nil }
     message { "it's ok" }

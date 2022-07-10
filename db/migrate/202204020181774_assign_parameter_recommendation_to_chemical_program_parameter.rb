@@ -2,7 +2,7 @@ class AssignParameterRecommendationToChemicalProgramParameter < ActiveRecord::Mi
   def change
     add_reference :parameter_recommendations, :chemical_program_parameter, foreign_key: true, null: true, index: { name: 'index_parameter_recommendation_chp'}
     ParameterRecommendation.all.each do |rec|
-      cpp = ChemicalProgramParameter.find_by(chemical_program_id: rec.chemical_program_id, parameter_id: rec.parameter_id)
+      cpp = ChemicalProviderParameter.find_by(chemical_program_id: rec.chemical_program_id, parameter_id: rec.parameter_id)
       if cpp.nil?
         rec.destroy!
         next
