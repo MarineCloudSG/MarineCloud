@@ -18,6 +18,6 @@ class VesselMailer < ApplicationMailer
   end
 
   def commenters_emails
-    @vessel.comments.map { |comment| comment.user.email }.uniq
+    @vessel.comments.distinct.pluck('comment.user.email')
   end
 end
