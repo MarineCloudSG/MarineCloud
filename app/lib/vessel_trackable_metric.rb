@@ -23,7 +23,19 @@ class VesselTrackableMetric
     end
   end
 
+  def chart_range_min
+    (chart_numeric_values + [lowest_satisfactory_range]).min
+  end
+
+  def chart_range_max
+    (chart_numeric_values + [highest_satisfactory_range]).max
+  end
+
   private
+
+  def chart_numeric_values
+    values.map { |_date, value| value }
+  end
 
   def highest_satisfactory_chart_line
     chart_limit_line(label: 'Satisfactory max', value: highest_satisfactory_range, color: '#00ff00')

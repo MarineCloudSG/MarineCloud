@@ -4,7 +4,9 @@
   <script>
     recommendationRules['<%= "vessel-chart-#{chart_data.vessel_system_parameter.id}" %>'] = <%= raw chart_data.recommendations_json %>;
   </script>
-  <%= line_chart chart_data.metric.values, **{
+  <%= line_chart chart_data.metric.values,
+    min: chart_data.metric.chart_range_min,
+    max: chart_data.metric.chart_range_max, **{
     id: "vessel-chart-#{chart_data.vessel_system_parameter.id}",
     height: "150px",
     library: {
@@ -13,7 +15,6 @@
         type: 'date'
       },
       yAxis: {
-        min: 0,
         plotLines: chart_data.metric.satisfactory_range_limits.map do |limit|
           {
             width: 2.5,
