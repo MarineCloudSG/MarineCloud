@@ -30,7 +30,9 @@ class VesselChartData
   end
 
   def latest_recommendations
-    @latest_recommendations ||= recommendations.select { |r| r.applies_for_value?(measurements.last.value) }.map(&:message)
+    @latest_recommendations ||= recommendations.select do |r|
+      measurements.last.present? && r.applies_for_value?(measurements.last.value)
+    end.map(&:message)
   end
 
   def recommendations_json

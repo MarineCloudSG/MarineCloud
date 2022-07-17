@@ -1,45 +1,24 @@
-<div class="vessel-filters relative block w-full border-2 border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500" data-controller="vessel-filters">
-  <h3 class="text-lg leading-6 font-medium text-gray-900">Selected period</h3>
+<div class="vessel-filters relative block w-full shadow bg-white rounded-lg p-6 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500" data-controller="vessel-filters">
   <%= form_with method: :get do |f| %>
     <div>
-      <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-5" >
-        <%= f.date_field :start_date, {value: start_date, class: 'form-control', 'data-action': 'vessel-filters#submit'}  %>
-        <%= f.date_field :end_date, {value: end_date, class: 'form-control', 'data-action': 'vessel-filters#submit'} %>
-
-        <div>
-          <button id="dropdownSystemSelectButton" data-dropdown-toggle="dropdownSystemSelect" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-            System <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-          </button>
-          <div id="dropdownSystemSelect" class="z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700 text-left">
-            <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownVesselGroupButton">
-              <li>
-                <%= radio_button_tag(:system_id, '', selected_system.nil?, {'data-action': 'vessel-filters#change_system'}) %>
-                All
-              </li>
-
-              <% available_systems.each do |system| %>
-                <li>
-                  <%= radio_button_tag(:system_id, system.id, selected_system&.id&.eql?(system.id), {'data-action': 'vessel-filters#change_system'}) %>
-                  <%= system.name %>
-                </li>
-              <% end %>
-            </ul>
+      <div class="sm:grid sm:grid-cols-12 sm:gap-4 sm:items-start sm:pt-5" >
+        <div class="col-span-7 text-left">
+          <h3 class="leading-6 font-medium text-gray-900">Selected period</h3>
+          <div class="grid grid-cols-2 gap-8 p-8 px-24 text-gray-500 border-gray-500">
+            <%= f.date_field :start_date, {value: start_date, class: 'form-control', 'data-action': 'vessel-filters#submit'}  %>
+            <%= f.date_field :end_date, {value: end_date, class: 'form-control', 'data-action': 'vessel-filters#submit'} %>
           </div>
         </div>
 
-        <div>
-          <button id="dropdownParametersFilterButton" data-dropdown-toggle="dropdownParametersFilter" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-            Parameters <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-          </button>
-          <div id="dropdownParametersFilter" class="z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700 text-left">
-            <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownVesselGroupButton">
-              <% available_parameters.each do |parameter| %>
-                <li>
-                  <%= check_box_tag('parameter_ids[]', parameter.id, selected_parameters.include?(parameter), {'data-action': 'vessel-filters#submit'}) %>
-                  <%= parameter.name %>
-                </li>
-              <% end %>
-            </ul>
+        <div class="col-span-5">
+          <h3 class="leading-6 font-medium text-gray-900 text-left mb-2">System parameters</h3>
+          <div class="grid grid-cols-3">
+            <% available_parameters.each do |parameter| %>
+              <div class="text-left text-gray-500 border-gray-500">
+                <%= check_box_tag('parameter_ids[]', parameter.id, selected_parameters.include?(parameter), {'data-action': 'vessel-filters#submit'}) %>
+                <%= parameter.name %>
+              </div>
+            <% end %>
           </div>
         </div>
       </div>

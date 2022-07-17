@@ -1,0 +1,32 @@
+<div class="grid grid-cols-1 mt-6">
+  <%= render partial: 'partials/dashboard_vessel_filters', locals: { start_date: date_range.begin, end_date: date_range.end, vessel_group_ids: vessel_group_ids } %>
+    <div class="text-sm mb-6 font-medium text-center text-gray-500 border-b border-gray-200">
+      <ul class="flex flex-wrap -mb-px">
+        <li class="mr-2">
+          <a href="?system_id=" class="inline-block p-4 rounded-t-lg border-b-2 border-blue-600 <%= (selected_system.nil?) ? "text-blue-600 active" : "border-b-transparent" %>" aria-current="page">All</a>
+        </li>
+        <% available_systems.each do |system| %>
+          <li class="mr-2">
+            <a href="?system_id=<%= system.id %>" class="inline-block p-4 rounded-t-lg border-b-2 border-blue-600 <%= (system.id == selected_system&.id) ? "text-blue-600 active" : "border-b-transparent" %>"><%= system.name %></a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% grouped_system_parameters.each do |system, system_parameters| %>
+    <div class="grid grid-cols-1 mt-6">
+      <%= render partial: 'partials/separator', locals: { system_name: system.name } %>
+      <% system_parameters.each do |system_parameter| %>
+
+        <div class="grid grid-cols-1 mt-6">
+          <%= render partial: 'partials/average_dashboard_chart',
+                     locals: {
+                       measurements: AverageVesselSystemParameterMeasurements.result_for(
+                         system: system, parameter: system_parameter.parameter, vessel_group_ids: vessel_group_ids,
+                         date_range: date_range
+                       ), system: system, parameter: system_parameter.parameter }
+          %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

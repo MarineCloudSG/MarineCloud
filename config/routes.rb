@@ -17,5 +17,7 @@ Rails.application.routes.draw do
     resources :vessel_comments, only: :create
   end
 
+  get :overview, to: 'vessels#overview'
+
   root 'vessels#index'
 end

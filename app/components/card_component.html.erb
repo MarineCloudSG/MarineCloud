@@ -1,13 +1,13 @@
 <div class="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200">
   <div class="w-full flex items-center justify-between p-6 space-x-6">
     <div class="flex-1 truncate">
-      <h3 class="text-gray-900 text-sm font-medium truncate">
+      <h3 class="text-gray-800 text-lg font-bold truncate">
+        <span class="rounded-full inline-block align-middle mb-1">
+          <%= @icon %>
+        </span>
         <a href="<%= @link %>"><%= @title %></a>
       </h3>
-      <p class="mt-1 text-gray-500 text-sm truncate"><%= @description %></p>
+      <p class="mt-8 text-sm text-gray-500 text-md truncate"><%= @description %></p>
     </div>
-    <span class="w-10 h-10 rounded-full flex-shrink-0">
-    <%= @icon %>
-  </span>
   </div>
 </div>

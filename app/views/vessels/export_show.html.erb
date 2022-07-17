@@ -5,9 +5,9 @@
     <div class="vessel space-y-6 lg:col-start-1 lg:col-span-2">
       <script> const recommendationRules = {} </script>
       <% charts_data_by_system.each do |system_name, charts_data| %>
-        <%= render partial: 'partials/separator', locals: { system_name: system_name } %>
+        <%= render partial: 'partials/export_separator', locals: { system_name: system_name } %>
         <% charts_data.each do |chart_data| %>
-          <%= render partial: 'partials/line_chart', locals: { chart_data: chart_data } %>
+          <%= render partial: 'partials/export_line_chart', locals: { chart_data: chart_data } %>
         <% end %>
       <% end %>
     </div>

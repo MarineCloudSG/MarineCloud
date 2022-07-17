@@ -39,3 +39,17 @@
 .highcharts-annotation-label, .highcharts-annotation-label * {
     display: none;
 }
+
+.home-background {
+    height: 270px;
+    margin-bottom: -200px;
+    background-image: url('home-page-bg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.home-report-header {
+    font-size: 18px;
+    line-height: 28px;
+}

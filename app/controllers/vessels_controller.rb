@@ -7,9 +7,20 @@ class VesselsController < BaseController
     return redirect_to action: :show, id: managed_vessels.first.id if managed_vessels.count == 1
 
     render locals: {
-      grouped_system_parameters: grouped_system_parameters,
       date_range: date_range,
       vessel_group_ids: vessel_group_ids
+    }
+  end
+
+  def overview
+    return redirect_to action: :show, id: managed_vessels.first.id if managed_vessels.count == 1
+
+    render locals: {
+      grouped_system_parameters: grouped_system_parameters,
+      date_range: date_range,
+      vessel_group_ids: vessel_group_ids,
+      available_systems: available_systems,
+      selected_system: selected_system
     }
   end
 
@@ -40,15 +51,16 @@ class VesselsController < BaseController
   end
 
   def vessel_show_template
-    return "export_show" if export_page?
+    return 'export_show' if export_page?
 
-    "show"
+    'show'
   end
 
   def vessel_page_layout
-    return "pdf_export" if export_page?
+    return 'pdf_export' if export_page?
+    return 'application_with_background' if action_name.eql? 'index'
 
-    "application"
+    'application'
   end
 
   def export_page?
@@ -110,6 +122,8 @@ class VesselsController < BaseController
   end
 
   def available_systems
+    return System.all if params[:id].nil?
+
     resource.systems
   end
 

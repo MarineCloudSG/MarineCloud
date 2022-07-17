@@ -1,6 +1,6 @@
 <div class="relative block w-full rounded-lg p-6 text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 bg-white mb-3 shadow">
   <h1 class="text-left text-lg mb-6 text-blue-500 font-bold">Get report about your fleet</h1>
-  <%= form_with method: :get do |f| %>
+  <%= form_with method: :get, url: overview_url do |f| %>
     <div>
       <div class="sm:grid sm:grid-cols-3 sm:gap-4 md:gap-12 md:px-32 sm:items-start">
         <div class="w-full">
@@ -14,7 +14,7 @@
             <ul class="p-6 text-sm text-gray-500 leading-7" aria-labelledby="dropdownVesselGroupButton">
               <% current_user.vessel_groups.each do |vessel_group| %>
                 <li>
-                  <%= check_box_tag('vessel_group_ids[]', vessel_group.id, vessel_group_ids.include?(vessel_group.id), {onchange: 'this.form.submit()'}) %>
+                  <%= check_box_tag('vessel_group_ids[]', vessel_group.id, vessel_group_ids.include?(vessel_group.id)) %>
                   <%= vessel_group.name %>
                 </li>
               <% end %>
@@ -23,11 +23,11 @@
         </div>
         <div class="w-full">
           <p class="text-left text-gray-500">From</p>
-          <%= f.date_field :start_date, {value: start_date, class: 'form-control w-full border-gray-400 text-gray-400', onchange: 'if(!this.value)return;this.form.submit()'}  %>
+          <%= f.date_field :start_date, {value: start_date, class: 'form-control w-full border-gray-400 text-gray-400'}  %>
         </div>
         <div class="w-full">
           <p class="text-left text-gray-500">To</p>
-          <%= f.date_field :end_date, {value: end_date, class: 'form-control w-full border-gray-400 text-gray-400', onchange: 'if(!this.value)return;this.form.submit()'} %>
+          <%= f.date_field :end_date, {value: end_date, class: 'form-control w-full border-gray-400 text-gray-400'} %>
         </div>
       </div>
       <div class="text-right md:px-32 pt-4">

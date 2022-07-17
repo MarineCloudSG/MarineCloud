@@ -1,78 +1,83 @@
 <div class="vessel-line-chart px-4 py-5 mb-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
-  <dt class="chart-name text-xl font-semibold text-gray-900 truncate"><%= chart_data.name %></dt>
-  <dd class="mb-2"><%= chart_data.vessel_system_parameter.parameter.unit %>&nbsp;</dd>
-  <script>
-    recommendationRules['<%= "vessel-chart-#{chart_data.vessel_system_parameter.id}" %>'] = <%= raw chart_data.recommendations_json %>;
-  </script>
-  <%= line_chart chart_data.metric.values,
-    min: chart_data.metric.chart_range_min,
-    max: chart_data.metric.chart_range_max, **{
-    id: "vessel-chart-#{chart_data.vessel_system_parameter.id}",
-    height: "150px",
-    library: {
-      xAxis: {
-        showFirstLabel: true,
-        type: 'date'
-      },
-      yAxis: {
-        plotLines: chart_data.metric.satisfactory_range_limits.map do |limit|
-          {
-            width: 2.5,
-            value: limit.value,
-            color: limit.color
-          }
-        end
-      },
-      annotations: [
-        {
-          labels: chart_data.metric.out_of_range_values.map do |date, data|
+<div class="grid grid-cols-12">
+  <div class="col-span-10 border-r border-gray-300 mr-6 px-6">
+    <div class="">
+      <dt class="chart-name text-xl font-semibold text-gray-900 truncate"><%= chart_data.name %></dt>
+      <dd class="mb-2"><%= chart_data.vessel_system_parameter.parameter.unit %>&nbsp;</dd>
+      <script>
+        recommendationRules['<%= "vessel-chart-#{chart_data.vessel_system_parameter.id}" %>'] = <%= raw chart_data.recommendations_json %>;
+      </script>
+      <%= line_chart chart_data.metric.values,
+        min: chart_data.metric.chart_range_min,
+        max: chart_data.metric.chart_range_max, **{
+        id: "vessel-chart-#{chart_data.vessel_system_parameter.id}",
+        height: "150px",
+        library: {
+          xAxis: {
+            showFirstLabel: true,
+            type: 'date'
+          },
+          yAxis: {
+            min: 0,
+            plotLines: chart_data.metric.satisfactory_range_limits.map do |limit|
+              {
+                width: 2.5,
+                value: limit.value,
+                color: limit.color
+              }
+            end
+          },
+          annotations: [
             {
-              point: { x: date.to_time.to_i * 1000, y: data[:value], xAxis: 0, yAxis: 0 },
-              backgroundColor: "rgba(0, 0, 0, 0.35)",
-              borderColor: "rgba(0, 0, 0, 0)",
-              color: "black",
-              text: data[:state]
+              labels: chart_data.metric.out_of_range_values.map do |date, data|
+                {
+                  point: { x: date.to_time.to_i * 1000, y: data[:value], xAxis: 0, yAxis: 0 },
+                  backgroundColor: "rgba(0, 0, 0, 0.35)",
+                  borderColor: "rgba(0, 0, 0, 0)",
+                  color: "black",
+                  text: data[:state]
+                }
+              end
             }
-          end
-        }
-      ],
-      tooltip: {
-        formatter: js_function_name('metricsTooltipFormatter')
-      },
-      chart: {
-        events: {
-          load: js_function_name('setOutOfRangeValues')
+          ],
+          tooltip: {
+            formatter: js_function_name('metricsTooltipFormatter')
+          },
+          chart: {
+            events: {
+              load: js_function_name('setOutOfRangeValues')
+            }
+          }
         }
       }
-    }
-  }
-  %>
-  <% if chart_data.satisfactory_statistics.count > 1 %>
+      %>
+    </div>
+
     <div class="mt-2">
       <% if chart_data.latest_recommendations.any? %>
-        <h3 class="text-lg leading-6 font-medium text-gray-900">Current recommendation: <%= chart_data.latest_recommendations.join(', ') %></h3>
+        <h3 class="text-lg leading-6 font-medium text-blue-500">Current recommendation: <%= chart_data.latest_recommendations.join(', ') %></h3>
       <% end %>
-      <h3 class="text-sm leading-6 font-medium text-gray-900">% of measurements match the satisfactory range</h3>
-      <dl class="chart-statistics mt-1 grid grid-cols-1 gap-5 sm:grid-cols-<%= chart_data.satisfactory_statistics.count %>">
-        <div class="px-4 py-1 bg-white shadow rounded-lg overflow-hidden sm:p-2 bg-green-100">
-          <dt class="text-sm font-medium text-gray-500 truncate">within</dt>
-          <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= chart_data.satisfactory_statistics[:in_range].round %>%</dd>
+    </div>
+  </div>
+  <div class="col-span-2">
+        <div class="mt-1">
+          <dd class="mt-1 text-3xl font-semibold text-emerald-500"><%= chart_data.satisfactory_statistics[:in_range].round %>%</dd>
+          <dt class="text-sm font-medium text-gray-500 truncate">within satisfactory range</dt>
         </div>
 
         <% if chart_data.satisfactory_statistics[:overrange].present? %>
-          <div class="px-4 py-1 bg-white shadow rounded-lg overflow-hidden sm:p-2 bg-red-100">
-            <dt class="text-sm font-medium text-gray-500 truncate">above</dt>
-            <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= chart_data.satisfactory_statistics[:overrange].round %>%</dd>
+          <div class="mt-4">
+            <dd class="mt-1 text-3xl font-semibold text-yellow-400"><%= chart_data.satisfactory_statistics[:overrange].round %>%</dd>
+            <dt class="text-sm font-medium text-gray-500 truncate">above satisfactory range</dt>
           </div>
         <% end %>
 
         <% if chart_data.satisfactory_statistics[:underrange].present? %>
-          <div class="px-4 py-1 bg-white shadow rounded-lg overflow-hidden sm:p-2 bg-red-100">
-            <dt class="text-sm font-medium text-gray-500 truncate">below</dt>
-            <dd class="mt-1 text-3xl font-semibold text-gray-900"><%= chart_data.satisfactory_statistics[:underrange].round %>%</dd>
+          <div class="mt-4">
+            <dd class="mt-1 text-3xl font-semibold text-red-500"><%= chart_data.satisfactory_statistics[:underrange].round %>%</dd>
+            <dt class="text-sm font-medium text-gray-500 truncate">below satisfactory range</dt>
           </div>
         <% end %>
-      </dl>
-    </div>
-  <% end %>
+  </div>
+</div>
 </div>
