@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import DiscussionController from "./discussion_controller.js"
+application.register("discussion", DiscussionController)
+
 import ExportPageController from "./export_page_controller.js"
 application.register("export-page", ExportPageController)
 

@@ -103,24 +103,4 @@
   </div>
 </section>
 
-<section class="discussion lg:col-start-3 lg:col-span-1">
-  <div class="relative">
-    <div class="absolute inset-0 flex items-center" aria-hidden="true">
-      <div class="w-full border-t border-gray-300"></div>
-    </div>
-    <div class="relative flex justify-center">
-      <span class="px-3 bg-gray-100 text-lg font-medium text-gray-900"> Discussion </span>
-    </div>
-  </div>
-  <div>
-    <div>
-      <%= render partial: 'vessel_comments/post_vessel_comment', locals: {
-        vessel: resource,
-        assigned_date: assigned_date
-      } %>
-      <ul role="list" class="divide-y divide-gray-200">
-        <%= render comments %>
-      </ul>
-    </div>
-  </div>
-</section>
+<%= render partial: 'partials/discussion_window', locals: { vessel: resource, comments: comments, assigned_date: assigned_date } %>

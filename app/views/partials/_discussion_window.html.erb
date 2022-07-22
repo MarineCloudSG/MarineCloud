@@ -1,0 +1,20 @@
+<section class="discussion" data-controller="discussion">
+  <div class="discussion-window bg-white h-full flex flex-col border border-gray-200 rounded-t-md">
+    <a href="#" class="bg-blue-500 p-2 text-gray-100 font-bold text-lg rounded-t-md" data-action="click->discussion#hide">
+      Discussion
+    </a>
+    <ul role="list" class="divide-y divide-gray-200 grow m-4 overflow-y-scroll">
+      <%= render comments %>
+    </ul>
+    <div class="m-6">
+      <%= render partial: 'vessel_comments/post_vessel_comment', locals: {
+        vessel: vessel,
+        assigned_date: assigned_date
+      } %>
+    </div>
+  </div>
+
+  <a href="#" class="discussion-toggle" data-action="click->discussion#show">
+    <%= image_tag 'icons/btn_floating_chat.svg' %>
+  </a>
+</section>

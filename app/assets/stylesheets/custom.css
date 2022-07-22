@@ -53,3 +53,34 @@
     font-size: 18px;
     line-height: 28px;
 }
+
+/* discussion window */
+section.discussion {
+    position: fixed;
+    bottom: 0px;
+    right: 10vw;
+    height: 360px;
+    width: 340px;
+}
+
+section.discussion .discussion-window {
+    transform: translateY(0);
+    transition: transform .2s;
+    transform-origin: bottom;
+}
+
+section.discussion.discussion-hidden .discussion-window {
+    transform: translateY(100%);
+    pointer-events: none;
+}
+
+section.discussion .discussion-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 50px;
+    display: none;
+}
+
+section.discussion.discussion-hidden .discussion-toggle {
+    display: initial;
+}

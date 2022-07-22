@@ -1,31 +1,17 @@
-<div class="flex items-start space-x-4">
-  <div class="flex-shrink-0">
-    <img class="inline-block h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-  </div>
-  <div class="min-w-0 flex-1">
-    <%= form_for [vessel, VesselComment.new] do |f| %>
-      <%= f.hidden_field :assigned_date, { value: assigned_date } %>
-      <div class="border-b border-gray-200 focus-within:border-sky-600">
-        <label for="comment" class="sr-only">Add your comment</label>
-        <%= f.text_area :message,
-                        class: "bg-transparent block w-full border-0 border-b border-transparent p-0 pb-2 resize-none
-                  focus:ring-0 focus:border-sky-600 sm:text-sm",
-                        placeholder: "Add your comment...",
-                        rows: 3 %>
-
-      </div>
-      <div class="pt-2 flex justify-between">
-        <div class="flex items-center space-x-5">
-
-        </div>
-        <div class="flex-shrink-0">
-          <%= f.button "Submit", type: :submit,
-                       class: "inline-flex items-center px-4 py-2 border border-transparent rounded-md
-                    shadow-sm text-white bg-sky-600 text-sm font-medium
-                    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500
-                    hover:bg-sky-700" %>
-        </div>
-      </div>
-    <% end %>
-  </div>
+<div>
+  <%= form_for [vessel, VesselComment.new] do |f| %>
+    <%= f.hidden_field :assigned_date, { value: assigned_date } %>
+    <div class="flex">
+      <%= f.text_field :message,
+                      class: "grow bg-blue-100 border-0 border-b border-transparent rounded-md
+                            focus:ring-0 focus:border-sky-600 sm:text-sm",
+                      placeholder: "Add your comment...",
+                      rows: 3 %>
+      <%= f.button "Send", type: :submit,
+                   class: "px-4 py-2 border border-transparent rounded-md
+                          shadow-sm text-white bg-blue-500 text-sm font-medium
+                          focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+                          hover:bg-blue-700" %>
+    </div>
+  <% end %>
 </div>
