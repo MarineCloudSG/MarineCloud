@@ -9,9 +9,9 @@
         </div>
         <div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
           <!-- Current: "border-sky-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
-          <%= render(MenuLinksComponent.new(classes_current: "border-sky-500 text-white",
-                                            classes_default: "border-transparent text-white hover:border-gray-300 hover:text-gray-100",
-                                            classes_base: "inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium")) do |menu_links| %>
+          <%= render(MenuLinksComponent.new(classes_current: "border-sky-500 text-white font-light",
+                                            classes_default: "border-transparent text-gray-300 hover:border-gray-300 hover:text-white hover:font-medium",
+                                            classes_base: "inline-flex items-center px-1 pt-1 border-b-2 text-sm font-light")) do |menu_links| %>
             <% menu_links.link label: 'Overview', url: overview_path %>
             <% menu_links.link label: 'Vessels', url: vessels_path %>
           <% end %>
