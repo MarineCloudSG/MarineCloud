@@ -24,11 +24,11 @@ class VesselTrackableMetric
   end
 
   def chart_range_min
-    (chart_numeric_values + [lowest_satisfactory_range]).min
+    (chart_numeric_values + [lowest_satisfactory_range]).compact.min
   end
 
   def chart_range_max
-    (chart_numeric_values + [highest_satisfactory_range]).max
+    (chart_numeric_values + [highest_satisfactory_range]).compact.max
   end
 
   private

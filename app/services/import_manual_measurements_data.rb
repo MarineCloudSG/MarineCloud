@@ -36,7 +36,8 @@ class ImportManualMeasurementsData < Patterns::Service
   end
 
   def taken_at_month
-    parser_output.fetch(:headers)[:month]
+    month = parser_output.fetch(:headers)[:month]
+    Date.parse("01 #{month} 2022").month
   end
 
   def taken_at_year
