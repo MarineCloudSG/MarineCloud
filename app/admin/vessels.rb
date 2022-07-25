@@ -72,9 +72,24 @@ ActiveAdmin.register Vessel do
   # ==== EDIT ====
   # ==============
 
-  permit_params :name, :vessel_group_id, :company_name, :email, :chemical_provider_id, :user_id,
-                vessel_systems: [:id, :system_id, :code],
-                vessel_system_parameters: [:id, :parameter_id, :code, :min_satisfactory, :max_satisfactory]
+  permit_params :name,
+                :vessel_group_id,
+                :company_name,
+                :email,
+                :chemical_provider_id,
+                :user_id,
+                vessel_systems_attributes: [
+                  :id,
+                  :system_id,
+                  :code,
+                  vessel_system_parameters_attributes: [
+                    :id,
+                    :parameter_id,
+                    :code,
+                    :min_satisfactory,
+                    :max_satisfactory
+                  ]
+                ]
 
   form do |f|
     f.inputs do
