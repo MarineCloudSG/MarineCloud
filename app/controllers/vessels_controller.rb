@@ -3,6 +3,15 @@
 class VesselsController < BaseController
   layout :vessel_page_layout
 
+  def home
+    return redirect_to action: :show, id: managed_vessels.first.id if managed_vessels.count == 1
+
+    render locals: {
+      date_range: date_range,
+      vessel_group_ids: vessel_group_ids
+    }
+  end
+
   def index
     return redirect_to action: :show, id: managed_vessels.first.id if managed_vessels.count == 1
 
@@ -58,7 +67,7 @@ class VesselsController < BaseController
 
   def vessel_page_layout
     return 'pdf_export' if export_page?
-    return 'application_with_background' if action_name.eql? 'index'
+    return 'application_with_background' if action_name.eql? 'home'
 
     'application'
   end

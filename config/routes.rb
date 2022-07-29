@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   end
 
   get :overview, to: 'vessels#overview'
+  get :home, to: 'vessels#home'
 
-  root 'vessels#index'
+  root 'vessels#home'
 end

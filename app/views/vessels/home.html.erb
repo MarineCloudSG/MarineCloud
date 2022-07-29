@@ -1,3 +1,7 @@
+<div class="grid grid-cols-1 mt-6">
+  <%= render partial: 'partials/vessels_index_filters', locals: { start_date: date_range.begin, end_date: date_range.end, vessel_group_ids: vessel_group_ids } %>
+</div>
+
 <div class="text-sm mb-6 font-medium text-center text-gray-500 border-b border-gray-200">
     <ul class="flex flex-wrap -mb-px">
         <li class="mr-2">
@@ -15,8 +19,8 @@
   <% collection.each do |vessel| %>
     <%= render CardComponent.new(
       title: vessel.name,
-      description: "#{image_tag 'icons/date-upload.svg', class: 'inline-block'} Last upload: #{vessel.last_data_upload&.to_date}",
-      icon: vessel.country.flag_file.present? ? image_tag(vessel.country.flag_file) : (user_avatar vessel.name, size: 28, colors: 45),
+      description: vessel.vessel_group.name,
+      icon: user_avatar(vessel.name, size: 28, colors: 45),
       link: vessel_path(vessel)
     ) %>
   <% end %>
