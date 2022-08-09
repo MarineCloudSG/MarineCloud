@@ -18,7 +18,8 @@
             type: 'date'
           },
           yAxis: {
-            min: 0,
+            min: chart_data.metric.chart_range_min,
+            max: chart_data.metric.chart_range_max,
             plotLines: chart_data.metric.satisfactory_range_limits.map do |limit|
               {
                 width: 2.5,
