@@ -20,7 +20,7 @@
     <%= render CardComponent.new(
       title: vessel.name,
       description: vessel.vessel_group.name,
-      icon: user_avatar(vessel.name, size: 28, colors: 45),
+      icon: vessel.country.flag.persisted? ? image_tag(vessel.country.flag) : (user_avatar vessel.name, size: 28, colors: 45),
       link: vessel_path(vessel)
     ) %>
   <% end %>

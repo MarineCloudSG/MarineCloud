@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 202204020181776) do
+ActiveRecord::Schema.define(version: 202204020181779) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,34 @@ ActiveRecord::Schema.define(version: 202204020181776) do
     t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author"
     t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource"
+  end
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum"
+    t.datetime "created_at", precision: 6, null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
   create_table "admin_users", force: :cascade do |t|
@@ -58,6 +86,12 @@ ActiveRecord::Schema.define(version: 202204020181776) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_chemical_providers_on_name", unique: true
+  end
+
+  create_table "countries", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "import_logs", force: :cascade do |t|
@@ -124,8 +158,8 @@ ActiveRecord::Schema.define(version: 202204020181776) do
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
+    t.datetime "reset_password_sent_at", precision: 6
+    t.datetime "remember_created_at", precision: 6
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "first_name"
@@ -188,12 +222,16 @@ ActiveRecord::Schema.define(version: 202204020181776) do
     t.string "flag"
     t.bigint "user_id"
     t.bigint "chemical_provider_id", null: false
+    t.bigint "country_id", null: false
     t.index ["chemical_provider_id"], name: "index_vessels_on_chemical_provider_id"
+    t.index ["country_id"], name: "index_vessels_on_country_id"
     t.index ["name"], name: "index_vessels_on_name", unique: true
     t.index ["user_id"], name: "index_vessels_on_user_id"
     t.index ["vessel_group_id"], name: "index_vessels_on_vessel_group_id"
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "chemical_provider_parameters", "chemical_providers"
   add_foreign_key "chemical_provider_parameters", "parameters"
   add_foreign_key "chemical_provider_parameters", "systems"
@@ -209,6 +247,7 @@ ActiveRecord::Schema.define(version: 202204020181776) do
   add_foreign_key "vessel_systems", "systems"
   add_foreign_key "vessel_systems", "vessels"
   add_foreign_key "vessels", "chemical_providers"
+  add_foreign_key "vessels", "countries"
   add_foreign_key "vessels", "users"
   add_foreign_key "vessels", "vessel_groups"
 end

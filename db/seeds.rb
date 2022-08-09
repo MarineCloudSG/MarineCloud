@@ -65,6 +65,7 @@ if Rails.env.development?
     parameter.save!
   end
 
+  country = Country.create(name: 'Unknown')
   last_month = (Date.current - 1.month).all_month
   seed_systems = ActiveModel::Type::Boolean.new.cast(ENV.fetch('SEED_SYSTEMS', true))
   seed_parameters = ActiveModel::Type::Boolean.new.cast(ENV.fetch('SEED_PARAMETERS', true))
@@ -93,6 +94,7 @@ if Rails.env.development?
     vessel.chemical_provider = chemical_provider
     vessel.company_name = group_name
     vessel.flag = 'Jolly Roger'
+    vessel.country = country
     vessel.save!
     next unless seed_systems
 
