@@ -14,7 +14,17 @@
 <body class="h-full export-page">
   <div class="page-export-screen" data-controller="export-page">
     <div class="page-export-info">
-      <h1>Exporting</h1>
+      <div class="export-panel bg-white rounded-lg shadow border-2 border-gray-300 pt-4 pb-6">
+        <div class="grid grid-cols-12 gap-4 mb-8">
+          <div class="col-span-2 text-right">
+            <%= image_tag 'icons/exporting.svg', class: 'inline-block' %>
+          </div>
+          <div class="col-span-8">
+            <h2 class="font-bold mt-1">Export in progress...</h2>
+            <p class="mt-2">Please wait while the data report is exporting.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="export-content min-h-full">

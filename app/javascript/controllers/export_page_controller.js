@@ -6,6 +6,7 @@ import ScreenshotToPdf from "../lib/screenshot_to_pdf";
 // Connects to data-controller="export-page"
 export default class extends Controller {
   connect() {
+    return
     Highcharts.setOptions({
       plotOptions: {
         series: {
