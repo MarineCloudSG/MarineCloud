@@ -7,7 +7,7 @@
         </span>
         <a href="<%= @link %>"><%= @title %></a>
       </h3>
-      <p class="mt-8 text-sm text-gray-500 text-md truncate"><%= @description %></p>
+      <p class="mt-8 text-sm text-gray-500 text-md truncate"><%= @description.html_safe %></p>
     </div>
   </div>
 </div>
