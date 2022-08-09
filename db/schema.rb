@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 202204020181779) do
+ActiveRecord::Schema.define(version: 202204020181780) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -219,7 +219,6 @@ ActiveRecord::Schema.define(version: 202204020181779) do
     t.bigint "vessel_group_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "flag"
     t.bigint "user_id"
     t.bigint "chemical_provider_id", null: false
     t.bigint "country_id", null: false

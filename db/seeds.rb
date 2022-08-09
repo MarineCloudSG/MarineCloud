@@ -93,7 +93,6 @@ if Rails.env.development?
     vessel.email = "#{vessel_name.parameterize.underscore}@#{group.name.parameterize.underscore}.dev"
     vessel.chemical_provider = chemical_provider
     vessel.company_name = group_name
-    vessel.flag = 'Jolly Roger'
     vessel.country = country
     vessel.save!
     next unless seed_systems

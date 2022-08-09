@@ -37,6 +37,7 @@ ActiveAdmin.register Vessel do
           row 'Managed by' do
             vessel.user
           end
+          row :country
         end
 
         panel 'Systems' do
@@ -78,6 +79,7 @@ ActiveAdmin.register Vessel do
                 :email,
                 :chemical_provider_id,
                 :user_id,
+                :country_id,
                 vessel_systems_attributes: [
                   :id,
                   :system_id,
@@ -99,6 +101,7 @@ ActiveAdmin.register Vessel do
       f.input :email
       f.input :chemical_provider
       f.input :user, label: 'Managed by', collection: User.pluck(:email, :id)
+      f.input :country
     end
     f.inputs "Assigned systems" do
       f.has_many :vessel_systems, allow_destroy: true do |vs|
