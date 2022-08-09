@@ -1,9 +1,9 @@
 import jsPDF from "jspdf";
 
 const elementHeightCorrection = {
-  top: e => e + 95,
-  separator: e => 14,
-  chart: e => e + 120,
+  top: e => e,
+  separator: e => e * 2 - 14,
+  chart: e => e + 24,
 }
 
 export default class ScreenshotToPdf {
@@ -15,7 +15,9 @@ export default class ScreenshotToPdf {
   }
 
   constructor(canvas) {
+    this.debug = false
     this.canvas = canvas
+    this.context = canvas.getContext('2d')
   }
 
   async result() {
@@ -44,7 +46,12 @@ export default class ScreenshotToPdf {
       position = imgHeight - heightLeft
       let currentPageHeight = 0
       if (firstPage) {
-        currentPageHeight += elementHeightCorrection.top(breakpoints[0].element.offsetTop)
+        let topHeight = elementHeightCorrection.top(breakpoints[0].element.offsetTop)
+        currentPageHeight += topHeight
+
+        if (this.debug) {
+          this.drawDebugLine(position + currentPageHeight, imgWidth, '#ff0000', 'Top')
+        }
       }
 
       for (let i = lastBreakpointId + 1; i < breakpoints.length; i++) {
@@ -58,16 +65,26 @@ export default class ScreenshotToPdf {
 
         currentPageHeight += height
         lastBreakpointId = i
+
+        if (this.debug) {
+          this.drawDebugLine(position + currentPageHeight, imgWidth, '#ff0000', `Breakpoint ${breakpoint.type}`)
+        }
       }
 
       const lastBreakpoint = breakpoints[lastBreakpointId]
       if (lastBreakpoint.type === 'separator') {
-        currentPageHeight -= 30
+        currentPageHeight -= elementHeightCorrection.separator(lastBreakpoint.element.offsetHeight)
         lastBreakpointId--
+      } else {
+        currentPageHeight += 0
       }
 
       if (currentPageHeight === 0) {
         currentPageHeight = heightLeft
+      }
+
+      if (this.debug) {
+        this.drawDebugLine(position + currentPageHeight, imgWidth, '#ff0000', 'Page end')
       }
 
       await this.addImageToPdf(pdf, position, imgWidth, currentPageHeight)
@@ -77,6 +94,19 @@ export default class ScreenshotToPdf {
     }
 
     return pdf
+  }
+
+  drawDebugLine(currentHeight, imgWidth, color, text) {
+    this.context.beginPath()
+    this.context.moveTo(0, currentHeight)
+    this.context.lineTo(imgWidth, currentHeight)
+    this.context.strokeStyle = color || '#000000'
+    this.context.stroke()
+
+    if (text) {
+      this.context.font = "20px Arial"
+      this.context.fillText(text, 10, currentHeight)
+    }
   }
 
   async addImageToPdf(pdf, position, imgWidth, pageHeight) {

@@ -10,5 +10,6 @@ ActiveAdmin.register ParameterRecommendation do
       input :value_max
       input :message
     end
+    f.actions
   end
 end
