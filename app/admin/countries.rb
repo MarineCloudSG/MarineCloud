@@ -8,12 +8,12 @@ ActiveAdmin.register Country do
     end
   end
 
-  permit_params :name, :flag
+  permit_params :name, :flag_file
 
   form do |f|
     f.inputs do
       f.input :name
-      f.input :flag, as: :file
+      f.input :flag_file
     end
 
     f.actions
