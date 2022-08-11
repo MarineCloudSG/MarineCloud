@@ -141,4 +141,11 @@ if Rails.env.development?
       end
     end
   end
+
+  flags_dir = 'icons/flags'
+  Dir.glob("app/assets/images/#{flags_dir}/*.svg").map do |p|
+    basename = File.basename(p, '.svg')
+    name = basename.humanize.titleize
+    Country.create(name: name, flag_file: "#{flags_dir}/#{basename}.svg")
+  end
 end

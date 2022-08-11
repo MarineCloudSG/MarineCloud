@@ -11,10 +11,6 @@ require('highcharts/modules/annotations')(Highcharts)
 import Chartkick from "chartkick"
 Chartkick.use(Highcharts)
 
-// ActiveStorage
-import * as ActiveStorage from "@rails/activestorage"
-ActiveStorage.start()
-
 // Trix / ActionText
 import "trix"
 import "@rails/actiontext"

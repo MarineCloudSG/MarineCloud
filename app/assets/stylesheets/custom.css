@@ -84,3 +84,8 @@ section.discussion .discussion-toggle {
 section.discussion.discussion-hidden .discussion-toggle {
     display: initial;
 }
+
+.vessel-flag {
+    width: 28px;
+    height: 28px;
+}

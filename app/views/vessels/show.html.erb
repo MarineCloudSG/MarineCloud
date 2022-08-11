@@ -12,8 +12,8 @@
           </a>
         </div>
         <h1 class="message-heading text-lg font-medium text-gray-900 leading-7">
-          <span class="rounded-full inline-block align-middle mb-1">
-            <%= user_avatar(vessel.name, size: 28, colors: 45) %>
+          <span class="vessel-flag rounded-full inline-block align-middle mb-1">
+            <%= vessel.country.flag_file.present? ? image_tag(vessel.country.flag_file) : (user_avatar vessel.name, size: 28, colors: 45) %>
           </span>
           <%= @vessel.name %>
         </h1>

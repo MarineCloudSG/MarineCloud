@@ -5,5 +5,6 @@ FactoryBot.define do
     vessel_group
     user { nil }
     chemical_provider
+    country
   end
 end

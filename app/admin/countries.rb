@@ -3,7 +3,7 @@ ActiveAdmin.register Country do
     attributes_table do
       row :name
       row :flag do |country|
-        image_tag url_for(country.flag)
+        image_tag url_for(country.flag_file)
       end
     end
   end

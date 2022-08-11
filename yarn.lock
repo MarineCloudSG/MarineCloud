@@ -570,7 +570,7 @@
   dependencies:
     "@rails/activestorage" ">= 7.0.0-alpha1"
 
-"@rails/activestorage@>= 7.0.0-alpha1", "@rails/activestorage@^7.0.1":
+"@rails/activestorage@>= 7.0.0-alpha1":
   version "7.0.1"
   resolved "https://registry.npmjs.org/@rails/activestorage/-/activestorage-7.0.1.tgz"
   integrity sha512-086z2aymPsfJITR8tbXjMr5OipfoFcoWJn5y5krXx3zo9zCEBQjSVR/tS2oHQGCSxIsF0E7a9Ds1cFXrnEdSKQ==
