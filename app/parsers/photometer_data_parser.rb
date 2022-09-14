@@ -8,16 +8,23 @@ class PhotometerDataParser
   end
 
   def result
-    @result ||= csv_rows.map { |row| row_to_hash(row) }
+    @result ||= csv_rows_default_encoding.map { |row| row_to_hash(row) }
+  rescue CSV::MalformedCSVError
+    @result ||= csv_rows_windows_encoding.map { |row| row_to_hash(row) }
   end
 
   private
 
   attr_reader :filepath
 
-  def csv_rows
-    @csv_rows ||= CSV.open(filepath, headers: true, liberal_parsing: true, col_sep: ';')
+  def csv_rows_default_encoding
+    CSV.open(filepath, headers: true, liberal_parsing: true, col_sep: ';')
   end
+
+  def csv_rows_windows_encoding
+    CSV.open(filepath, headers: true, liberal_parsing: true, col_sep: ';', encoding: 'ISO-8859-1')
+  end
+
 
   def row_to_hash(row)
     {
