@@ -1,5 +1,8 @@
 <div class="vessel-filters relative block w-full shadow bg-white rounded-lg p-6 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500" data-controller="vessel-filters">
   <%= form_with method: :get do |f| %>
+    <% if selected_system.present? %>
+      <input type="hidden" name="system_id" value="<%= selected_system.id %>">
+    <% end %>
     <div>
       <div class="sm:grid sm:grid-cols-12 sm:gap-4 sm:items-start sm:pt-5" >
         <div class="col-span-7 text-left">
