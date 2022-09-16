@@ -38,15 +38,15 @@ class VesselTrackableMetric
   end
 
   def highest_satisfactory_chart_line
-    chart_limit_line(label: 'Satisfactory max', value: highest_satisfactory_range, color: '#00ff00')
+    chart_limit_line(label: 'Satisfactory max', value: highest_satisfactory_range, color: '#00ff00', type: :max)
   end
 
   def lowest_satisfactory_chart_line
-    chart_limit_line(label: 'Satisfactory min', value: lowest_satisfactory_range, color: '#ff0000')
+    chart_limit_line(label: 'Satisfactory min', value: lowest_satisfactory_range, color: '#ff0000', type: :min)
   end
 
-  def chart_limit_line(label:, value:, color:)
-    OpenStruct.new(label: label, value: value.to_i, color: color)
+  def chart_limit_line(label:, value:, color:, type:)
+    OpenStruct.new(label: label, value: value.to_i, color: color, type: type)
   end
 
   def lowest_satisfactory_range

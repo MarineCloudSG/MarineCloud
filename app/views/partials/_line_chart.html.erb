@@ -24,7 +24,15 @@
               {
                 width: 2.5,
                 value: limit.value,
-                color: limit.color
+                color: limit.color,
+                label: {
+                  text: limit.value,
+                  textAlign: 'left',
+                  y: (limit.type == :max) ? 15 : -5,
+                  style: {
+                    color: limit.color
+                  }
+                }
               }
             end
           },
