@@ -3,9 +3,3 @@ send_data_import_reminders:
   class: "ServiceWorker"
   args:
     - 'send_data_import_reminders'
-
-send_data_import_reminders_test1:
-  cron: "0 0 16 * *"
-  class: "ServiceWorker"
-  args:
-    - 'send_data_import_reminders'
