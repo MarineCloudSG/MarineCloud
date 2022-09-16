@@ -14,6 +14,10 @@ class VesselChartData
     vessel_system_parameter.system.name
   end
 
+  def satisfactory_statistics?
+    satisfactory_statistics.length > 1
+  end
+
   def satisfactory_statistics
     @satisfactory_statistics ||= SatisfactoryRangeValueDistributionForMeasurements.result_for(measurements)
   end
