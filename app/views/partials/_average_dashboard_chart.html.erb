@@ -3,21 +3,7 @@
   <dd class="mt-1"><%= system.name %></dd>
   <%= column_chart measurements,
                    id: "average-vessel-chart-#{system.name}-#{parameter.name}",
-                   height: '150px',
-                   library: {
-                     yAxis: {
-                       min: 0,
-                       plotLines: [{
-                                     width: 2.5,
-                                     value: parameter.chemical_provider_parameters.minimum(:min_satisfactory),
-                                     color: '#ff0000'
-                                   },{
-                                     width: 2.5,
-                                     value: parameter.chemical_provider_parameters.maximum(:max_satisfactory),
-                                     color: '#00ff00'
-                                   }]
-                     },
-                   }
+                   height: '150px'
   %>
 </div>
 

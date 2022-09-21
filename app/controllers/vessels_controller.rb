@@ -25,7 +25,7 @@ class VesselsController < BaseController
     return redirect_to action: :show, id: managed_vessels.first.id if managed_vessels.count == 1
 
     render locals: {
-      grouped_system_parameters: grouped_system_parameters,
+      grouped_system_parameters: filtered_system_parameters,
       date_range: date_range,
       vessel_group_ids: vessel_group_ids,
       available_systems: available_systems,
@@ -124,6 +124,13 @@ class VesselsController < BaseController
 
   def vessel_ids
     Vessel.joins(:vessel_group).where(vessel_group_id: vessel_group_ids).pluck(:id).uniq
+  end
+
+  def filtered_system_parameters
+    grouped_system_parameters.map do |system, params|
+      system_unique_params = params.uniq &:parameter_id
+      [system, system_unique_params]
+    end.to_h
   end
 
   def grouped_system_parameters
