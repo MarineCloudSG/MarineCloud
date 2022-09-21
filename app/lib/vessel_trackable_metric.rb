@@ -14,7 +14,7 @@ class VesselTrackableMetric
   end
 
   def values
-    measurements.map { |m| [m.taken_at.to_date, m.value.to_f] }
+    measurements.map { |m| [m.taken_at.to_date.to_time(:utc), m.value.to_f] }
   end
 
   def out_of_range_values
