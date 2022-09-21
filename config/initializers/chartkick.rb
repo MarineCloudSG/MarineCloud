@@ -22,6 +22,3 @@ module ChartkickMixinJavascriptFunctions
 end
 
 Chartkick::Helper.send(:prepend, ChartkickMixinJavascriptFunctions::Helper)
-
-
-ActiveSupport.to_time_preserves_timezone = false
