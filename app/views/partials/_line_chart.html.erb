@@ -18,8 +18,8 @@
             type: 'datetime'
           },
           yAxis: {
-            min: chart_data.metric.chart_range_min,
-            max: chart_data.metric.chart_range_max,
+            # endOnTick: false,
+            # startOnTick: false,
             plotLines: chart_data.metric.satisfactory_range_limits.map do |limit|
               {
                 width: 2.5,
@@ -29,7 +29,7 @@
                   text: limit.value,
                   align: 'right',
                   textAlign: 'right',
-                  y: (limit.type == :max && (limit.value - chart_data.metric.chart_range_max) <= 10) ? 15 : -5,
+                  y: (limit.value - chart_data.metric.chart_range_max ) <= 1120 ? 15 : -5,
                   style: {
                     color: limit.color
                   }

@@ -17,7 +17,7 @@ function getRulesForChart(chart) {
 }
 
 function filterRulesFulfilledForValue(rules, value) {
-    return rules.filter((rule) => (rule.min === null || rule.min < value) && (rule.max === null || rule.max > value))
+    return rules.filter((rule) => (rule.min === null || rule.min <= value) && (rule.max === null || rule.max >= value))
 }
 
 function getRulesFulfilledForChart(chart, value) {
