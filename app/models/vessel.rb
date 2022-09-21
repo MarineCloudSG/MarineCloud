@@ -8,8 +8,8 @@ class Vessel < ApplicationRecord
   has_many :vessel_system_parameters, through: :vessel_systems
   has_many :parameters, through: :vessel_system_parameters
   has_many :measurements, through: :vessel_system_parameters
-  has_many :measurements_imports, dependent: :delete_all
-  has_many :comments, class_name: VesselComment.name
+  has_many :measurements_imports, dependent: :destroy
+  has_many :comments, class_name: VesselComment.name, dependent: :destroy
 
   accepts_nested_attributes_for :vessel_systems
 
