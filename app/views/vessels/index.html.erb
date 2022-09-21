@@ -1,18 +1,10 @@
-<div class="text-sm mb-6 font-medium text-center text-gray-500 border-b border-gray-200">
-    <ul class="flex flex-wrap -mb-px">
-        <li class="mr-2">
-            <a href="#" class="inline-block text-blue-600 p-4 rounded-t-lg border-b-2 border-blue-600 active" aria-current="page">All</a>
-        </li>
-      <% current_user.vessel_groups.each do |vessel_group| %>
-        <li class="mr-2">
-          <a href="#" class="inline-block p-4 rounded-t-lg border-b-2 border-blue-600 border-b-transparent"><%= vessel_group.name %></a>
-        </li>
-      <% end %>
-    </ul>
-</div>
+<%= render partial: 'partials/vessel_groups', locals: {
+  groups: current_user.vessel_groups,
+  active_group_ids: selected_vessel_group_ids
+} %>
 
 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-  <% collection.each do |vessel| %>
+  <% vessels.each do |vessel| %>
     <%= render CardComponent.new(
       title: vessel.name,
       description: "#{image_tag 'icons/date-upload.svg', class: 'inline-block'} Last upload: #{vessel.last_data_upload&.to_date}",

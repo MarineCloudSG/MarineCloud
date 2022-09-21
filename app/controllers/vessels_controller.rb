@@ -8,7 +8,9 @@ class VesselsController < BaseController
 
     render locals: {
       date_range: date_range,
-      vessel_group_ids: vessel_group_ids
+      vessel_group_ids: vessel_group_ids,
+      vessels: vessels,
+      selected_vessel_group_ids: selected_vessel_group_ids
     }
   end
 
@@ -17,7 +19,9 @@ class VesselsController < BaseController
 
     render locals: {
       date_range: date_range,
-      vessel_group_ids: vessel_group_ids
+      vessel_group_ids: vessel_group_ids,
+      vessels: vessels,
+      selected_vessel_group_ids: selected_vessel_group_ids
     }
   end
 
@@ -29,7 +33,7 @@ class VesselsController < BaseController
       date_range: date_range,
       vessel_group_ids: vessel_group_ids,
       available_systems: available_systems,
-      selected_system: selected_system
+      selected_system: selected_system,
     }
   end
 
@@ -54,6 +58,10 @@ class VesselsController < BaseController
   end
 
   private
+
+  def vessels
+    vessel_group_ids ? collection.where(vessel_group_id: vessel_group_ids) : collection
+  end
 
   def export_url_params
     params.permit(:start_date, :end_date, :system_id, parameter_ids: []).merge({ export_page: true })
@@ -120,6 +128,10 @@ class VesselsController < BaseController
 
   def vessel_group_ids
     params.fetch(:vessel_group_ids, current_user.vessel_groups.pluck(:id)).map(&:to_i)
+  end
+
+  def selected_vessel_group_ids
+    params[:vessel_group_ids]&.map(&:to_i)
   end
 
   def vessel_ids
