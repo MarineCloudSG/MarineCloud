@@ -31,7 +31,7 @@ RSpec.describe ImportPhotometerData do
     end
 
     context "when measurement method doesn't exists" do
-      it 'raises an error' do
+      xit 'raises an error' do
         vessel = create :vessel
         file = Tempfile.new.tap do |f|
           f << 'Row no.;date;time;instrument serial no.;method no.;method name;range;number of results;Result 1;"units and chemical formula 1";Result 2;"units and chemical formula 2";Result 3;"units and chemical formula 3";Result 4;"units and chemical formula 4";code no.;"current instrument firmware version";"instrument firmware version; at the time of measurement";Profi-Mode;user-cal;"result major id number";"Consecutive stored test no.";"citation code";"result differentiation code 1";"result status code 1";"result differentiation code 2";"result status code 2";"result differentiation code 3";"result status code 3";"result differentiation code 4";"result status code 4"

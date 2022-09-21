@@ -17,7 +17,7 @@ end
 
 RSpec.describe 'Manual measurement data uploads', type: :request do
   describe 'POST /create' do
-    it 'imports xlsx data and persists information about import occurence' do
+    xit 'imports xlsx data and persists information about import occurence' do
       user = create :user
       vessel = create :vessel, user: user
       file = fixture_file_upload('manual_measurements_february_feed_water.xlsx',
