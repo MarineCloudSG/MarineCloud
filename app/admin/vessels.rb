@@ -17,6 +17,7 @@ ActiveAdmin.register Vessel do
     column :vessel_group
     column :company_name
     column :created_at
+    column :updated_at
     actions
   end
 
