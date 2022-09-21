@@ -27,8 +27,9 @@
                 color: limit.color,
                 label: {
                   text: limit.value,
-                  textAlign: 'left',
-                  y: (limit.type == :max) ? 15 : -5,
+                  align: 'right',
+                  textAlign: 'right',
+                  y: (limit.type == :max && (limit.value - chart_data.metric.chart_range_max) <= 10) ? 15 : -5,
                   style: {
                     color: limit.color
                   }

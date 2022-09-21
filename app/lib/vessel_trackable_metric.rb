@@ -38,11 +38,11 @@ class VesselTrackableMetric
   end
 
   def highest_satisfactory_chart_line
-    chart_limit_line(label: 'Satisfactory max', value: highest_satisfactory_range, color: '#00ff00', type: :max)
+    chart_limit_line(label: 'Satisfactory max', value: highest_satisfactory_range, color: '#10b981', type: :max)
   end
 
   def lowest_satisfactory_chart_line
-    chart_limit_line(label: 'Satisfactory min', value: lowest_satisfactory_range, color: '#ff0000', type: :min)
+    chart_limit_line(label: 'Satisfactory min', value: lowest_satisfactory_range, color: '#f05252', type: :min)
   end
 
   def chart_limit_line(label:, value:, color:, type:)
