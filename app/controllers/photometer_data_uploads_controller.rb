@@ -6,8 +6,12 @@ class PhotometerDataUploadsController < BaseController
 
   def create
     authorize vessel, :update?
-    ImportPhotometerData.call(file: data_file, vessel: vessel)
-    redirect_to vessel, notice: 'Upload completed successfully'
+    result = ImportPhotometerData.call(file: data_file, vessel: vessel)
+    if result.failed_rows.positive?
+      redirect_to vessel, alert: "Upload completed, errors: #{result.failed_rows}. Contact administrator in order to fix it."
+    else
+      redirect_to vessel, notice: 'Upload completed successfully'
+    end
   rescue ImportPhotometerData::UnsupportedFileTypeError
     redirect_to vessel, alert: 'Upload failed - please upload CSV or XLSX file'
   rescue ParsedVesselPhotometerDataRow::HandledImportException

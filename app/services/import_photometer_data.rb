@@ -3,22 +3,19 @@
 class ImportPhotometerData < Patterns::Service
   class UnsupportedFileTypeError < StandardError; end
 
+  attr_reader :failed_rows
+
   def initialize(file:, vessel:)
     @file = file
     @vessel = vessel
+    @failed_rows = 0
   end
 
   def call
     raise UnsupportedFileTypeError unless supported_file_format?
 
     parser_results.each do |row|
-      Measurement.create!(
-        measurements_import: measurements_import,
-        vessel_system_parameter: row.vessel_system_parameter,
-        taken_at: row.taken_at,
-        value: adjusted_row_value(row),
-        state: row.state
-      )
+      save_result_row(row)
     end
   end
 
@@ -29,6 +26,18 @@ class ImportPhotometerData < Patterns::Service
   SUPPORTED_TYPES = [XLSX_TYPE, CSV_TYPE]
 
   attr_reader :file, :vessel, :measurements_import
+
+  def save_result_row(row)
+    Measurement.create!(
+      measurements_import: measurements_import,
+      vessel_system_parameter: row.vessel_system_parameter,
+      taken_at: row.taken_at,
+      value: adjusted_row_value(row),
+      state: row.state
+    )
+  rescue
+    @failed_rows += 1
+  end
 
   def adjusted_row_value(row)
     row.value * row_multiplier(row)

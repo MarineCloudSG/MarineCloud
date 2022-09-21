@@ -3,21 +3,19 @@
 class ImportManualMeasurementsData < Patterns::Service
   InvalidFileFormat = Class.new(ArgumentError)
 
+  attr_reader :failed_rows
+
   def initialize(file:, vessel:)
     raise InvalidFileFormat unless file.content_type.eql?(XLSX_TYPE)
 
     @filepath = file.path
     @vessel = vessel
+    @failed_rows = 0
   end
 
   def call
     parser_results.each do |row|
-      Measurement.create!(
-        measurements_import: measurements_import,
-        vessel_system_parameter: row.vessel_system_parameter,
-        taken_at: row.taken_at,
-        value: row.value
-      )
+      save_result_row(row)
     end
   end
 
@@ -26,6 +24,17 @@ class ImportManualMeasurementsData < Patterns::Service
   attr_reader :filepath, :vessel
 
   XLSX_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+
+  def save_result_row(row)
+    Measurement.create!(
+      measurements_import: measurements_import,
+      vessel_system_parameter: row.vessel_system_parameter,
+      taken_at: row.taken_at,
+      value: row.value
+    )
+  rescue
+    @failed_rows += 1
+  end
 
   def parser_results
     parser_output.fetch(:data).map { |row| ParsedManualMeasurementDataRow.new(row, vessel, measurements_import) }
