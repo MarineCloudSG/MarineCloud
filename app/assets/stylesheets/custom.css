@@ -62,7 +62,10 @@ section.discussion {
     height: 360px;
     width: 340px;
 }
-
+section.discussion.discussion-hidden {
+    width: 0;
+    height: 0;
+}
 section.discussion .discussion-window {
     transform: translateY(0);
     transition: transform .2s;
@@ -83,10 +86,6 @@ section.discussion .discussion-toggle {
 
 section.discussion.discussion-hidden .discussion-toggle {
     display: initial;
-}
-
-section.discussion.discussion-hidden{
-    z-index: -99;
 }
 
 .vessel-flag {
