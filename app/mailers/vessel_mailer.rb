@@ -18,6 +18,6 @@ class VesselMailer < ApplicationMailer
   end
 
   def commenters_emails
-    @vessel.comments.distinct.pluck('comment.user.email')
+    @vessel.comments.joins(:user).distinct.pluck('users.email')
   end
 end
