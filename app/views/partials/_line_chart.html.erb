@@ -18,8 +18,6 @@
             type: 'datetime'
           },
           yAxis: {
-            # endOnTick: false,
-            # startOnTick: false,
             plotLines: chart_data.metric.satisfactory_range_limits.map do |limit|
               {
                 width: 2.5,
@@ -29,7 +27,7 @@
                   text: limit.value,
                   align: 'right',
                   textAlign: 'right',
-                  y: (limit.value - chart_data.metric.chart_range_max ) <= 1120 ? 15 : -5,
+                  y: -5,
                   style: {
                     color: limit.color
                   }
@@ -54,6 +52,7 @@
             formatter: js_function_name('metricsTooltipFormatter')
           },
           chart: {
+            marginTop: 15,
             events: {
               load: js_function_name('setOutOfRangeValues')
             }
