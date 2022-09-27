@@ -46,7 +46,7 @@ class VesselTrackableMetric
   end
 
   def chart_limit_line(label:, value:, color:, type:)
-    OpenStruct.new(label: label, value: value.to_i, color: color, type: type)
+    OpenStruct.new(label: label, value: value, color: color, type: type)
   end
 
   def lowest_satisfactory_range
