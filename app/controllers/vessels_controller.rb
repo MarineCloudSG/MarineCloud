@@ -150,9 +150,8 @@ class VesselsController < BaseController
   end
 
   def available_systems
-    return System.all if params[:id].nil?
-
-    resource.systems
+    systems = params[:id].nil? ? System.all : resource.systems
+    systems.order(sort_order: :asc)
   end
 
   def selected_system_id
@@ -160,9 +159,11 @@ class VesselsController < BaseController
   end
 
   def selected_system
-    return if selected_system_id.blank?
-
-    available_systems.find(selected_system_id)
+    if selected_system_id.blank?
+      available_systems.first
+    else
+      available_systems.find(selected_system_id)
+    end
   end
 
   def available_parameter_ids
