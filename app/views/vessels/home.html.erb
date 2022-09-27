@@ -11,8 +11,8 @@
   <% vessels.each do |vessel| %>
     <%= render CardComponent.new(
       title: vessel.name,
-      description: vessel.vessel_group.name,
-      icon: user_avatar(vessel.name, size: 28, colors: 45),
+      description: "#{image_tag 'icons/date-upload.svg', class: 'inline-block'} Last upload: #{vessel.last_data_upload&.to_date}",
+      icon: vessel.country.flag_file.present? ? image_tag(vessel.country.flag_file) : (user_avatar vessel.name, size: 28, colors: 45),
       link: vessel_path(vessel)
     ) %>
   <% end %>
