@@ -1,0 +1,14 @@
+<div class="text-sm mb-6 font-medium text-center text-gray-500 border-b border-gray-200">
+  <ul class="flex flex-wrap -mb-px">
+    <%= render partial: 'partials/vessel_groups', locals: {
+      groups: current_user.vessel_groups,
+      active_group_ids: selected_vessel_group_ids
+    } %>
+
+    <li class="grow">&nbsp;</li>
+
+    <%= render partial: 'partials/vessels_search_form', locals: {
+      keep_params: keep_params, vessel_search_query: vessel_search_query
+    } %>
+  </ul>
+</div>

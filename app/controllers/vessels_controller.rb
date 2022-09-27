@@ -9,8 +9,10 @@ class VesselsController < BaseController
     render locals: {
       date_range: date_range,
       vessel_group_ids: vessel_group_ids,
-      vessels: vessels,
-      selected_vessel_group_ids: selected_vessel_group_ids
+      vessels: search_filtered_vessels,
+      selected_vessel_group_ids: selected_vessel_group_ids,
+      vessel_search_query: vessel_search_query,
+      keep_params: params.permit(:start_date, :end_date, vessel_group_ids: [])
     }
   end
 
@@ -20,8 +22,10 @@ class VesselsController < BaseController
     render locals: {
       date_range: date_range,
       vessel_group_ids: vessel_group_ids,
-      vessels: vessels,
-      selected_vessel_group_ids: selected_vessel_group_ids
+      vessels: search_filtered_vessels,
+      selected_vessel_group_ids: selected_vessel_group_ids,
+      vessel_search_query: vessel_search_query,
+      keep_params: params.permit(:start_date, :end_date, vessel_group_ids: [])
     }
   end
 
@@ -58,6 +62,12 @@ class VesselsController < BaseController
   end
 
   private
+
+  def search_filtered_vessels
+    return vessels if vessel_search_query.nil?
+
+    vessels.where('name like ?', "%#{vessel_search_query}%")
+  end
 
   def vessels
     vessel_group_ids ? collection.where(vessel_group_id: vessel_group_ids) : collection
@@ -132,6 +142,10 @@ class VesselsController < BaseController
 
   def selected_vessel_group_ids
     params[:vessel_group_ids]&.map(&:to_i)
+  end
+
+  def vessel_search_query
+    params.fetch(:vessel_search_query, nil)
   end
 
   def vessel_ids

@@ -2,9 +2,11 @@
   <%= render partial: 'partials/vessels_index_filters', locals: { start_date: date_range.begin, end_date: date_range.end, vessel_group_ids: vessel_group_ids } %>
 </div>
 
-<%= render partial: 'partials/vessel_groups', locals: {
+<%= render partial: 'partials/vessel_group_and_search_menu', locals: {
   groups: current_user.vessel_groups,
-  active_group_ids: selected_vessel_group_ids
+  selected_vessel_group_ids: selected_vessel_group_ids,
+  keep_params: keep_params,
+  vessel_search_query: vessel_search_query
 } %>
 
 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

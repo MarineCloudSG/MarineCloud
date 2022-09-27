@@ -1,0 +1,5 @@
+<% keep_params.each do |key, values| %>
+  <% Array.wrap(values).each do |value| %>
+    <%= hidden_field_tag field_name("", key, multiple: values.respond_to?('each')), value  %>
+  <% end %>
+<% end %>
