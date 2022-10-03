@@ -35,9 +35,12 @@ class VesselsController < BaseController
     render locals: {
       grouped_system_parameters: filtered_system_parameters,
       date_range: date_range,
+      vessel_ids: vessel_ids,
       vessel_group_ids: vessel_group_ids,
       available_systems: available_systems,
       selected_system: selected_system,
+      vessel_search_query: vessel_search_query,
+      keep_params: params.permit(:start_date, :end_date, :system_id, vessel_group_ids: [])
     }
   end
 
@@ -66,7 +69,7 @@ class VesselsController < BaseController
   def search_filtered_vessels
     return vessels if vessel_search_query.nil?
 
-    vessels.where('name like ?', "%#{vessel_search_query}%")
+    vessels.where('name ILIKE ?', "%#{vessel_search_query}%")
   end
 
   def vessels
@@ -149,7 +152,7 @@ class VesselsController < BaseController
   end
 
   def vessel_ids
-    Vessel.joins(:vessel_group).where(vessel_group_id: vessel_group_ids).pluck(:id).uniq
+    search_filtered_vessels.pluck(:id).uniq
   end
 
   def filtered_system_parameters

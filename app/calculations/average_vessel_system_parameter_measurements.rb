@@ -31,11 +31,7 @@ class AverageVesselSystemParameterMeasurements < Patterns::Calculation
   end
 
   def vessel_ids
-    Vessel.joins(:vessel_group).where(vessel_group_id: vessel_group_ids).pluck(:id).uniq
-  end
-
-  def vessel_group_ids
-    options.fetch(:vessel_group_ids)
+    options.fetch(:vessel_ids)
   end
 
   def date_range
