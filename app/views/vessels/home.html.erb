@@ -2,6 +2,9 @@
   <%= render partial: 'partials/vessels_index_filters', locals: { start_date: date_range.begin, end_date: date_range.end, vessel_group_ids: vessel_group_ids } %>
 </div>
 
+<div class="px-3 py-2">
+  <h1 class="text-left text-xl text-black-500 font-bold">Vessel Dashboards</h1>
+</div>
 <%= render partial: 'partials/vessel_group_and_search_menu', locals: {
   groups: current_user.vessel_groups,
   selected_vessel_group_ids: selected_vessel_group_ids,
