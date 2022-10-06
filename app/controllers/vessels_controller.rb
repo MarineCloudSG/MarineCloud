@@ -136,7 +136,12 @@ class VesselsController < BaseController
   end
 
   def default_start_date
-    Date.today.beginning_of_month - 1.month
+    prev_month = Date.today.beginning_of_month - 1.month
+    if params[:id].nil?
+      prev_month
+    else
+      resource.last_month_with_measurements || prev_month
+    end
   end
 
   def vessel_group_ids

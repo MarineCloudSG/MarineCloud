@@ -22,4 +22,8 @@ class Vessel < ApplicationRecord
                         .order(created_at: :ASC)
                         .last&.tested_by
   end
+
+  def last_month_with_measurements
+    measurements.order(taken_at: :desc).first&.taken_at&.to_date&.beginning_of_month
+  end
 end
