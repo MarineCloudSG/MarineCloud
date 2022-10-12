@@ -73,7 +73,8 @@ class VesselsController < BaseController
   end
 
   def vessels
-    vessel_group_ids ? collection.where(vessel_group_id: vessel_group_ids) : collection
+    vessels = vessel_group_ids ? collection.where(vessel_group_id: vessel_group_ids) : collection
+    vessels.includes(:measurements_imports).order('measurements_imports.created_at DESC NULLS LAST')
   end
 
   def export_url_params
