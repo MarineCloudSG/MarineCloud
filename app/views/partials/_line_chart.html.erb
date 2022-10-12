@@ -1,95 +1,108 @@
 <div class="vessel-line-chart px-4 py-5 mb-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
-<div class="grid grid-cols-12">
-  <div class="<%= chart_data.satisfactory_statistics? ? 'col-span-10 border-r border-gray-300 mr-6 px-6' : 'col-span-12' %>">
-    <div class="">
-      <dt class="chart-name text-xl font-semibold text-gray-900 truncate"><%= chart_data.name %></dt>
-      <dd class="mb-2"><%= chart_data.vessel_system_parameter.parameter.unit %>&nbsp;</dd>
-      <script>
-        recommendationRules['<%= "vessel-chart-#{chart_data.vessel_system_parameter.id}" %>'] = <%= raw chart_data.recommendations_json %>;
-      </script>
-      <%= line_chart chart_data.metric.values,
-        min: chart_data.metric.chart_range_min,
-        max: chart_data.metric.chart_range_max, **{
-        id: "vessel-chart-#{chart_data.vessel_system_parameter.id}",
-        height: "150px",
-        library: {
-          xAxis: {
-            showFirstLabel: true,
-            type: 'datetime'
-          },
-          yAxis: {
-            plotLines: chart_data.metric.satisfactory_range_limits.map do |limit|
-              {
-                width: 2.5,
-                value: limit.value,
-                color: limit.color,
-                label: {
-                  text: limit.value,
-                  align: 'right',
-                  textAlign: 'right',
-                  y: -5,
-                  style: {
-                    color: limit.color
+  <div class="grid grid-cols-12">
+    <div class="<%= chart_data.satisfactory_statistics? ? 'col-span-10 border-r border-gray-300 mr-6 px-6' : 'col-span-12' %>">
+      <div class="">
+        <dt class="chart-name text-xl font-semibold text-gray-900 truncate"><%= chart_data.name %></dt>
+        <dd class="mb-2"><%= chart_data.vessel_system_parameter.parameter.unit %>&nbsp;</dd>
+        <script>
+            recommendationRules['<%= "vessel-chart-#{chart_data.vessel_system_parameter.id}" %>'] = <%= raw chart_data.recommendations_json %>;
+        </script>
+        <%= line_chart chart_data.metric.values,
+                       min: chart_data.metric.chart_range_min,
+                       max: chart_data.metric.chart_range_max, **{
+            id: "vessel-chart-#{chart_data.vessel_system_parameter.id}",
+            height: "150px",
+            library: {
+              xAxis: {
+                showFirstLabel: true,
+                type: 'datetime'
+              },
+              yAxis: {
+                plotLines: chart_data.metric.satisfactory_range_limits.map do |limit|
+                  {
+                    width: 2.5,
+                    value: limit.value,
+                    color: limit.color,
+                    label: {
+                      text: limit.value,
+                      align: 'right',
+                      textAlign: 'right',
+                      y: -5,
+                      style: {
+                        color: limit.color
+                      }
+                    }
                   }
+                end
+              },
+              annotations: [
+                {
+                  labels: chart_data.metric.out_of_range_values.map do |date, data|
+                    {
+                      point: { x: date.to_time(:utc).to_i * 1000, y: data[:value], xAxis: 0, yAxis: 0 },
+                      backgroundColor: "rgba(0, 0, 0, 0.35)",
+                      borderColor: "rgba(0, 0, 0, 0)",
+                      color: "black",
+                      text: data[:state]
+                    }
+                  end
+                }
+              ],
+              tooltip: {
+                formatter: js_function_name('metricsTooltipFormatter')
+              },
+              chart: {
+                marginTop: 15,
+                events: {
+                  load: js_function_name('setOutOfRangeValues')
                 }
               }
-            end
-          },
-          annotations: [
-            {
-              labels: chart_data.metric.out_of_range_values.map do |date, data|
-                {
-                  point: { x: date.to_time(:utc).to_i * 1000, y: data[:value], xAxis: 0, yAxis: 0 },
-                  backgroundColor: "rgba(0, 0, 0, 0.35)",
-                  borderColor: "rgba(0, 0, 0, 0)",
-                  color: "black",
-                  text: data[:state]
-                }
-              end
-            }
-          ],
-          tooltip: {
-            formatter: js_function_name('metricsTooltipFormatter')
-          },
-          chart: {
-            marginTop: 15,
-            events: {
-              load: js_function_name('setOutOfRangeValues')
             }
           }
-        }
-      }
-      %>
-    </div>
-
-    <div class="mt-2">
-      <% if chart_data.latest_recommendations.any? %>
-        <h3 class="text-lg leading-6 font-medium text-black-500">Last Analysis: <%= chart_data.latest_recommendations.join(', ') %></h3>
-      <% end %>
-    </div>
-  </div>
-
-  <% if chart_data.satisfactory_statistics? %>
-    <div class="col-span-2">
-      <div class="mt-1">
-        <dd class="mt-1 text-3xl font-semibold text-emerald-500"><%= chart_data.satisfactory_statistics[:in_range].round %>%</dd>
-        <dt class="text-sm font-medium text-gray-500 truncate">within satisfactory range</dt>
+        %>
       </div>
 
-      <% if chart_data.satisfactory_statistics[:overrange].present? %>
-        <div class="mt-4">
-          <dd class="mt-1 text-3xl font-semibold text-yellow-400"><%= chart_data.satisfactory_statistics[:overrange].round %>%</dd>
-          <dt class="text-sm font-medium text-gray-500 truncate">above satisfactory range</dt>
-        </div>
-      <% end %>
-
-      <% if chart_data.satisfactory_statistics[:underrange].present? %>
-        <div class="mt-4">
-          <dd class="mt-1 text-3xl font-semibold text-red-500"><%= chart_data.satisfactory_statistics[:underrange].round %>%</dd>
-          <dt class="text-sm font-medium text-gray-500 truncate">below satisfactory range</dt>
-        </div>
-      <% end %>
+      <div class="mt-2">
+        <% if chart_data.latest_recommendations.any? %>
+          <h3 class="text-lg leading-6 font-medium text-black-500">Last
+            Analysis: <%= chart_data.latest_recommendations.join(', ') %></h3>
+        <% end %>
+      </div>
     </div>
-  <% end %>
-</div>
+
+    <% if chart_data.satisfactory_statistics? %>
+      <div class="col-span-2">
+        <div class="mt-1">
+          <dd class="mt-1 text-3xl font-semibold text-emerald-500"><%= chart_data.satisfactory_statistics[:in_range].round %>
+            %
+          </dd>
+          <dt class="text-sm font-medium text-gray-500 truncate">within satisfactory range</dt>
+        </div>
+
+        <% if chart_data.satisfactory_statistics[:overrange].present? %>
+          <div class="mt-2">
+            <dd class="mt-1 text-3xl font-semibold text-yellow-400"><%= chart_data.satisfactory_statistics[:overrange].round %>
+              %
+            </dd>
+            <dt class="text-sm font-medium text-gray-500 truncate">above satisfactory range</dt>
+          </div>
+        <% end %>
+
+        <% if chart_data.satisfactory_statistics[:underrange].present? %>
+          <div class="mt-2">
+            <dd class="mt-1 text-3xl font-semibold text-red-500"><%= chart_data.satisfactory_statistics[:underrange].round %>
+              %
+            </dd>
+            <dt class="text-sm font-medium text-gray-500 truncate">below satisfactory range</dt>
+          </div>
+        <% end %>
+        <% if chart_data.satisfactory_range_text %>
+          <div class="border-t border-gray-300 mt-2 pt-2">
+            <p class="text-sm font-medium text-gray-500 truncate">Sat.Range <%= chart_data.satisfactory_range_text %></p>
+          </div>
+        <% end %>
+      </div>
+
+    <% end %>
+  </div>
 </div>

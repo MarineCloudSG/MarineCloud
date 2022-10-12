@@ -5,7 +5,7 @@
         <dt class="chart-name text-xl font-semibold text-gray-900 truncate"><%= chart_data.name %></dt>
         <dd class="mb-2"><%= chart_data.vessel_system_parameter.parameter.unit %>&nbsp;</dd>
         <script>
-          recommendationRules['<%= "vessel-chart-#{chart_data.vessel_system_parameter.id}" %>'] = <%= raw chart_data.recommendations_json %>;
+            recommendationRules['<%= "vessel-chart-#{chart_data.vessel_system_parameter.id}" %>'] = <%= raw chart_data.recommendations_json %>;
         </script>
         <%= line_chart chart_data.metric.values,
                        min: chart_data.metric.chart_range_min,
@@ -56,27 +56,40 @@
 
       <div class="mt-2">
         <% if chart_data.latest_recommendations.any? %>
-          <h3 class="text-lg leading-6 font-medium text-black-500">Last Analysis: <%= chart_data.latest_recommendations.join(', ') %></h3>
+          <h3 class="text-lg leading-6 font-medium text-black-500">Last
+            Analysis: <%= chart_data.latest_recommendations.join(', ') %></h3>
         <% end %>
       </div>
     </div>
     <div class="col-span-2">
       <div class="mt-1">
-        <dd class="mt-1 text-3xl font-semibold text-emerald-500"><%= chart_data.satisfactory_statistics[:in_range].round %>%</dd>
+        <dd class="mt-1 text-3xl font-semibold text-emerald-500"><%= chart_data.satisfactory_statistics[:in_range].round %>
+          %
+        </dd>
         <dt class="text-sm font-medium text-gray-500 truncate">within satisfactory range</dt>
       </div>
 
       <% if chart_data.satisfactory_statistics[:overrange].present? %>
         <div class="mt-4">
-          <dd class="mt-1 text-3xl font-semibold text-yellow-400"><%= chart_data.satisfactory_statistics[:overrange].round %>%</dd>
+          <dd class="mt-1 text-3xl font-semibold text-yellow-400"><%= chart_data.satisfactory_statistics[:overrange].round %>
+            %
+          </dd>
           <dt class="text-sm font-medium text-gray-500 truncate">above satisfactory range</dt>
         </div>
       <% end %>
 
       <% if chart_data.satisfactory_statistics[:underrange].present? %>
         <div class="mt-4">
-          <dd class="mt-1 text-3xl font-semibold text-red-500"><%= chart_data.satisfactory_statistics[:underrange].round %>%</dd>
+          <dd class="mt-1 text-3xl font-semibold text-red-500"><%= chart_data.satisfactory_statistics[:underrange].round %>
+            %
+          </dd>
           <dt class="text-sm font-medium text-gray-500 truncate">below satisfactory range</dt>
+        </div>
+      <% end %>
+
+      <% if chart_data.satisfactory_range_text %>
+        <div class="border-t border-gray-300 mt-2 pt-2">
+          <p class="text-sm font-medium text-gray-500 truncate">Sat.Range <%= chart_data.satisfactory_range_text %></p>
         </div>
       <% end %>
     </div>

@@ -8,6 +8,7 @@ class VesselSystemParameter < ApplicationRecord
 
   delegate :min_satisfactory, to: :chemical_provider_parameter, prefix: :default, allow_nil: true
   delegate :max_satisfactory, to: :chemical_provider_parameter, prefix: :default, allow_nil: true
+  delegate :unit, to: :parameter, prefix: :default, allow_nil: true
 
   def lowest_satisfactory_range
     overrides_satisfactory? ? min_satisfactory : default_min_satisfactory

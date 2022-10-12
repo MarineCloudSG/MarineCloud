@@ -46,4 +46,9 @@ class VesselChartData
   def recommendations
     @recommendations ||= vessel_system_parameter.recommendations
   end
-end
+
+  def satisfactory_range_text
+    return "<2P-Alkalinity" if vessel_system_parameter.parameter.name == "M-Alkalinity"
+    return vessel_system_parameter.satisfactory_range_text
+    end
+  end
