@@ -15,7 +15,10 @@
             library: {
               xAxis: {
                 showFirstLabel: true,
-                type: 'datetime'
+                type: 'datetime',
+                labels: {
+                  format: "{value:%Y-%m-%d}"
+                }
               },
               yAxis: {
                 plotLines: chart_data.metric.satisfactory_range_limits.map do |limit|
