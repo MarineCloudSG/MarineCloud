@@ -75,7 +75,7 @@
           <ul class="flex flex-wrap -mb-px">
             <% available_systems.each do |system| %>
               <li class="mr-2">
-                <a href="<%= url_for(request.parameters.merge({ :system_id => system.id })) %>" class="inline-block p-4 rounded-t-lg border-b-2 border-blue-600 <%= (system.id == selected_system&.id) ? "text-blue-600 active" : "border-b-transparent" %>"><%= system.name %></a>
+                <a href="<%= url_for(request.parameters.merge({ :system_id => system.id, :parameter_ids => nil })) %>" class="inline-block p-4 rounded-t-lg border-b-2 border-blue-600 <%= (system.id == selected_system&.id) ? "text-blue-600 active" : "border-b-transparent" %>"><%= system.name %></a>
               </li>
             <% end %>
           </ul>
