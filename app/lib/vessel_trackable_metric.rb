@@ -21,14 +21,18 @@ class VesselTrackableMetric
   end
 
   def chart_range_min
-    (chart_numeric_values + [lowest_satisfactory_range]).compact.min
+    chart_all_values.min
   end
 
   def chart_range_max
-    (chart_numeric_values + [highest_satisfactory_range]).compact.max
+    chart_all_values.max
   end
 
   private
+
+  def chart_all_values
+    @chart_all_values ||= (chart_numeric_values + [lowest_satisfactory_range, highest_satisfactory_range]).compact
+  end
 
   def chart_numeric_values
     values.map { |_date, value| value }
