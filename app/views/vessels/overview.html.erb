@@ -32,6 +32,10 @@
         <div class="grid grid-cols-1 mt-6">
           <%= render partial: 'partials/average_dashboard_chart',
                      locals: {
+                       satisfactory_ranges: AverageVesselSystemParameterSatisfactoryRanges.result_for(
+                         system: system, parameter: system_parameter.parameter,
+                         chemical_provider: selected_chemical_provider,
+                       ),
                        measurements: AverageVesselSystemParameterMeasurements.result_for(
                          system: system, parameter: system_parameter.parameter, vessel_ids: vessel_ids,
                          date_range: date_range

@@ -7,10 +7,7 @@ class VesselTrackableMetric
   attr_reader :vessel_system_parameter, :measurements
 
   def satisfactory_range_limits
-    limits = []
-    limits << highest_satisfactory_chart_line if highest_satisfactory_range.present?
-    limits << lowest_satisfactory_chart_line if lowest_satisfactory_range.present?
-    limits
+    SatisfactoryRangeChartLines.new(max_satisfactory_range: highest_satisfactory_range, min_satisfactory_range: lowest_satisfactory_range).chart_lines
   end
 
   def values

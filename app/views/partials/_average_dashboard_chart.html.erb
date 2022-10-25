@@ -3,7 +3,27 @@
   <dd class="mt-1"><%= system.name %></dd>
   <%= column_chart measurements,
                    id: "average-vessel-chart-#{system.name}-#{parameter.name}",
-                   height: '150px'
+                   height: '150px',
+                   library: {
+                     yAxis: {
+                       plotLines: satisfactory_ranges.map do |limit|
+                         {
+                           width: 2.5,
+                           value: limit.value,
+                           color: limit.color,
+                           label: {
+                             text: limit.value,
+                             align: 'right',
+                             textAlign: 'right',
+                             y: -5,
+                             style: {
+                               color: limit.color
+                             }
+                           }
+                         }
+                       end
+                     },
+                   }
   %>
 </div>
 
