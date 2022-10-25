@@ -189,7 +189,7 @@ class VesselsController < BaseController
     ChemicalProvider.all
   end
   def selected_chemical_provider
-    params[:chemical_provider].present? ? params[:chemical_provider].to_i : nil
+    params[:chemical_provider].present? ? ChemicalProvider.find(params[:chemical_provider].to_i) : nil
   end
 
   def selected_system_id
