@@ -3,7 +3,7 @@ class SatisfactoryRangeValueDistributionForMeasurements < Patterns::Calculation
   private
 
   def result
-    applicable_states.map { |state| [state, states_percentages[state]] }.to_h.compact
+    applicable_states.map { |state| [state, states_percentages[state]] }.to_h
   end
 
   def applicable_states
