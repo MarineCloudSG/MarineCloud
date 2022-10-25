@@ -1,5 +1,13 @@
 <div class="grid grid-cols-1 mt-6">
-  <%= render partial: 'partials/dashboard_vessel_filters', locals: { start_date: date_range.begin, end_date: date_range.end, vessel_group_ids: vessel_group_ids } %>
+  <%= render partial: 'partials/dashboard_vessel_filters', locals: {
+    selected_chemical_provider: selected_chemical_provider,
+    chemical_providers: chemical_providers,
+    available_systems: available_systems,
+    selected_system: selected_system,
+    start_date: date_range.begin,
+    end_date: date_range.end,
+    vessel_group_ids: vessel_group_ids
+  } %>
   <div class="text-sm mb-6 font-medium text-center text-gray-500 border-b border-gray-200">
     <ul class="flex flex-wrap -mb-px">
       <% available_systems.each do |system| %>

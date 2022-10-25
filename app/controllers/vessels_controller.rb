@@ -38,6 +38,8 @@ class VesselsController < BaseController
       vessel_ids: vessel_ids,
       vessel_group_ids: vessel_group_ids,
       available_systems: available_systems,
+      chemical_providers: chemical_providers,
+      selected_chemical_provider: selected_chemical_provider,
       selected_system: selected_system,
       vessel_search_query: vessel_search_query,
       keep_params: params.permit(:start_date, :end_date, :system_id, vessel_group_ids: [])
@@ -74,6 +76,12 @@ class VesselsController < BaseController
 
   def vessels
     vessels = vessel_group_ids ? collection.where(vessel_group_id: vessel_group_ids) : collection
+    if selected_chemical_provider
+      vessels = vessels.joins(:chemical_provider).where(chemical_provider: selected_chemical_provider)
+    end
+    # if selected_systems.any?
+    #   vessels = vessels.joins(:chemical_provider).where(chemical_provider: selected_chemical_providers)
+    # end
     vessels.includes(:measurements_imports).order('measurements_imports.created_at DESC NULLS LAST')
   end
 
@@ -175,6 +183,13 @@ class VesselsController < BaseController
   def available_systems
     systems = params[:id].nil? ? System.all : resource.systems
     systems.order(sort_order: :asc)
+  end
+
+  def chemical_providers
+    ChemicalProvider.all
+  end
+  def selected_chemical_provider
+    params[:chemical_provider].present? ? params[:chemical_provider].to_i : nil
   end
 
   def selected_system_id

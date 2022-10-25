@@ -21,6 +21,50 @@
             </ul>
           </div>
         </div>
+
+        <div class="w-full">
+          <p class="text-left text-gray-500">Chemical provider</p>
+
+          <button id="dropdownChemicalProviderButton" data-dropdown-toggle="dropdownChemicalProvider" class="w-full text-gray-400 bg-white font-medium border border-gray-400 text-sm px-4 py-2.5 text-center inline-flex items-center" type="button">
+            <span class="grow text-left">Select</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </button>
+          <div id="dropdownChemicalProvider" class="z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-64 text-left">
+            <ul class="p-6 text-sm text-gray-500 leading-7" aria-labelledby="dropdownChemicalProviderButton">
+              <li>
+                <%= radio_button_tag('chemical_provider', "", selected_chemical_provider.nil?, {onchange: 'this.form.submit()'}) %>
+                all
+              </li>
+              <% chemical_providers.each do |chemical_provider| %>
+                <li>
+                  <%= radio_button_tag('chemical_provider', chemical_provider.id, selected_chemical_provider == chemical_provider.id, {onchange: 'this.form.submit()'}) %>
+                  <%= chemical_provider.name %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+
+
+          <div class="w-full">
+          <p class="text-left text-gray-500">System</p>
+
+          <button id="dropdownSystemButton" data-dropdown-toggle="dropdownSystem" class="w-full text-gray-400 bg-white font-medium border border-gray-400 text-sm px-4 py-2.5 text-center inline-flex items-center" type="button">
+            <span class="grow text-left">Select</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </button>
+          <div id="dropdownSystem" class="z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-64 text-left">
+            <ul class="p-6 text-sm text-gray-500 leading-7" aria-labelledby="dropdownSystemButton">
+              <% available_systems.each do |system| %>
+                <li>
+                  <%= radio_button_tag('system_id', system.id, selected_system&.id == system.id, {onchange: 'this.form.submit()'}) %>
+                  <%= system.name %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+
         <div class="w-full">
           <p class="text-left text-gray-500">From</p>
           <%= f.date_field :start_date, {value: start_date, class: 'form-control w-full border-gray-400 text-gray-400', onchange: 'if(!this.value)return;this.form.submit()'}  %>
