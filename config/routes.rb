@@ -17,6 +17,8 @@ Rails.application.routes.draw do
     resources :vessel_comments, only: :create
   end
 
+  resources :downloads, only: :index
+
   get :overview, to: 'vessels#overview'
   get :home, to: 'vessels#home'
 
