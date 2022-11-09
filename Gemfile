@@ -58,7 +58,7 @@ gem "inherited_resources"
 gem "kaminari"
 
 # Active Storage
-# gem "aws-sdk-s3"
+gem "aws-sdk-s3"
 
 # Authentication
 gem "devise"
