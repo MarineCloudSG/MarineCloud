@@ -4,21 +4,10 @@
     chemical_providers: chemical_providers,
     available_parameters: available_parameters,
     selected_parameters: selected_parameters,
-    available_systems: available_systems,
-    selected_system: selected_system,
     start_date: date_range.begin,
     end_date: date_range.end,
     vessel_group_ids: vessel_group_ids
   } %>
-  <div class="text-sm mb-6 font-medium text-center text-gray-500 border-b border-gray-200">
-    <ul class="flex flex-wrap -mb-px">
-      <% available_systems.each do |system| %>
-        <li class="mr-2">
-          <a href="<%= url_for(request.parameters.merge({ :system_id => system.id })) %>" class="inline-block p-4 rounded-t-lg border-b-2 border-blue-600 <%= (system.id == selected_system&.id) ? "text-blue-600 active" : "border-b-transparent" %>"><%= system.name %></a>
-        </li>
-      <% end %>
-    </ul>
-  </div>
   <ul class="flex flex-wrap">
     <li class="grow">&nbsp;</li>
 
@@ -26,24 +15,35 @@
       keep_params: keep_params, vessel_search_query: vessel_search_query
     } %>
   </ul>
-  <% grouped_system_parameters.each do |system, system_parameters| %>
-    <div class="grid grid-cols-1 mt-6">
-      <%= render partial: 'partials/separator', locals: { system_name: system.name } %>
-      <% system_parameters.each do |system_parameter| %>
+  <% grouped_parameters_by_system.each do |tag_or_system, parameters| %>
 
-        <div class="grid grid-cols-1 mt-6">
+    <div class="grid grid-cols-1 mt-6">
+      <% if tag_or_system.is_a?(System) %>
+        <% parameters.each do |parameter| %>
           <%= render partial: 'partials/average_dashboard_chart',
                      locals: {
                        satisfactory_ranges: AverageVesselSystemParameterSatisfactoryRanges.result_for(
-                         system: system, parameter: system_parameter.parameter,
+                         system: tag_or_system, parameter: parameter,
                          chemical_provider: selected_chemical_provider,
                        ),
                        measurements: AverageVesselSystemParameterMeasurements.result_for(
-                         system: system, parameter: system_parameter.parameter, vessel_ids: vessel_ids,
+                         parameter: parameter, vessel_ids: vessel_ids,
+                         system: tag_or_system,
                          date_range: date_range
-                       ), system: system, parameter: system_parameter.parameter }
+                       ), system: tag_or_system, parameter: parameter }
           %>
-        </div>
+        <% end %>
+      <% else %>
+        <% parameters.each do |parameter| %>
+          <%= render partial: 'partials/average_dashboard_chart',
+                     locals: {
+                       measurements: AverageMeasurementsForMultipleParameters.result_for(
+                         parameter: parameter, vessel_ids: vessel_ids, tag: tag_or_system,
+                         date_range: date_range
+                       ), satisfactory_ranges: [], system: nil, parameter: parameter }
+          %>
+
+        <% end %>
       <% end %>
     </div>
   <% end %>

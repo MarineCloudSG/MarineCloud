@@ -12,6 +12,7 @@ ActiveAdmin.register System do
     id_column
     column :name
     column :code
+    column :tag
     column :sort_order
     actions
   end
@@ -20,5 +21,5 @@ ActiveAdmin.register System do
   # ==== EDIT ====
   # ==============
 
-  permit_params :name, :code, :sort_order
+  permit_params :name, :code, :sort_order, :tag
 end

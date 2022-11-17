@@ -1,9 +1,13 @@
 <div class="px-4 py-5 mb-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
-  <dt class="text-xl font-semibold text-gray-900 truncate"><%= parameter.name %></dt>
-  <dd class="mt-1"><%= system.name %></dd>
+  <% if parameter %>
+    <dt class="text-xl font-semibold text-gray-900 truncate"><%= parameter.name %></dt>
+  <% end %>
+  <% if system %>
+    <dd class="mt-1"><%= system.name %></dd>
+  <% end %>
   <%= column_chart measurements,
-                   id: "average-vessel-chart-#{system.name}-#{parameter.name}",
                    height: '150px',
+
                    library: {
                      yAxis: {
                        plotLines: satisfactory_ranges.map do |limit|
