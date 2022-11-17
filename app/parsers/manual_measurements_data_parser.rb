@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ManualMeasurementsDataParser
+  class InvalidDate < StandardError; end
+
   def self.read(*args)
     new(*args).result
   end
@@ -27,6 +29,8 @@ class ManualMeasurementsDataParser
   HEADER_KEY_REGEX = /[A-Z ]+:/
   FIRST_DAY_COLUMN = 2
   LAST_DAY_COLUMN = 32
+
+  DATE_FORMATS = ["%Y-%m-%d", "%Y-%B-%d", "%Y-%b-%d"]
 
   def parse_spreadsheet
     while @row_id <= spreadsheet.last_row && state != :finished
@@ -82,8 +86,7 @@ class ManualMeasurementsDataParser
       value = row[column_id]
       next if value.nil?
 
-      taken_at = Date.parse([headers.fetch(:year), headers.fetch(:month), column_id - FIRST_DAY_COLUMN + 1].join("-"))
-      @data << { system: @system, parameter: parameter, value: value, taken_at: taken_at }
+      @data << { system: @system, parameter: parameter, value: value, taken_at: taken_at(value, column_id - FIRST_DAY_COLUMN + 1) }
     end
   end
 
@@ -97,5 +100,20 @@ class ManualMeasurementsDataParser
 
   def spreadsheet
     @spreadsheet ||= Roo::Spreadsheet.open(filepath)
+  end
+
+  def taken_at(value, day)
+    candidate = nil
+    date = [headers.fetch(:year).to_i, headers.fetch(:month), day].join("-")
+    for format in DATE_FORMATS
+      begin
+        candidate = Date.strptime(date, format)
+      rescue Date::Error
+      end
+    end
+    unless candidate
+      raise InvalidDate
+    end
+    candidate
   end
 end

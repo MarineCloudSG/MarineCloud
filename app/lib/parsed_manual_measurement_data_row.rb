@@ -23,7 +23,11 @@ class ParsedManualMeasurementDataRow
   end
 
   def value
-    row.fetch(:value)
+    value = row.fetch(:value).to_s
+    if value
+      value.sub!(",", ".")
+    end
+    value.to_f
   end
 
   private

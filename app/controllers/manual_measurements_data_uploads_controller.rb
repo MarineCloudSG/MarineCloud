@@ -10,6 +10,8 @@ class ManualMeasurementsDataUploadsController < BaseController
     end
   rescue ImportManualMeasurementsData::InvalidFileFormat
     redirect_to vessel, alert: 'Upload failed - please upload XLSX file'
+  rescue ManualMeasurementsDataParser::InvalidDate
+    redirect_to vessel, alert: 'Upload failed - invalid date format'
   rescue ParsedManualMeasurementDataRow::HandledImportException
     redirect_to vessel, alert: 'Error occured. Contact administrator in order to fix it'
   end
