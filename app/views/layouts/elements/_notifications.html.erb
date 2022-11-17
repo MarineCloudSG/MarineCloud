@@ -1,5 +1,7 @@
 <% flash.each do |type, data| %>
-  <%= render NotificationComponent.new(type: type) do %>
-    <%= data %>
+  <% unless data.blank? %>
+    <%= render NotificationComponent.new(type: type) do %>
+      <%= data %>
+    <% end %>
   <% end %>
 <% end %>
