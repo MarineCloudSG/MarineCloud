@@ -70,7 +70,7 @@ gem "devise"
 gem "draper"
 
 # DRY package
-gem "dry-rails", "~> 0.1"
+gem "dry-rails", "~> 0.6"
 
 # Design patterns
 gem "rails-patterns"
