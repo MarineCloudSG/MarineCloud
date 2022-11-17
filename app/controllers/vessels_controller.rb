@@ -37,10 +37,12 @@ class VesselsController < BaseController
       date_range: date_range,
       vessel_ids: vessel_ids,
       vessel_group_ids: vessel_group_ids,
+      available_parameters: available_parameters,
+      selected_parameters: selected_parameters,
       available_systems: available_systems,
+      selected_system: selected_system,
       chemical_providers: chemical_providers,
       selected_chemical_provider: selected_chemical_provider,
-      selected_system: selected_system,
       vessel_search_query: vessel_search_query,
       keep_params: params.permit(:start_date, :end_date, :system_id, vessel_group_ids: [])
     }
@@ -177,7 +179,7 @@ class VesselsController < BaseController
   end
 
   def grouped_system_parameters
-    SystemParametersForVesselIdsQuery.call(vessel_ids: vessel_ids).group_by(&:system)
+    SystemParametersForVesselIdsQuery.call(vessel_ids: vessel_ids).where(parameter: selected_parameters).group_by(&:system)
   end
 
   def available_systems
@@ -188,6 +190,7 @@ class VesselsController < BaseController
   def chemical_providers
     ChemicalProvider.all
   end
+
   def selected_chemical_provider
     params[:chemical_provider].present? ? ChemicalProvider.find(params[:chemical_provider].to_i) : nil
   end
@@ -205,9 +208,13 @@ class VesselsController < BaseController
   end
 
   def available_parameter_ids
-    params = VesselSystemParameter.joins(:vessel_system).select(:parameter_id).distinct.where(vessel_systems: { vessel: resource })
-    params = params.where(vessel_systems: { system: selected_system }) unless selected_system.nil?
-    params
+    if params[:id].nil?
+      Parameter.all.pluck(:id)
+    else
+      params = VesselSystemParameter.joins(:vessel_system).select(:parameter_id).distinct.where(vessel_systems: { vessel: resource })
+      params = params.where(vessel_systems: { system: selected_system }) unless selected_system.nil?
+      params
+    end
   end
 
   def available_parameters

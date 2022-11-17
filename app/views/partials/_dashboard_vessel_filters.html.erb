@@ -2,19 +2,21 @@
   <h1 class="text-left text-lg mb-6 text-black-500 font-bold">Overview Dashboard</h1>
   <%= form_with method: :get do |f| %>
     <div>
-      <div class="sm:grid sm:grid-cols-3 sm:gap-4 md:gap-12 md:px-32 sm:items-start">
-        <div class="w-full">
+      <div class="sm:grid sm:grid-cols-12 sm:gap-8 sm:items-start sm:pt-5 ">
+        <div class="col-span-6 text-left">
           <p class="text-left text-gray-500">Vessel groups</p>
           <button id="dropdownVesselGroupButton" data-dropdown-toggle="dropdownVesselGroup" class="w-full text-gray-400 bg-white font-medium border border-gray-400 text-sm px-4 py-2.5 text-center inline-flex items-center" type="button">
             <span class="grow text-left">Select</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
           </button>
           <!-- Dropdown menu -->
           <div id="dropdownVesselGroup" class="z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-64 text-left">
             <ul class="p-6 text-sm text-gray-500 leading-7" aria-labelledby="dropdownVesselGroupButton">
               <% current_user.vessel_groups.each do |vessel_group| %>
                 <li>
-                  <%= check_box_tag('vessel_group_ids[]', vessel_group.id, vessel_group_ids.include?(vessel_group.id), {onchange: 'this.form.submit()'}) %>
+                  <%= check_box_tag('vessel_group_ids[]', vessel_group.id, vessel_group_ids.include?(vessel_group.id), { onchange: 'this.form.submit()' }) %>
                   <%= vessel_group.name %>
                 </li>
               <% end %>
@@ -22,22 +24,24 @@
           </div>
         </div>
 
-        <div class="w-full">
+        <div class="col-span-6 text-left">
           <p class="text-left text-gray-500">Chemical provider</p>
 
           <button id="dropdownChemicalProviderButton" data-dropdown-toggle="dropdownChemicalProvider" class="w-full text-gray-400 bg-white font-medium border border-gray-400 text-sm px-4 py-2.5 text-center inline-flex items-center" type="button">
             <span class="grow text-left"><%= selected_chemical_provider&.name || "Select" %></span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
           </button>
           <div id="dropdownChemicalProvider" class="z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-64 text-left">
             <ul class="p-6 text-sm text-gray-500 leading-7" aria-labelledby="dropdownChemicalProviderButton">
               <li>
-                <%= radio_button_tag('chemical_provider', "", selected_chemical_provider.nil?, {onchange: 'this.form.submit()'}) %>
+                <%= radio_button_tag('chemical_provider', "", selected_chemical_provider.nil?, { onchange: 'this.form.submit()' }) %>
                 all
               </li>
               <% chemical_providers.each do |chemical_provider| %>
                 <li>
-                  <%= radio_button_tag('chemical_provider', chemical_provider.id, selected_chemical_provider&.id == chemical_provider.id, {onchange: 'this.form.submit()'}) %>
+                  <%= radio_button_tag('chemical_provider', chemical_provider.id, selected_chemical_provider&.id == chemical_provider.id, { onchange: 'this.form.submit()' }) %>
                   <%= chemical_provider.name %>
                 </li>
               <% end %>
@@ -46,32 +50,26 @@
         </div>
 
 
-          <div class="w-full">
-          <p class="text-left text-gray-500">System</p>
+        <div class="col-span-6 text-left">
+          <p class="text-left text-gray-500">Parameters</p>
 
-          <button id="dropdownSystemButton" data-dropdown-toggle="dropdownSystem" class="w-full text-gray-400 bg-white font-medium border border-gray-400 text-sm px-4 py-2.5 text-center inline-flex items-center" type="button">
-            <span class="grow text-left"><%= selected_system&.name || "Select" %></span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-          </button>
-          <div id="dropdownSystem" class="z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-64 text-left">
-            <ul class="p-6 text-sm text-gray-500 leading-7" aria-labelledby="dropdownSystemButton">
-              <% available_systems.each do |system| %>
-                <li>
-                  <%= radio_button_tag('system_id', system.id, selected_system&.id == system.id, {onchange: 'this.form.submit()'}) %>
-                  <%= system.name %>
-                </li>
-              <% end %>
-            </ul>
+          <div class="grid grid-cols-3">
+            <% available_parameters.each do |parameter| %>
+              <div class="text-left text-gray-500 border-gray-500">
+                <%= check_box_tag('parameter_ids[]', parameter.id, selected_parameters.include?(parameter), { 'data-action': 'vessel-filters#submit' }) %>
+                <%= parameter.name %>
+              </div>
+            <% end %>
           </div>
         </div>
 
-        <div class="w-full">
+        <div class="col-span-3 text-left">
           <p class="text-left text-gray-500">From</p>
-          <%= f.date_field :start_date, {value: start_date, class: 'form-control w-full border-gray-400 text-gray-400', onchange: 'if(!this.value)return;this.form.submit()'}  %>
+          <%= f.date_field :start_date, { value: start_date, class: 'form-control w-full border-gray-400 text-gray-400', onchange: 'if(!this.value)return;this.form.submit()' } %>
         </div>
-        <div class="w-full">
+        <div class="col-span-3 text-left">
           <p class="text-left text-gray-500">To</p>
-          <%= f.date_field :end_date, {value: end_date, class: 'form-control w-full border-gray-400 text-gray-400', onchange: 'if(!this.value)return;this.form.submit()'} %>
+          <%= f.date_field :end_date, { value: end_date, class: 'form-control w-full border-gray-400 text-gray-400', onchange: 'if(!this.value)return;this.form.submit()' } %>
         </div>
       </div>
       <div class="text-right md:px-32 pt-4">
