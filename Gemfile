@@ -77,7 +77,7 @@ gem "rails-patterns"
 
 # Asynchronous processing
 gem "sidekiq", "~> 5.2.1"
-gem "sidekiq-cron", "~> 1.0.4"
+gem "sidekiq-cron", "~> 1.8.0"
 gem "sidekiq-status"
 
 # REST APIs
