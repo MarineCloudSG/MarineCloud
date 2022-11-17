@@ -15,6 +15,7 @@ ActiveAdmin.register Download do
     column :order
     column :created_at
     column :updated_at
+    actions
   end
   form :html => { :enctype => "multipart/form-data" } do |f|
     f.input :title
