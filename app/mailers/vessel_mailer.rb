@@ -8,7 +8,7 @@ class VesselMailer < ApplicationMailer
   def new_comment_email
     @vessel = params[:vessel]
     @message_text = params[:message_text]
-    mail(to: (vessel_emails + commenters_emails).uniq, subject: "New comment")
+    mail(to: (vessel_emails + commenters_emails + admin_emails).uniq, subject: "New comment")
   end
 
   private
@@ -19,5 +19,9 @@ class VesselMailer < ApplicationMailer
 
   def commenters_emails
     @vessel.comments.joins(:user).distinct.pluck('users.email')
+  end
+
+  def admin_emails
+    AdminUser.all.pluck(&:email)
   end
 end
