@@ -123,6 +123,7 @@ class VesselsController < BaseController
     resource.comments
             .where(assigned_date: date_range)
             .order(assigned_date: :desc, created_at: :desc)
+            .decorate
   end
 
   def charts_data_by_system
