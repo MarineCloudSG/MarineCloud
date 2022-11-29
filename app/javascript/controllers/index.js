@@ -15,3 +15,6 @@ application.register("notification", NotificationController)
 
 import VesselFiltersController from "./vessel_filters_controller.js"
 application.register("vessel-filters", VesselFiltersController)
+
+import DashboardFiltersController from "./dashboard_filters_controller"
+application.register("dashboard-filters", DashboardFiltersController)

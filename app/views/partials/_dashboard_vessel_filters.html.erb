@@ -1,4 +1,4 @@
-<div class="relative block w-full rounded-lg p-6 text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 bg-white mb-3 shadow">
+<div class="relative block w-full rounded-lg p-6 text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 bg-white mb-3 shadow" data-controller="dashboard-filters">
   <h1 class="text-left text-lg mb-6 text-black-500 font-bold">Overview Dashboard</h1>
   <%= form_with method: :get do |f| %>
     <div>
@@ -56,10 +56,14 @@
           <div class="grid grid-cols-3">
             <% available_parameters.each do |parameter| %>
               <div class="text-left text-gray-500 border-gray-500">
-                <%= check_box_tag('parameter_ids[]', parameter.id, selected_parameters.include?(parameter), { 'data-action': 'vessel-filters#submit' }) %>
+                <%= check_box_tag('parameter_ids[]', parameter.id, selected_parameters.include?(parameter)) %>
                 <%= parameter.name %>
               </div>
             <% end %>
+          </div>
+
+          <div class="text-left text-gray-500 border-gray-500 mt-2">
+            <a href="#" data-action="dashboard-filters#select_all_parameters">Select all</a>
           </div>
         </div>
 
