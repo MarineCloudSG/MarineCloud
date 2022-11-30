@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 202204020181783) do
+ActiveRecord::Schema.define(version: 202204020181784) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -240,7 +240,7 @@ ActiveRecord::Schema.define(version: 202204020181783) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "chemical_provider_parameters", "chemical_providers"
+  add_foreign_key "chemical_provider_parameters", "chemical_providers", on_delete: :cascade
   add_foreign_key "chemical_provider_parameters", "parameters"
   add_foreign_key "chemical_provider_parameters", "systems"
   add_foreign_key "import_logs", "measurements_imports"
