@@ -6,10 +6,10 @@
     <div class="sm:flex sm:items-center sm:justify-between border-b border-gray-300">
       <div class="sm:w-0 sm:flex-1">
         <div class="mb-6">
-          <a href="<%= vessels_path %>" class="text-gray-500">
+          <%= link_to :back, class: "text-gray-500" do %>
             <%= image_tag 'icons/back.svg', class: 'inline-block' %>
             <span class="text-sm">Back</span>
-          </a>
+          <% end %>
         </div>
         <h1 class="message-heading text-lg font-medium text-gray-900 leading-7">
           <span class="vessel-flag rounded-full inline-block align-middle mb-1">
