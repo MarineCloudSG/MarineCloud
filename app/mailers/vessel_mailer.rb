@@ -14,7 +14,7 @@ class VesselMailer < ApplicationMailer
   private
 
   def vessel_emails
-    [@vessel.user.email, @vessel.email].uniq
+    [@vessel.user&.email, @vessel.email].uniq
   end
 
   def commenters_emails
