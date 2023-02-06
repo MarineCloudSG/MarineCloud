@@ -1,6 +1,6 @@
 <div class="vessel-line-chart px-4 py-5 mb-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
   <div class="grid grid-cols-12">
-    <div class="<%= chart_data.satisfactory_statistics? or chart_data.satisfactory_range_text ? 'col-span-10 border-r border-gray-300 mr-6 px-6' : 'col-span-12' %>">
+    <div class="<%= chart_data.satisfactory_statistics? || chart_data.satisfactory_range_text ? 'col-span-10 border-r border-gray-300 mr-6 px-6' : 'col-span-12' %>">
       <div class="">
         <dt class="chart-name text-xl font-semibold text-gray-900 truncate"><%= chart_data.name %></dt>
         <dd class="mb-2"><%= chart_data.vessel_system_parameter.parameter.unit %>&nbsp;</dd>
@@ -73,7 +73,7 @@
       </div>
     </div>
 
-    <% if chart_data.satisfactory_statistics? or chart_data.satisfactory_range_text %>
+    <% if chart_data.satisfactory_statistics? || chart_data.satisfactory_range_text %>
       <div class="col-span-2">
         <% if chart_data.satisfactory_statistics? %>
           <% if chart_data.satisfactory_statistics[:in_range].present? %>
