@@ -6,9 +6,15 @@ class AverageVesselSystemParameterMeasurements < Patterns::Calculation
     raw_measurements.map do |row|
       [
         row[0],
-        row[1]
+        fix_value(row[1])
       ]
     end
+  end
+
+  def fix_value(value)
+    return value.round(2) if value < 10
+
+    value.round
   end
 
   def raw_measurements

@@ -8,13 +8,30 @@
     end_date: date_range.end,
     vessel_group_ids: vessel_group_ids
   } %>
-  <ul class="flex flex-wrap">
-    <li class="grow">&nbsp;</li>
+  <div class="grid grid-cols-12">
+    <div class="col-span-9 text-sm mb-6 font-medium text-center text-gray-500 border-b border-gray-200">
+      <ul class="flex flex-wrap -mb-px">
+        <li class="mr-2">
+          <a href="<%= url_for(request.parameters.merge({ :system_id => nil, :parameter_ids => nil })) %>" class="inline-block p-4 rounded-t-lg border-b-2 border-blue-600 <%= (!selected_system_id.to_i.positive?) ? "text-blue-600 active" : "border-b-transparent" %>">
+            All systems
+          </a>
+        </li>
 
-    <%= render partial: 'partials/vessels_search_form', locals: {
-      keep_params: keep_params, vessel_search_query: vessel_search_query
-    } %>
-  </ul>
+        <% available_systems.each do |system| %>
+          <li class="mr-2">
+            <a href="<%= url_for(request.parameters.merge({ :system_id => system.id, :parameter_ids => nil })) %>" class="inline-block p-4 rounded-t-lg border-b-2 border-blue-600 <%= (system.id == selected_system_id.to_i) ? "text-blue-600 active" : "border-b-transparent" %>"><%= system.name %></a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="col-span-3 text-right">
+      <div class="mr-2">
+        <%= render partial: 'partials/vessels_search_form', locals: {
+          keep_params: keep_params, vessel_search_query: vessel_search_query
+        } %>
+      </div>
+    </div>
+  </div>
   <% grouped_parameters_by_system.each do |tag_or_system, parameters| %>
 
     <div class="grid grid-cols-1 mt-6">

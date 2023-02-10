@@ -5,8 +5,11 @@
   <% if system %>
     <dd class="mt-1"><%= system.name %></dd>
   <% end %>
+  <% if parameter.unit %>
+    <dd class="mt-1"><%= parameter.unit %></dd>
+  <% end %>
   <%= column_chart measurements,
-                   height: '150px',
+                   height: '300px',
 
                    library: {
                      yAxis: {
@@ -27,6 +30,7 @@
                          }
                        end
                      },
+                     colors: %w[#7cb5ec #e39e39 #90ed7d #f7a35c #8085e9 #f15c80 #e4d354 #2b908f #f45b5b #91e8e1]
                    }
   %>
 </div>

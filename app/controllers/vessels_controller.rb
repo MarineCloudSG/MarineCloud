@@ -41,6 +41,7 @@ class VesselsController < BaseController
       selected_parameters: selected_parameters,
       available_systems: available_systems,
       selected_system: selected_system,
+      selected_system_id: selected_system_id,
       chemical_providers: chemical_providers,
       selected_chemical_provider: selected_chemical_provider,
       vessel_search_query: vessel_search_query,
@@ -173,15 +174,16 @@ class VesselsController < BaseController
   end
 
   def grouped_parameters_by_system
-    SystemParametersForVesselIdsQuery.call(
-      vessel_ids: vessel_ids
-    ).where(
-      parameter: selected_parameters
-    ).group_by { |obj| obj.system.tag ? obj.system.tag : obj.system }.
-      map { |key, system_parameters| [key, system_parameters.map(&:parameter).uniq] }.
-      to_h
+    where = VesselSystemParameter.where(parameter: selected_parameters)
+    if selected_system_id&.to_i&.positive?
+      vessel_system_ids = VesselSystem.where(vessel_id: vessel_ids, system: selected_system).pluck(:id)
+      where = where.and(VesselSystemParameter.where(vessel_system_id: vessel_system_ids))
+    end
 
-    # SystemParametersForVesselIdsQuery.call(vessel_ids: vessel_ids).where(parameter: selected_parameters)
+    SystemParametersForVesselIdsQuery.call(vessel_ids: vessel_ids)
+                                     .and(where)
+                                     .group_by { |obj| obj.system.tag || obj.system }
+                                     .transform_values { |system_parameters| system_parameters.map(&:parameter).uniq }
   end
 
   def available_systems
@@ -210,13 +212,18 @@ class VesselsController < BaseController
   end
 
   def available_parameter_ids
-    if params[:id].nil?
-      Parameter.all.pluck(:id)
-    else
-      params = VesselSystemParameter.joins(:vessel_system).select(:parameter_id).distinct.where(vessel_systems: { vessel: resource })
-      params = params.where(vessel_systems: { system: selected_system }) unless selected_system.nil?
-      params
+    if params[:id].to_i.positive?
+      available_params = VesselSystemParameter.joins(:vessel_system).select(:parameter_id).distinct.where(vessel_systems: { vessel: resource })
+      available_params = available_params.where(vessel_systems: { system: selected_system }) unless selected_system.nil?
+      return available_params.pluck(:parameter_id)
     end
+
+    if selected_system
+      available_params = VesselSystemParameter.joins(:vessel_system).select(:parameter_id).distinct.where(vessel_systems: { system: selected_system })
+      return available_params.pluck(:parameter_id)
+    end
+
+    Parameter.all.pluck(:id)
   end
 
   def available_parameters
