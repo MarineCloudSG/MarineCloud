@@ -15,6 +15,8 @@
 
         <div class="col-span-5">
           <h3 class="leading-6 font-medium text-gray-900 text-left mb-4">System parameters</h3>
+
+          <input type="hidden" name="parameter_ids[]" class="ignore-select">
           <div class="grid grid-cols-3">
             <% available_parameters.each do |parameter| %>
               <div class="text-left text-gray-500 border-gray-500">
@@ -25,7 +27,7 @@
           </div>
 
           <div class="text-left text-gray-500 border-gray-500 mt-2">
-            <a href="#" data-action="vessel-filters#select_all_parameters">Select all</a>
+            <a href="#" data-action="vessel-filters#select_all_parameters" class="select-all">Select all</a>
           </div>
         </div>
       </div>

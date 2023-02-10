@@ -53,6 +53,7 @@
         <div class="col-span-6 text-left">
           <p class="text-left text-gray-500">Parameters</p>
 
+          <input type="hidden" name="parameter_ids[]" class="ignore-select">
           <div class="grid grid-cols-3">
             <% available_parameters.each do |parameter| %>
               <div class="text-left text-gray-500 border-gray-500">
@@ -63,7 +64,7 @@
           </div>
 
           <div class="text-left text-gray-500 border-gray-500 mt-2">
-            <a href="#" data-action="dashboard-filters#select_all_parameters">Select all</a>
+            <a href="#" data-action="dashboard-filters#select_all_parameters" class="select-all">Select all</a>
           </div>
         </div>
 
