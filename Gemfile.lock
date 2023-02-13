@@ -441,8 +441,8 @@ GEM
       rack (~> 2.0)
       rack-protection (>= 1.5.0)
       redis (~> 4.5, < 4.6.0)
-    sidekiq-cron (1.8.0)
-      fugit (~> 1)
+    sidekiq-cron (1.9.1)
+      fugit (~> 1.8)
       sidekiq (>= 4.2.1)
     sidekiq-status (2.1.3)
       chronic_duration
@@ -554,7 +554,7 @@ DEPENDENCIES
   sentry-rails
   sentry-ruby
   sidekiq (~> 5.2.1)
-  sidekiq-cron (~> 1.8.0)
+  sidekiq-cron (~> 1.9.1)
   sidekiq-status
   simplecov
   sprockets-rails
