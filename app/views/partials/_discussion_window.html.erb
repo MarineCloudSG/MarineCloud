@@ -3,10 +3,10 @@
     <a href="#" class="bg-blue-500 p-2 text-gray-100 font-bold text-lg rounded-t-md" data-action="click->discussion#hide">
       Discussion
     </a>
-    <ul role="list" class="divide-y divide-gray-200 grow m-4 overflow-y-scroll">
+    <ul role="list" class="divide-y divide-gray-200 grow m-3 overflow-y-scroll">
       <%= render comments %>
     </ul>
-    <div class="m-6">
+    <div class="m-3">
       <%= render partial: 'vessel_comments/post_vessel_comment', locals: {
         vessel: vessel,
         assigned_date: assigned_date
