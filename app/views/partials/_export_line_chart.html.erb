@@ -74,7 +74,7 @@
       </div>
     </div>
     <% if chart_data.satisfactory_statistics? %>
-      <div class="col-span-2">
+      <div class="col-span-2 chart-statistics">
 
         <% if chart_data.satisfactory_statistics[:in_range].present? %>
         <div class="mt-1">
@@ -105,7 +105,7 @@
 
         <% if chart_data.satisfactory_range_text %>
           <div class="border-t border-gray-300 mt-2 pt-2">
-            <p class="text-sm font-medium text-gray-500 truncate">Sat.Range <%= chart_data.satisfactory_range_text %></p>
+            <p class="text-sm font-medium text-gray-500 truncate sat-range-text">Sat.Range <%= chart_data.satisfactory_range_text %></p>
           </div>
         <% end %>
       </div>

@@ -69,7 +69,7 @@
 
 .export-page .vessel-charts .chart-statistics dt {
     line-height: 4;
-    margin-bottom: -1.5em;
+    margin-bottom: -1em;
     margin-top: -1.5em;
     margin-left: 8px;
 }
@@ -78,4 +78,11 @@
     line-height: 2;
     margin-top: -1.5em;
     margin-left: 8px;
+}
+
+.export-page .vessel-charts .chart-statistics .sat-range-text {
+    line-height: 4;
+    margin-top: -2em;
+    margin-left: 8px;
+    margin-bottom: -1em;
 }

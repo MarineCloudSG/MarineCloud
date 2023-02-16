@@ -2,7 +2,7 @@ import jsPDF from "jspdf";
 
 const elementHeightCorrection = {
   top: e => e,
-  separator: e => e * 2 - 14,
+  separator: e => e * 2,
   chart: e => e + 24,
 }
 
@@ -110,10 +110,10 @@ export default class ScreenshotToPdf {
   }
 
   async addImageToPdf(pdf, position, imgWidth, pageHeight) {
-    const pdfImageWidthRatio = 1/2654
-    const pdfImageWidthMultiplier = 1.24
+    const pdfImageWidthRatio = 1 / 2654
+    const pdfImageWidthMultiplier = 1
     const pdfWidth = 400
-    const pdfHeight = pdfWidth * pageHeight *  pdfImageWidthRatio * pdfImageWidthMultiplier
+    const pdfHeight = pdfWidth * pageHeight * pdfImageWidthRatio * pdfImageWidthMultiplier
     const cropped = await this.cropImage(position, imgWidth, pageHeight)
     console.log(cropped)
     pdf.addImage(cropped, "PNG", 0, 0, pdfWidth, pdfHeight)
