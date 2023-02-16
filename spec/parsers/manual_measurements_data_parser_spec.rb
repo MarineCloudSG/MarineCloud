@@ -9,7 +9,7 @@ RSpec.describe ManualMeasurementsDataParser do
 
       result = ManualMeasurementsDataParser.read(filepath.to_s)
 
-      expect(result[:headers]).to include vessel_name: 'Howzat', company: 'Country Cricket', month: 1, year: 2021,
+      expect(result[:headers]).to include vessel_name: 'Howzat', company: 'Country Cricket', month: '1', year: '2021',
                                           tested_by: 'Andrew Flintoff'
       expect(result[:data].count).to eq 1028
       expect(result[:data].count { |row| row[:system] == 'HT CW' }).to eq 253

@@ -55,10 +55,10 @@ class ManualMeasurementsDataParser
   def parse_header
     values = current_row.reject(&:nil?)
     (0..(values.count - 1)).each do |id|
-      key = values[id]
-      value = values[id + 1]
-      next if HEADER_KEY_REGEX.match(key.to_s).nil?
-      next unless HEADER_KEY_REGEX.match(value.to_s).nil?
+      key = values[id].to_s.strip
+      value = values[id + 1].to_s.strip
+      next if HEADER_KEY_REGEX.match(key).nil?
+      next unless HEADER_KEY_REGEX.match(value).nil?
 
       @headers[key.parameterize.underscore.to_sym] = value
     end
