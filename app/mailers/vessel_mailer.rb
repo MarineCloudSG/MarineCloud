@@ -14,7 +14,7 @@ class VesselMailer < ApplicationMailer
   private
 
   def vessel_emails
-    [@vessel.user&.email, @vessel.email].uniq
+    [@vessel.user&.email, @vessel.email].uniq.reject { |c| c.blank? || c.empty? }
   end
 
   def commenters_emails
@@ -22,6 +22,6 @@ class VesselMailer < ApplicationMailer
   end
 
   def admin_emails
-    AdminUser.all.pluck(&:email)
+    AdminUser.all.pluck(:email)
   end
 end
