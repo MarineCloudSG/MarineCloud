@@ -8,6 +8,7 @@ class ImportManualMeasurementsData < Patterns::Service
   def initialize(file:, vessel:)
     raise InvalidFileFormat unless file.content_type.eql?(XLSX_TYPE)
 
+    @file = file
     @filepath = file.path
     @vessel = vessel
     @failed_rows = 0
@@ -21,7 +22,7 @@ class ImportManualMeasurementsData < Patterns::Service
 
   private
 
-  attr_reader :filepath, :vessel
+  attr_reader :file, :filepath, :vessel
 
   XLSX_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 
