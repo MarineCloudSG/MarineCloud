@@ -55,7 +55,7 @@ class ImportManualMeasurementsData < Patterns::Service
   end
 
   def taken_at
-    Date.new(taken_at_year, taken_at_month, 1).end_of_month
+    Date.new(taken_at_year.to_i, taken_at_month.to_i, 1).end_of_month
   end
 
   def parser_output
