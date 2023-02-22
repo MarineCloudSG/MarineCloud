@@ -56,8 +56,11 @@ class ImportPhotometerData < Patterns::Service
   end
 
   def measurements_import
-    @measurements_import ||= MeasurementsImport.create!(vessel: vessel, filename: input_file_path,
-                                                        source: MeasurementsImport::PHOTOMETER_CSV_SOURCE)
+    @measurements_import ||= MeasurementsImport.create!(vessel: vessel,
+                                                        filename: input_file_path,
+                                                        file: file,
+                                                        source: MeasurementsImport::PHOTOMETER_CSV_SOURCE
+    )
   end
 
   def csv_file_path

@@ -6,4 +6,5 @@ class MeasurementsImport < ApplicationRecord
   enum source: SOURCES_AVAILABLE
   belongs_to :vessel
   has_many :import_logs, dependent: :destroy
+  has_one_attached :file
 end

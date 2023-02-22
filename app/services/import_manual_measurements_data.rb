@@ -65,6 +65,7 @@ class ImportManualMeasurementsData < Patterns::Service
     @measurements_import ||= MeasurementsImport.create!(
       vessel: vessel,
       filename: filepath,
+      file: file,
       source: MeasurementsImport::MANUAL_XLSX_SOURCE,
       tested_by: tested_by,
       taken_at: taken_at

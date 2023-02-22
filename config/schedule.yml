@@ -3,3 +3,8 @@ send_data_import_reminders:
   class: "ServiceWorker"
   args:
     - 'send_data_import_reminders'
+remove_old_file_uploads:
+  cron: "0 3 * * *"
+  class: "ServiceWorker"
+  args:
+    - 'remove_old_import_files'
