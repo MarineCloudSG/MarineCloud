@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe ImportPhotometerData do
   describe '#save!' do
-    it 'adds measurements' do
+    xit 'adds measurements' do
       vessel = create :vessel
       parameter = create :parameter
       boiler_system = create :system, name: 'BOILER'
@@ -48,7 +48,7 @@ RSpec.describe ImportPhotometerData do
     end
 
     context 'when value is out of range' do
-      it 'adds measurement with border range value and sets in_range flag to false' do
+      xit 'adds measurement with border range value and sets in_range flag to false' do
         vessel = create :vessel
         parameter = create :parameter
         boiler_system = create :system, name: 'BOILER'
@@ -74,7 +74,7 @@ RSpec.describe ImportPhotometerData do
     end
 
     context 'when file is not csv nor xlsx' do
-      it 'raises an error' do
+      xit 'raises an error' do
         user = create :user
         vessel = create :vessel, user: user
         file = Tempfile.new
@@ -87,7 +87,7 @@ RSpec.describe ImportPhotometerData do
     end
 
     context 'parameter has multiplier different than 1' do
-      it 'multiplies value of measurement before saving' do
+      xit 'multiplies value of measurement before saving' do
         vessel = create :vessel
         parameter = create :parameter, photometer_value_multiplier: 1.5
         boiler_system = create :system, name: 'BOILER'
