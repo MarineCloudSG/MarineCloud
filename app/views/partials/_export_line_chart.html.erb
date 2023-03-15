@@ -1,4 +1,4 @@
-<div class="vessel-line-chart px-4 py-5 mb-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+<div class="vessel-line-chart px-4 py-5 mb-5 bg-white shadow rounded-lg overflow-hidden">
   <div class="grid grid-cols-12">
     <div class="col-span-10 border-r border-gray-300 mr-6 px-6">
       <div class="">
@@ -77,7 +77,7 @@
       <div class="col-span-2 chart-statistics">
         <% if chart_data.satisfactory_statistics? %>
           <% if chart_data.satisfactory_statistics[:in_range].present? %>
-            <div class="mt-1">
+            <div class="mt-3">
               <dd class="mt-1 text-3xl font-semibold text-emerald-500"><%= chart_data.satisfactory_statistics[:in_range].round %>
                 %
               </dd>

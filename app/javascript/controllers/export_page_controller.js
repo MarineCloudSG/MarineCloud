@@ -65,7 +65,7 @@ export default class extends Controller {
   async getOutputPDF() {
     const canvas = await this.takeScreenshot()
     const pdf = await ScreenshotToPdf.convert(canvas)
-
-    pdf.save('result.pdf')
+    const vesselName = document.getElementById("vessel-name").textContent
+    pdf.save(vesselName + '.pdf')
   }
 }

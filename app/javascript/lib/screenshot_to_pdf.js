@@ -25,7 +25,8 @@ export default class ScreenshotToPdf {
     const pdf = new jsPDF({
       orientation: 'p',
       unit: 'mm',
-      format: [400, 480]
+      format: [400, 480],
+      compress: true,
     })
 
     const imgWidth = this.canvas.width
@@ -110,7 +111,7 @@ export default class ScreenshotToPdf {
   }
 
   async addImageToPdf(pdf, position, imgWidth, pageHeight) {
-    const pdfImageWidthRatio = 1 / 2654
+    const pdfImageWidthRatio = 1 / 1654
     const pdfImageWidthMultiplier = 1
     const pdfWidth = 400
     const pdfHeight = pdfWidth * pageHeight * pdfImageWidthRatio * pdfImageWidthMultiplier

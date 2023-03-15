@@ -44,7 +44,6 @@
 
 .export-page .vessel-line-separator .vessel-system-name {
     line-height: 4;
-    margin-top: -3em;
 }
 
 .export-page .message-heading {
@@ -59,30 +58,29 @@
 
 .export-page .vessel-charts .chart-name {
     line-height: 4;
-    margin-bottom: -1.5em;
-    margin-top: -2em;
 }
 
 .export-page .vessel-charts .chart-name + * {
     line-height: 2;
 }
-
+.export-page .vessel-charts .chart-statistics {
+    /*margin-top: 20px;*/
+}
 .export-page .vessel-charts .chart-statistics dt {
     line-height: 4;
     margin-bottom: -1em;
     margin-top: -1.5em;
     margin-left: 8px;
+
 }
 
 .export-page .vessel-charts .chart-statistics dd {
     line-height: 2;
-    margin-top: -1.5em;
     margin-left: 8px;
 }
 
 .export-page .vessel-charts .chart-statistics .sat-range-text {
     line-height: 4;
-    margin-top: -2em;
     margin-left: 8px;
-    margin-bottom: -1em;
 }
+
