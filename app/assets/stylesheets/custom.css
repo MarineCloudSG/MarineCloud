@@ -92,3 +92,7 @@ section.discussion.discussion-hidden .discussion-toggle {
     width: 28px;
     height: 28px;
 }
+
+.initials svg {
+    display: inline;
+}

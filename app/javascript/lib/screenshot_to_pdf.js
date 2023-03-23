@@ -2,8 +2,8 @@ import jsPDF from "jspdf";
 
 const elementHeightCorrection = {
   top: e => e,
-  separator: e => e * 2,
-  chart: e => e + 24,
+  separator: e => e,
+  chart: e => e + 20,
 }
 
 export default class ScreenshotToPdf {
@@ -21,11 +21,11 @@ export default class ScreenshotToPdf {
   }
 
   async result() {
-    const pageHeight = 480 * (1920 / 400)
+    const pageHeight = 2054
     const pdf = new jsPDF({
       orientation: 'p',
-      unit: 'mm',
-      format: [400, 480],
+      unit: 'px',
+      format: [400, 565],
       compress: true,
     })
 
@@ -49,10 +49,10 @@ export default class ScreenshotToPdf {
       if (firstPage) {
         let topHeight = elementHeightCorrection.top(breakpoints[0].element.offsetTop)
         currentPageHeight += topHeight
-
         if (this.debug) {
           this.drawDebugLine(position + currentPageHeight, imgWidth, '#ff0000', 'Top')
         }
+      } else {
       }
 
       for (let i = lastBreakpointId + 1; i < breakpoints.length; i++) {
@@ -74,7 +74,7 @@ export default class ScreenshotToPdf {
 
       const lastBreakpoint = breakpoints[lastBreakpointId]
       if (lastBreakpoint.type === 'separator') {
-        currentPageHeight -= elementHeightCorrection.separator(lastBreakpoint.element.offsetHeight)
+        currentPageHeight -= lastBreakpoint.element.offsetHeight//elementHeightCorrection.separator()
         lastBreakpointId--
       } else {
         currentPageHeight += 0
@@ -87,7 +87,6 @@ export default class ScreenshotToPdf {
       if (this.debug) {
         this.drawDebugLine(position + currentPageHeight, imgWidth, '#ff0000', 'Page end')
       }
-
       await this.addImageToPdf(pdf, position, imgWidth, currentPageHeight)
 
       heightLeft -= currentPageHeight
@@ -116,8 +115,7 @@ export default class ScreenshotToPdf {
     const pdfWidth = 400
     const pdfHeight = pdfWidth * pageHeight * pdfImageWidthRatio * pdfImageWidthMultiplier
     const cropped = await this.cropImage(position, imgWidth, pageHeight)
-    console.log(cropped)
-    pdf.addImage(cropped, "PNG", 0, 0, pdfWidth, pdfHeight)
+    pdf.addImage(cropped, "PNG", 0, 25, pdfWidth, pdfHeight)
   }
 
   async cropImage(position, imgWidth, pageHeight) {

@@ -3,10 +3,10 @@
     <div class="border-b border-gray-300">
       <div class="">
         <h1 class="message-heading text-lg font-medium text-gray-900 leading-7">
-          <span class="rounded-full inline-block align-middle mb-1">
+          <span class="initials">
             <%= user_avatar(vessel.name, size: 28, colors: 45) %>
           </span>
-          <span id="vessel-name"><%= @vessel.name %></span>
+          <div id="vessel-name" class="inline"><%= @vessel.name %></div>
         </h1>
         <div class="pt-2 mb-4">
           <span class="mr-2 text-sm text-gray-500">
@@ -41,7 +41,7 @@
     <% end %>
   </div>
 
-  <div class="vessel-charts mt-8 ">
+  <div class="vessel-charts ">
     <div class="vessel ">
       <script> const recommendationRules = {} </script>
       <% charts_data_by_system.each do |system_name, charts_data| %>
