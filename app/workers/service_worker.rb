@@ -5,4 +5,5 @@ class ServiceWorker < SidekiqWorker
     klass = service_name.camelize.constantize
     klass.call(*args)
   end
+
 end
