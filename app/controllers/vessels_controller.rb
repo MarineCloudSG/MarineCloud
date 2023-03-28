@@ -40,6 +40,8 @@ class VesselsController < BaseController
       available_parameters: available_parameters,
       selected_parameters: selected_parameters,
       available_systems: available_systems,
+      available_tags: available_tags,
+      selected_tag: selected_tag,
       selected_system: selected_system,
       selected_system_id: selected_system_id,
       chemical_providers: chemical_providers,
@@ -175,7 +177,10 @@ class VesselsController < BaseController
 
   def grouped_parameters_by_system
     where = VesselSystemParameter.where(parameter: selected_parameters)
-    if selected_system_id&.to_i&.positive?
+    if selected_tag
+      vessel_system_ids = VesselSystem.joins(:system).where(vessel_id: vessel_ids, systems: {tag: selected_tag}).pluck(:id)
+      where = where.and(VesselSystemParameter.where(vessel_system_id: vessel_system_ids))
+    elsif selected_system_id&.to_i&.positive?
       vessel_system_ids = VesselSystem.where(vessel_id: vessel_ids, system: selected_system).pluck(:id)
       where = where.and(VesselSystemParameter.where(vessel_system_id: vessel_system_ids))
     end
@@ -189,6 +194,10 @@ class VesselsController < BaseController
   def available_systems
     systems = params[:id].nil? ? System.all : resource.systems
     systems.order(sort_order: :asc)
+  end
+
+  def available_tags
+    System.tags.map(&:first)
   end
 
   def chemical_providers
@@ -211,10 +220,19 @@ class VesselsController < BaseController
     end
   end
 
+  def selected_tag
+    params[:tag]
+  end
+
   def available_parameter_ids
     if params[:id].to_i.positive?
       available_params = VesselSystemParameter.joins(:vessel_system).select(:parameter_id).distinct.where(vessel_systems: { vessel: resource })
       available_params = available_params.where(vessel_systems: { system: selected_system }) unless selected_system.nil?
+      return available_params.pluck(:parameter_id)
+    end
+
+    if selected_tag
+      available_params = VesselSystemParameter.joins({ vessel_system: :system }).select(:parameter_id).distinct.where(vessel_systems: { systems: { tag: selected_tag } })
       return available_params.pluck(:parameter_id)
     end
 

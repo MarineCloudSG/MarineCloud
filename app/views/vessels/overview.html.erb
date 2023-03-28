@@ -12,14 +12,14 @@
     <div class="col-span-9 text-sm mb-6 font-medium text-center text-gray-500 border-b border-gray-200">
       <ul class="flex flex-wrap -mb-px">
         <li class="mr-2">
-          <a href="<%= url_for(request.parameters.merge({ :system_id => nil, :parameter_ids => nil })) %>" class="inline-block p-4 rounded-t-lg border-b-2 border-blue-600 <%= (!selected_system_id.to_i.positive?) ? "text-blue-600 active" : "border-b-transparent" %>">
+          <a href="<%= url_for(request.parameters.merge({ :tag => nil, :parameter_ids => nil })) %>" class="inline-block p-4 rounded-t-lg border-b-2 border-blue-600 <%= (!selected_tag) ? "text-blue-600 active" : "border-b-transparent" %>">
             All systems
           </a>
         </li>
 
-        <% available_systems.each do |system| %>
+        <% available_tags.each do |tag| %>
           <li class="mr-2">
-            <a href="<%= url_for(request.parameters.merge({ :system_id => system.id, :parameter_ids => nil })) %>" class="inline-block p-4 rounded-t-lg border-b-2 border-blue-600 <%= (system.id == selected_system_id.to_i) ? "text-blue-600 active" : "border-b-transparent" %>"><%= system.name %></a>
+            <a href="<%= url_for(request.parameters.merge({ :tag => tag, :parameter_ids => nil })) %>" class="inline-block p-4 rounded-t-lg border-b-2 border-blue-600 <%= (tag == selected_tag) ? "text-blue-600 active" : "border-b-transparent" %>"><%= tag.capitalize %></a>
           </li>
         <% end %>
       </ul>
