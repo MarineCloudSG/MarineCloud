@@ -323,7 +323,7 @@ GEM
       wisper (~> 2.0.0)
       wisper-rspec
       wisper-sidekiq
-    puma (5.6.5)
+    puma (6.1.1)
       nio4r (~> 2.0)
     pundit (2.3.0)
       activesupport (>= 3.0.0)
@@ -541,7 +541,7 @@ DEPENDENCIES
   newrelic_rpm
   pg (~> 1.1)
   pubsub_on_rails (~> 0.0.7)
-  puma (~> 5.0)
+  puma (~> 6.1)
   pundit
   rails
   rails-patterns
