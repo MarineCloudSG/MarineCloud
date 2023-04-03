@@ -124,7 +124,6 @@ class VesselsController < BaseController
 
   def comments
     resource.comments
-            .where(assigned_date: date_range)
             .order(assigned_date: :desc, created_at: :desc)
             .decorate
   end
