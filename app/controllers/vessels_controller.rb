@@ -91,7 +91,7 @@ class VesselsController < BaseController
   end
 
   def export_url_params
-    params.permit(:start_date, :end_date, :system_id, parameter_ids: []).merge({ export_page: true })
+    params.permit(:id, :start_date, :end_date, :system_id, parameter_ids: []).merge({ export_page: true })
   end
 
   def vessel_show_template

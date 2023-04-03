@@ -3,7 +3,18 @@ class VesselSystemParameterMeasurementsByDate < Patterns::Calculation
   private
 
   def result
-    Measurement.where(id: measurement_ids).order(:taken_at)
+    Measurement.joins(:measurements_import).where(id: measurement_ids).order(:taken_at).map do |measurement|
+      if measurement.measurements_import.source.to_sym == MeasurementsImport::MANUAL_XLSX_SOURCE and measurement.state.to_sym != :in_range
+        if measurement.state.to_sym == :overrange
+          measurement.value = vessel_system_parameter.parameter.overrange.to_f
+        elsif measurement.state.to_sym == :underrange
+          measurement.value = vessel_system_parameter.parameter.underrange.to_f
+        else
+          measurement.value = measurement.value.to_f
+        end
+      end
+      measurement
+    end
   end
 
   def measurement_ids

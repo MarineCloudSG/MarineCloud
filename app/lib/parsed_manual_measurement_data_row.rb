@@ -1,5 +1,10 @@
 class ParsedManualMeasurementDataRow
+
+  VALUE_OVERRANGE_LABELS = ['overrange', 'overange', 'over']
+  VALUE_UNDERRANGE_LABELS = ['underrange', 'underange', 'under']
+
   class HandledImportException < StandardError; end
+
   def initialize(row, vessel, import)
     @row = row
     @vessel = vessel
@@ -22,12 +27,27 @@ class ParsedManualMeasurementDataRow
     row.fetch(:taken_at)
   end
 
+  def state
+    value = raw_value.to_s
+    return :overrange if VALUE_OVERRANGE_LABELS.include?(value.downcase)
+    return :underrange if VALUE_UNDERRANGE_LABELS.include?(value.downcase)
+
+    :in_range
+  end
+
+  def raw_value
+    row.fetch(:value)
+  end
+
   def value
-    value = row.fetch(:value).to_s
-    if value
-      value.sub!(",", ".")
+    if state.to_sym != :in_range
+      return nil
     end
-    value.to_f
+    value = raw_value
+    if value
+      value = value.to_s.sub(",", ".")
+    end
+    value&.to_f
   end
 
   private

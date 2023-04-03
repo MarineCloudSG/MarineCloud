@@ -31,9 +31,11 @@ class ImportManualMeasurementsData < Patterns::Service
       measurements_import: measurements_import,
       vessel_system_parameter: row.vessel_system_parameter,
       taken_at: row.taken_at,
-      value: row.value
+      value: row.value,
+      state: row.state
     )
-  rescue
+  rescue => exception
+    Sentry.capture_exception(exception)
     @failed_rows += 1
   end
 

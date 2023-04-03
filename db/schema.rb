@@ -152,6 +152,8 @@ ActiveRecord::Schema.define(version: 202204020181784) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "sort_order", default: 10
     t.decimal "photometer_value_multiplier", default: "1.0"
+    t.float "overrange"
+    t.float "underrange"
   end
 
   create_table "systems", force: :cascade do |t|
