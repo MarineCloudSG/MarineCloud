@@ -12,6 +12,8 @@ ActiveAdmin.register Parameter do
     id_column
     column :name
     column :unit
+    column :overrange
+    column :underrange
     column :photometer_value_multiplier
     column :sort_order
     actions
@@ -21,5 +23,5 @@ ActiveAdmin.register Parameter do
   # ==== EDIT ====
   # ==============
 
-  permit_params :name, :unit, :photometer_value_multiplier, :sort_order
+  permit_params :name, :unit, :photometer_value_multiplier, :sort_order, :overrange, :underrange
 end

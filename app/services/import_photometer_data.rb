@@ -35,7 +35,8 @@ class ImportPhotometerData < Patterns::Service
       value: adjusted_row_value(row),
       state: row.state
     )
-  rescue
+  rescue => exception
+    Sentry.capture_exception(exception)
     @failed_rows += 1
   end
 
