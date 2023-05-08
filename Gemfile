@@ -76,7 +76,7 @@ gem "dry-rails", "~> 0.6"
 gem "rails-patterns"
 
 # Asynchronous processing
-gem "sidekiq", "~> 5.2.1"
+gem "sidekiq", "~> 7.1.0"
 gem "sidekiq-cron", "~> 1.9.1"
 gem "sidekiq-status"
 
