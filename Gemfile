@@ -132,7 +132,7 @@ group :development, :test do
   gem "factory_trace"
   gem "rspec-rails"
   # Ensure uniform code style
-  gem "rubocop", "~> 1.45.1", require: false
+  gem "rubocop", "~> 1.53.0", require: false
   gem "dotenv-rails"
 end
 
